@@ -7,22 +7,19 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 $services = [
     'factories' => [
-        "ZfMetal\Datagrid" => ZfMetal\Datagrid\Factory\GridFactory::class,
-        "ZfMetal\DatagridDoctrine" => ZfMetal\Datagrid\Factory\GridFactory::class,
-        'zf-metal-datagrid.options' => function (ServiceLocatorInterface $sm) {
-            $config = $sm->get('Config');
-            return new \ZfMetal\Datagrid\Options\GridOptions(isset($config['zf-metal-datagrid.options']) ? $config['zf-metal-datagrid.options'] : array());
-        },
-            ],
-            'aliases' => [
-                \ZfMetal\Datagrid\Grid::class => "ZfMetal\Datagrid"
-            ]
-        ];
+        \ZfMetal\Datagrid\Grid::class => \ZfMetal\Datagrid\Factory\GridFactory::class,
+        'zf-metal-datagrid.options' => \ZfMetal\Datagrid\Factory\Options\ModuleOptionsFactory::class,
+    ],
+    'aliases' => [
+        "zf-metal-datagrid" => \ZfMetal\Datagrid\Grid::class,
+        "zf-metal-datagrid-doctrine" => \ZfMetal\Datagrid\Grid::class
+    ]
+];
 
 
-        return $services;
+return $services;
 
 
 
 
-        
+

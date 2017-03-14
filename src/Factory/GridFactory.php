@@ -16,7 +16,7 @@ class GridFactory implements FactoryInterface {
         $this->container = $container;
 
         /* @var $config \ZfMetal\Datagrid\Opcions\GridOptions */
-        $gridOptions = $container->get('ZfMetal\Datagrid_options');
+        $gridOptions = $container->get('zf-metal-datagrid.options');
 
         /* @var $application \Zend\Mvc\Application */
         $application = $container->get('application');
@@ -45,7 +45,7 @@ class GridFactory implements FactoryInterface {
         $this->grid = new Grid($mvcevent, $gridOptions);
 
         //SET SOURCE BY REQUEST NAME
-        ($requestedName == "ZfMetal\DatagridDoctrine" || (isset($this->gridOptions->getSourceConfig()["type"]) && $this->gridOptions->getSourceConfig()["type"] == "doctrine") ) ? $this->buildDoctrineSource() : null;
+        ($requestedName == "zf-metal-datagrid-doctrine" || (isset($this->gridOptions->getSourceConfig()["type"]) && $this->gridOptions->getSourceConfig()["type"] == "doctrine") ) ? $this->buildDoctrineSource() : null;
 
         return $this->grid;
     }

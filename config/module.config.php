@@ -14,16 +14,16 @@ return array(
         'recordsPerPage' => 10,
         'templates' => array(
             'default' => array(
-                'form_view' => 'ZfMetal\Datagrid/form/form-default',
-                'grid_view' => 'ZfMetal\Datagrid/grid/grid-default',
-                'detail_view' => 'ZfMetal\Datagrid/detail/detail-default',
-                'pagination_view' => 'ZfMetal\Datagrid/pagination/pagination-default'
+                'form_view' => 'zf-metal/datagrid/form/form-default',
+                'grid_view' => 'zf-metal/datagrid/grid/grid-default',
+                'detail_view' => 'zf-metal/datagrid/detail/detail-default',
+                'pagination_view' => 'zf-metal/datagrid/pagination/pagination-default'
             ),
             'ajax' => array(
-                'form_view' => 'ZfMetal\Datagrid/form/form-ajax',
-                'grid_view' => 'ZfMetal\Datagrid/grid/grid-ajax',
-                'detail_view' => 'ZfMetal\Datagrid/detail/detail-ajax',
-                'pagination_view' => 'ZfMetal\Datagrid/pagination/pagination-ajax'
+                'form_view' => 'zf-metal/datagrid/form/form-ajax',
+                'grid_view' => 'zf-metal/datagrid/grid/grid-ajax',
+                'detail_view' => 'zf-metal/datagrid/detail/detail-ajax',
+                'pagination_view' => 'zf-metal/datagrid/pagination/pagination-ajax'
             )
         )
     ),

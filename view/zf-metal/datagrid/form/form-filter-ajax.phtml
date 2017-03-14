@@ -30,7 +30,7 @@ echo $this->form()->openTag($form);
             $element->setAttribute('placeholder', $element->getName());
             ?>
             <div class="col-lg-4 col-md-6 col-xs-12" style="height: 65px">
-                <?php echo $this->partial('ZfMetal\Datagrid/form/filter-element-select', array('element' => $element)); ?>
+                <?php echo $this->partial('zf-metal/datagrid/form/filter-element-select', array('element' => $element)); ?>
             </div>
 
             <?php
@@ -42,7 +42,7 @@ echo $this->form()->openTag($form);
             // $element->setAttribute('class', 'form-control');
             ?>
             <div class="col-lg-4 col-md-6 col-xs-12" style="height: 65px">
-                <?php echo $this->partial('ZfMetal\Datagrid/form/filter-element-checkbox', array('element' => $element)); ?>
+                <?php echo $this->partial('zf-metal/datagrid/form/filter-element-checkbox', array('element' => $element)); ?>
             </div>
 
             <?php
@@ -55,7 +55,7 @@ echo $this->form()->openTag($form);
             $element->setAttribute('placeholder', $element->getName());
             ?>
             <div class="col-lg-4 col-md-6 col-xs-12" style="height: 65px">
-                <?php echo $this->partial('ZfMetal\Datagrid/form/filter-element', array('element' => $element)); ?>
+                <?php echo $this->partial('zf-metal/datagrid/form/filter-element', array('element' => $element)); ?>
             </div>
 
             <?php break; ?>

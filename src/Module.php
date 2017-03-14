@@ -2,39 +2,16 @@
 
 namespace ZfMetal\Datagrid;
 
+class Module {
 
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-
-/**
- * Module
- *
- * @package   Cdi
- * @copyright Cristian Incarnato (c) - http://www.cincarnato.com
- */
-class Module implements AutoloaderProviderInterface {
-
-    public function init() {
-        
-    }
-  
-    public function getAutoloaderConfig() {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
-    }
+    const VERSION = '3.0.2dev';
 
     public function getConfig() {
         return include __DIR__ . '/../config/module.config.php';
     }
-
-    public function getServiceConfig() {
-           return include __DIR__ . '/../config/services.config.php';
+    
+     public function getServiceConfig() {
+           return include __DIR__ . '/config/services.config.php';
     }
-
-  
 
 }
