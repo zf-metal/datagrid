@@ -1,0 +1,12 @@
+<div  class="form-group<?php if ($this->formElementErrors($this->element)) echo " has-error" ?>">
+    <label class="col-lg-12 col-md-12 control-label">
+        <?php echo ucfirst($this->translate($element->getLabel())) ?>
+    </label>
+    
+    <div class="col-lg-12">    
+
+        <?php echo $this->formElement($this->element); ?>
+      
+
+    </div>
+</div>

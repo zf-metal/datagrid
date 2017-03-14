@@ -1,0 +1,30 @@
+<div  class="form-group<?php if ($this->formElementErrors($this->element)) echo " has-error" ?>">
+     <label class="col-lg-12 col-md-12 control-label">
+        <?php echo ucfirst($this->translate($element->getLabel())) ?>
+    </label>
+    <div class="col-lg-12">    
+        
+        <div class="input-group">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                    <span class="caret"></span> <span class="sr-only">Toggle Dropdown</span> 
+                </button>
+                <ul class="dropdown-menu"> 
+                    <li><a onclick="changeOp('<?php echo $this->element->getName(); ?>', '~')"><?php echo $this->translate("like (Default) ~"); ?></a></li> 
+                    <li><a onclick="changeOp('<?php echo $this->element->getName(); ?>', '!~')"><?php echo $this->translate("not like !~"); ?></a></li> 
+                    <li><a onclick="changeOp('<?php echo $this->element->getName(); ?>', '==')"><?php echo $this->translate("equal"); ?> ==</a></li> 
+                    <li><a onclick="changeOp('<?php echo $this->element->getName(); ?>', '>')"><?php echo $this->translate("greater"); ?> ></a></li>
+                    <li><a onclick="changeOp('<?php echo $this->element->getName(); ?>', '<')"><?php echo $this->translate("less"); ?> <</a></li> 
+                    <li><a onclick="changeOp('<?php echo $this->element->getName(); ?>', '>=')"><?php echo $this->translate("greater equal"); ?> >=</a></li>
+                    <li><a onclick="changeOp('<?php echo $this->element->getName(); ?>', '<=')"><?php echo $this->translate("less equal"); ?> <=</a></li> 
+                    <li><a onclick="changeOp('<?php echo $this->element->getName(); ?>', 'val1<>val2')"><?php echo $this->translate("between"); ?> <></a></li> 
+
+                </ul>
+            </div>
+            <?php echo $this->formElement($this->element); ?>
+        </div>
+
+
+    </div>
+</div>
+

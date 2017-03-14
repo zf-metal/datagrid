@@ -1,0 +1,63 @@
+{
+    "name": "zf-metal/datagrid",
+    "description": "Zend Framework 3 Module that provides a datagrid",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "keywords": [
+        "ZfcDatagrid",
+        "datagrid",
+        "datatable",
+        "table",
+        "paginator",
+        "module",
+        "zf",
+        "zf2",
+        "zf3",
+        "Zend Framework",
+        "Zend Framework 2",
+        "Zend Framework 3",
+        "zend",
+        "doctrine",
+        "doctrine 2",
+        "order",
+        "filter",
+        "pager",
+        "add",
+        "edit",
+        "delete",
+        "view",
+        "abm",
+        "crud",
+        "php"
+    ],
+    "authors": [{
+            "name": "Cristian Incarnato",
+            "email": "cincarnato@gmail.com",
+            "homepage": "http://cincarnato.com.ar/",
+            "role": "Desarrollador"
+        },
+        {
+            "name": "Alejandro Furgeri",
+            "email": "alecitoman@gmail.com",
+            "homepage": "http://afurgeri.com.ar/",
+            "role": "Desarrollador"
+        }
+    ],
+    "minimum-stability": "dev",
+    "config": {
+        "process-timeout": 5000
+    },
+    "require": {
+        "php": ">=5.6",
+        "zendframework/zend-mvc": "^3.0.4",
+        "zendframework/zend-view": "^2.8",
+        "zendframework/zend-http": "~2.2",
+        "zendframework/zend-paginator": "~2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "ZfMetal\\Datagrid\\": "src/"
+        }
+    }
+}
