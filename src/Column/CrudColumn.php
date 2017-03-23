@@ -12,10 +12,10 @@ class CrudColumn extends ExtraColumn {
     const type = "crud";
 
     protected $side;
-    protected $add = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary fa fa-plus", "value" => "", "action" => "onclick='cdiAddRecord()'"];
-    protected $edit = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary fa fa-edit", "value" => "", "action" => "onclick='cdiEditRecord({{id}})'"];
-    protected $del = ["enable" => true, "htmltag" => "a", "class" => "btn btn-danger fa fa-trash", "value" => "", "action" => "onclick='cdiDeleteRecord({{id}})'"];
-    protected $view = ["enable" => true, "htmltag" => "a", "class" => "btn btn-success fa fa-list", "value" => "", "action" => "onclick='cdiViewRecord({{id}})'"];
+    protected $add = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary glyphicon glyphicon-plus", "value" => "", "action" => "onclick='cdiAddRecord()'"];
+    protected $edit = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary glyphicon glyphicon-edit", "value" => "", "action" => "onclick='cdiEditRecord({{id}})'"];
+    protected $del = ["enable" => true, "htmltag" => "a", "class" => "btn btn-danger glyphicon glyphicon-trash", "value" => "", "action" => "onclick='cdiDeleteRecord({{id}})'"];
+    protected $view = ["enable" => true, "htmltag" => "a", "class" => "btn btn-success glyphicon glyphicon-list-alt", "value" => "", "action" => "onclick='cdiViewRecord({{id}})'"];
     protected $filterActive = true;
     protected $filter;
     protected $gridId = null;
