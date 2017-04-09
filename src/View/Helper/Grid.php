@@ -5,30 +5,21 @@ namespace ZfMetal\Datagrid\View\Helper;
 use Zend\View\Helper\AbstractHelper;
 
 class Grid extends AbstractHelper  {
-
-
+    
+    CONST TEMPLATE_PATH = 'zf-metal/datagrid/templates/';
+    
+    protected $template = "default";
+    protected $instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
+    
     public function __invoke(\ZfMetal\Datagrid\Grid $grid) {
 
-        $template = $grid->getTemplate();
-        $templates = $grid->getOptions()->getTemplates();
-
-        switch ($grid->getInstanceToRender()) {
-            case "formEntity":
-                $partial = $templates[$template]["form_view"];
-                break;
-            case "grid":
-                $partial = $templates[$template]["grid_view"];
-                break;
-            case "detail":
-                $partial = $templates[$template]["detail_view"];
-                break;
-            default:
-                $partial = $templates[$template]["grid_view"];
-                break;
-        }
-
-        $partialPagination = $templates[$template]["pagination_view"];
-
+        $this->template = $grid->getTemplate();
+        $this->instance = $grid->getInstance();
+        
+        $partial = self::TEMPLATE_PATH.$this->template."/".$this->instance;
+        $partialPagination = self::TEMPLATE_PATH.$this->template."/pagination";
+        $partialFilter = self::TEMPLATE_PATH.$this->template."/filter";
+        
         $routeParams = $grid->getQueryArray();
         if (!$routeParams) {
             $routeParams = array();
@@ -38,6 +29,7 @@ class Grid extends AbstractHelper  {
         return $this->view->partial($partial, array(
                     "grid" => $grid,
                     "partialPagination" => $partialPagination,
+                    "partialFilter" => $partialFilter,
                     'routeParams' => $routeParams,
                     'route' => $route));
     }

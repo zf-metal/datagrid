@@ -1,0 +1,23 @@
+<?php
+echo $this->renderForm($form, null, \ZfMetal\Commons\Consts::COLUMNS_THREE);
+?>
+
+<script type="text/javascript">
+    function changeOp(element, value) {
+        $('[name="' + element + '"]').val(value);
+    }
+
+    function resetFormFilter_<?php echo $form->getName(); ?>(sub = false) {
+        $(':input', '#<?php echo $form->getName(); ?>')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+
+        if (sub === true) {
+            $('#<?php echo $form->getName(); ?>').submit();
+        }
+
+    }
+
+</script>

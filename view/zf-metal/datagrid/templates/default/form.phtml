@@ -1,0 +1,17 @@
+<div class="row container-fluid">
+
+    <?php
+    $form = $this->grid->getCrudForm();
+    $formConfig = $this->grid->getOptions()->getFormConfig();
+    ?>
+
+    <?php
+    echo $this->renderForm($form, $formConfig->getStyle(), $formConfig->getColumns(), $formConfig->getGroups());
+    ?>
+    <br><br>
+    <div class="clearfix"></div>
+    <div class="pull-right">
+        <a class="btn btn-default" href="<?php echo $this->url($this->route, array(), array('query' => $this->routeParams), true); ?>" >Cancel</a>
+    </div>
+</div>
+

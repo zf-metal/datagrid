@@ -13,6 +13,14 @@ use ZfMetal\Datagrid\Column\CrudColumn;
  */
 class Grid {
 
+//Instance to Render
+    const INSTANCE_GRID = "grid";
+    const INSTANCE_VIEW = "view";
+    const INSTANCE_FORM = "form";
+    const INSTANCES = [
+        self::INSTANCE_GRID, self::INSTANCE_VIEW, self::INSTANCE_FORM
+    ];
+
     /**
      * Identificador del Grid
      * 
@@ -123,7 +131,7 @@ class Grid {
      * 
      * @var type
      */
-    protected $instanceToRender = "grid";
+    protected $instance = self::INSTANCE_GRID;
 
     /**
      * CRUD
@@ -133,7 +141,7 @@ class Grid {
     protected $crud;
 
 
-    //CONFIG REFACTOR
+//CONFIG REFACTOR
 
     /**
      * Grid Options
@@ -162,10 +170,9 @@ class Grid {
      * @var \ZfMetal\Datagrid\Sort
      */
     protected $sort;
-    //TOREVIEW
+//TOREVIEW
 
     protected $formFilters;
-    protected $editForm = null;
     protected $tableClass;
     protected $recordDetail;
     protected $forceFilters = array();
@@ -180,6 +187,8 @@ class Grid {
         $this->setMvcevent($mvcevent);
 
         $this->setOptions($options);
+        
+        $this->setTemplate($options->getTemplateDefault());
     }
 
     function getMvcevent() {
@@ -198,7 +207,7 @@ class Grid {
         $this->sort = $sort;
     }
 
-    //-->CONFIG
+//-->CONFIG
 
     public function getOptions() {
         return $this->options;
@@ -215,8 +224,8 @@ class Grid {
     function setColumnsConfig(Array $columnsConfig) {
         $this->getOptions()->setColumnsConfig($columnsConfig);
     }
-    
-     function mergeColumnsConfig(Array $columnsConfig) {
+
+    function mergeColumnsConfig(Array $columnsConfig) {
         $this->getOptions()->mergeColumnsConfig($columnsConfig);
     }
 
@@ -236,12 +245,8 @@ class Grid {
         $this->getOptions()->setRecordsPerPage($recordsPerPage);
     }
 
-// DISABLED - SourceConfig Conflict - set Custom Config only on Factory    
-//    public function setCustomOptions($customOptionsKey) {
-//        $this->getOptions()->mergeCustomOptionsByKey($customOptionsKey);
-//    }
-    //<--CONFIG
-    //
+//<--CONFIG
+//
     //
     //-->>SOURCE
 
@@ -266,8 +271,8 @@ class Grid {
         return $this->source;
     }
 
-    //<<--SOURCE
-    //
+//<<--SOURCE
+//
     //
     //-->COLUMNS
 
@@ -299,7 +304,7 @@ class Grid {
         $this->columnFactory = $columnFactory;
     }
 
-    //<--COLUMNS
+//<--COLUMNS
 
     public function prepare() {
 
@@ -309,9 +314,15 @@ class Grid {
 
         //CRUD - to review 
         $this->processCrudActions();
-        //SEE IF CAN RETURN HERE
+        
         //CRUD CONFIGURE
         $this->crudConfigure();
+        
+        //IF THE INSTANCE IS NOT GRID, RETURN NOW
+        if ($this->getInstance() !== self::INSTANCE_GRID) {
+            $this->ready = true;
+          //  return $this;
+        }
 
         //Extract and generate source columns
         $this->buildColumns();
@@ -336,12 +347,17 @@ class Grid {
 
         //Order Columns..Need review to enable
         //$this->processOrderColumn();
-
         $this->ready = true;
+        return $this;
+    }
+
+    protected function processInstance() {
+        
     }
 
     protected function crudConfigure() {
-        if ($this->getOptions()->getCrudConfig()["enable"] === true) {
+       // var_dump($this->getOptions()->getCrudConfig());
+        if ($this->getOptions()->getCrudConfig()->getEnable() === true) {
             $this->addCrudColumn("", "left", $this->getOptions()->getCrudConfig());
         }
     }
@@ -357,16 +373,14 @@ class Grid {
         return $this->getSource()->getForm();
     }
 
-    //-->CRUD
+//-->CRUD
 
     public function getCrudForm() {
         return $this->getCrud()->getCrudForm();
     }
 
     protected function processCrudActions() {
-        if ($this->getCrud()->crudActions()) {
-            $this->setInstanceToRender($this->getCrud()->getInstanceToRender());
-        }
+        $this->setInstance($this->getCrud()->crudActions());
     }
 
     function getCrud() {
@@ -390,8 +404,8 @@ class Grid {
         }
     }
 
-    //<--CRUD
-    //
+//<--CRUD
+//
     //
     //-->MVCEVENT
     public function getRoute() {
@@ -433,7 +447,7 @@ class Grid {
         return $return;
     }
 
-    //<--MVCEVENT
+//<--MVCEVENT
 
 
     public function prepareSort() {
@@ -450,7 +464,7 @@ class Grid {
         }
     }
 
-    //-->FILTERS
+//-->FILTERS
 
     public function buildFilters() {
         $this->filters = new \ZfMetal\Datagrid\Filters();
@@ -498,8 +512,8 @@ class Grid {
         $this->filters = $filters;
     }
 
-    //<--FILTERS
-    //
+//<--FILTERS
+//
     //-->ORDER COLUMNS (REVIEW-CONFIG)
     public function setOrderColumn($column, $order) {
         $this->OrderColumnCollection[$column] = $order;
@@ -520,7 +534,7 @@ class Grid {
         $this->columns = array_merge($newOrder, $this->columns);
     }
 
-    //<--ORDER COLUMNS (REVIEW-CONFIG)
+//<--ORDER COLUMNS (REVIEW-CONFIG)
 
     protected function processData() {
 
@@ -546,17 +560,17 @@ class Grid {
         }
     }
 
-    //EXTRA COLUMNS - TO REVIEW
+//EXTRA COLUMNS - TO REVIEW
     public function addExtraColumn($name, $originalValue, $side = "left", $filter = false) {
-        
+
         if (key_exists($name, $this->getColumnsConfig())) {
             $columnConfig = $this->getColumnsConfig()[$name];
         } else {
             $columnConfig = array();
         }
-        $columnConfig["type"] ="extra";
+        $columnConfig["type"] = "extra";
         $extraColumn = $this->getColumnFactory()->create($name, $columnConfig);
-        
+
         $extraColumn->setOriginalValue($originalValue);
         $extraColumn->setFilterActive($filter);
 
@@ -588,7 +602,7 @@ class Grid {
     }
 
     public function setId($id) {
-        $this->id = str_replace (' ', '', $id);
+        $this->id = str_replace(' ', '', $id);
     }
 
     public function getRow() {
@@ -603,21 +617,18 @@ class Grid {
         $this->tableClass = $tableClass;
     }
 
-    function getInstanceToRender() {
-        return $this->instanceToRender;
+    function getInstance() {
+        return $this->instance;
     }
 
-    function setInstanceToRender($instanceToRender) {
-        $this->instanceToRender = $instanceToRender;
+    function setInstance($instance) {
+        if (in_array($instance, self::INSTANCES)) {
+            $this->instance = $instance;
+        } else {
+            throw new \Exception("Instance " . $instance . " not exist");
+        }
     }
 
-    function getRenderTemplate() {
-        return $this->renderTemplate;
-    }
-
-    function setRenderTemplate($renderTemplate) {
-        $this->renderTemplate = $renderTemplate;
-    }
 
     function getAddBtn() {
         return $this->addBtn;
@@ -693,7 +704,7 @@ class Grid {
         $this->crudColumn = $crudColumn;
     }
 
-    //TOREVIEW
+//TOREVIEW
     /**
      * Compatibilidad
      */

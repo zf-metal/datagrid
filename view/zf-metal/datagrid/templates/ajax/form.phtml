@@ -1,0 +1,37 @@
+<?php $file = false; ?>
+<div class="row container-fluid">
+
+    <?php
+    $form = $this->grid->getCrudForm();
+    $form->setAttribute("action", "javascript:cdiForm_" . $this->grid->getId() . "('" . $form->getName() . "')");
+    $formConfig = $this->grid->getOptions()->getFormConfig();
+    ?>
+
+    <?php
+    echo $this->renderForm($form, $formConfig->getStyle(), $formConfig->getColumns(),$formConfig->getGroups());
+    ?>
+    <div class="clearfix"></div>
+    <div class="pull-right">
+        <a class="btn btn-default" onclick="cdiListRecords_<?php echo $this->grid->getId(); ?>()" >Cancel</a>
+    </div>
+</div>
+
+
+<?php echo $this->GridCrudAjax($this->grid->getId(), $this->url($this->route, array(), array(), true)); ?>
+
+
+<?php if ($file): ?>
+    <?php
+//Para Imagenes
+    $url = $this->url($this->route, array(), array(), true);
+    ?>
+    <script>
+
+        $('#<?php echo $form->getName(); ?>').ajaxForm({
+            url: "<?php echo $url; ?>",
+            complete: function (xhr) {
+                $('#<?php echo $this->grid->getId(); ?>').html(xhr.responseText);
+            }
+        });
+    </script>
+<?php endif; ?>

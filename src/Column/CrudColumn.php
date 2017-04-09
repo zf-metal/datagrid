@@ -27,8 +27,12 @@ class CrudColumn extends ExtraColumn {
         $this->view["action"] = "onclick='cdiViewRecord_" . $this->gridId . "({{id}})'";
     }
 
-    function __construct($name, $side, $crudConfig, $gridId) {
-
+    function __construct($name, $side, $gridCrudConfig, $gridId) {
+        $crudConfig["add"] = $gridCrudConfig->getAdd()->toArray();
+        $crudConfig["edit"] = $gridCrudConfig->getEdit()->toArray();
+        $crudConfig["del"] = $gridCrudConfig->getDel()->toArray();
+        $crudConfig["view"] = $gridCrudConfig->getView()->toArray();
+        
         $this->gridId = $gridId;
         $this->name = $name;
         $this->displayName = $name;

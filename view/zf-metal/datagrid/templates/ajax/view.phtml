@@ -1,0 +1,48 @@
+<?php $record = $this->grid->getRecordDetail(); ?>
+
+<div class="col-lg-10 col-lg-offset-1 col-xs-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <?php echo $this->translate('Record Detail'); ?>
+                
+                <i class="btn btn-default btn-xs pull-right" onclick="cdiListRecords_<?php echo $this->grid->getId(); ?>()" >
+                    <?php echo $this->translate('Listar'); ?>
+                </i> 
+                <?php if ($this->grid->getOptions()->getCrudConfig()->getEdit()->getEnable()): ?>
+                    <i class='btn btn-danger btn-xs pull-right' onclick='cdiEditRecord_<?php echo $this->grid->getId(); ?>(<?php echo $record->getId(); ?>)'><?php echo $this->translate('Editar'); ?></i>
+                <?php endif; ?>
+
+            </h4>
+
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped table-bordered">
+                <?php foreach ((array) $record as $key => $value): ?>
+                    <tr>
+                        <th><?php echo $this->translate($key); ?></th>
+
+                        <td>
+                            <?php if (substr($key, 0, 1) != '_'): ?>
+                                <?php if (is_object($value)): ?>
+                                    <?php if (is_a($value, "DateTime")): ?>
+                                        <?php echo $value->format("Y-m-d H:i:s"); ?>
+                                    <?php elseif (is_a($value, 'Doctrine\ORM\PersistentCollection')): ?>
+                                            <?php echo count($value); ?> <?php echo $this->translate(' Items'); ?>
+                                    <?php else: ?> 
+                                        <?php echo $value; ?>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <?php echo $value; ?>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<?php echo $this->GridCrudAjax($this->grid->getId(), $this->url($this->route, array(), array(), true)); ?>

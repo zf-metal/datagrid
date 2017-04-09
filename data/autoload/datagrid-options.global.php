@@ -4,20 +4,7 @@
 return array(
     'zf-metal-datagrid.options' => array(
         'recordsPerPage' => 10,
-        'templates' => array(
-            'default' => array(
-                'form_view' => 'ZfMetal\Datagrid/form/form-default',
-                'grid_view' => 'ZfMetal\Datagrid/grid/grid-default',
-                'detail_view' => 'ZfMetal\Datagrid/detail/detail-default',
-                'pagination_view' => 'ZfMetal\Datagrid/pagination/pagination-default'
-            ),
-            'ajax' => array(
-                'form_view' => 'ZfMetal\Datagrid/form/form-ajax',
-                'grid_view' => 'ZfMetal\Datagrid/grid/grid-ajax',
-                'detail_view' => 'ZfMetal\Datagrid/detail/detail-ajax',
-                'pagination_view' => 'ZfMetal\Datagrid/pagination/pagination-ajax'
-            )
-        ),
+        'template_default' => 'default',
         "crudConfig" => [
             "enable" => true,
             "add" => [

@@ -8,9 +8,9 @@ namespace ZfMetal\Datagrid\Options;
  */
 interface GridOptionsInterface {
 
-    function getTemplates();
+    function getTemplateDefault();
 
-    function setTemplates($template);
+    function setTemplateDefault($template);
 
     function getRecordsPerPage();
 

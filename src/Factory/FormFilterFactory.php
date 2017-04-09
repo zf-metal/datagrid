@@ -25,7 +25,7 @@ class FormFilterFactory {
             /* @var $element \Zend\Form\Element */
 
             //TODO - ADD F_
-           $element->setAttribute("required",false);
+            $element->setAttribute("required", false);
 
             if ($element instanceof \DoctrineModule\Form\Element\ObjectSelect) {
                 $element->setOption("display_empty_item", true);
@@ -55,8 +55,8 @@ class FormFilterFactory {
                 $form->remove($element->getName());
                 $form->add($newElement);
             }
-            
-              if (preg_match("/date/i", $element->getAttribute("type"))) {
+
+            if (preg_match("/date/i", $element->getAttribute("type"))) {
                 $name = $element->getName();
                 $newElement = new \Zend\Form\Element\Text($name);
                 $newElement->setLabel($name);
@@ -82,6 +82,8 @@ class FormFilterFactory {
             if (preg_match("/file/i", $element->getAttribute("type"))) {
                 $form->remove($element->getName());
             }
+
+            $element->setOption("description", null);
         }
 
         $form->add(array(
@@ -89,6 +91,15 @@ class FormFilterFactory {
             'attributes' => array(
                 'type' => 'hidden',
                 'value' => $page
+            )
+        ));
+
+        $form->add(array(
+            'name' => 'submitbtn',
+            'type' => 'Zend\Form\Element\Submit',
+            'attributes' => array(
+                'value' => 'Filtrar',
+                'class' => 'btn btn-success',
             )
         ));
 
@@ -118,14 +129,7 @@ class FormFilterFactory {
             )
         ));
 
-        $form->add(array(
-            'name' => 'submitbtn',
-            'type' => 'Zend\Form\Element\Submit',
-            'attributes' => array(
-                'value' => 'Filtrar',
-                'class' => 'btn btn-success',
-            )
-        ));
+
 
         $form->setData($data);
         return $form;

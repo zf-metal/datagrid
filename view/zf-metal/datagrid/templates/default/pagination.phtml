@@ -1,0 +1,49 @@
+
+<?php if ($this->pageCount): ?>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="dataTables_info">
+              
+                        <span><?php echo $this->translate('Records'); ?>: <?php echo $this->totalItemCount; ?> | <?php echo $this->translate('Range'); ?>: <?php echo $this->firstItemNumber; ?> - <?php echo $this->lastItemNumber; ?></span>
+                 
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="dataTables_paginate paging_simple_numbers">
+                <ul class="pagination">
+
+                    <!-- First page link -->
+                    <li<?php echo (isset($this->previous)) ? '' : ' class="paginate_button disabled"'; ?>>
+                        <a href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->first) + $this->routeParams), true); ?>" >&lt;&lt; First</a>
+
+                    </li>
+
+                    <!-- Previous page link -->
+                    <li<?php echo (isset($this->previous)) ? '' : ' class="paginate_button disabled"'; ?>>
+                        <a href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->previous) + $this->routeParams), true); ?>" >&lt;&lt; Previous</a>
+                    </li>
+
+                    <!-- Numbered page links -->
+                    <?php foreach ($this->pagesInRange as $page): ?>
+                        <li<?php echo ($page == $this->current) ? ' class="active"' : ''; ?>>
+                            <a href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $page) + $this->routeParams), true); ?>" ><?php echo $page; ?></a>
+                        </li>
+                    <?php endforeach; ?>
+
+                    <!-- Next page link -->
+                    <li<?php echo (isset($this->next)) ? '' : ' class="paginate_button disabled"'; ?>>
+                        <a href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->next) + $this->routeParams), true); ?>" >Next &gt;&gt;</a>
+                    </li>
+
+                    <!-- Last page link -->
+                    <li<?php echo (isset($this->next)) ? '' : ' class="paginate_button disabled"'; ?>>
+                        <a href="<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->last) + $this->routeParams), true); ?>" >Last &gt;&gt;</a>
+
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

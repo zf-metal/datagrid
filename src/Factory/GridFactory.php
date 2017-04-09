@@ -15,8 +15,10 @@ class GridFactory implements FactoryInterface {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL) {
         $this->container = $container;
 
-        /* @var $config \ZfMetal\Datagrid\Opcions\GridOptions */
-        $gridOptions = $container->get('zf-metal-datagrid.options');
+
+        // Foward $options. Util Keys: customOptionsKey | customOptions
+        $gridOptions = $container->build('zf-metal-datagrid.options',$options);
+
 
         /* @var $application \Zend\Mvc\Application */
         $application = $container->get('application');
@@ -24,20 +26,6 @@ class GridFactory implements FactoryInterface {
         /* @var $mvcevent \Zend\Mvc\MvcEvent */
         $mvcevent = $application->getMvcEvent();
 
-        //CUSTOM OPTIONS KEY
-        if (isset($options["customOptionsKey"])) {
-            $customOptions = $container->get('config')[$options["customOptionsKey"]];
-            if (is_array($customOptions)) {
-                $gridOptions->mergeCustomOptions($customOptions);
-            } else {
-                throw new \Exception("Can't get a config array by key " . $options["customOptionsKey"] . "' ");
-            }
-        }
-
-        //CUSTOM OPTIONS
-        if (isset($options["customOptions"]) && is_array($options["customOptions"])) {
-            $gridOptions->mergeCustomOptions($options["customOptions"]);
-        }
 
         $this->gridOptions = $gridOptions;
 

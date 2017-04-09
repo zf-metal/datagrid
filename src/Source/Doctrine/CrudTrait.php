@@ -68,7 +68,8 @@ trait CrudTrait {
             'name' => 'submit',
             'type' => 'Zend\Form\Element\Submit',
             'attributes' => array(
-                'value' => 'submit'
+                'value' => 'submit',
+                'class' => 'btn btn-success'
             )
         ));
 

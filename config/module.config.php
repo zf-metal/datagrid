@@ -12,20 +12,34 @@
 return array(
     'zf-metal-datagrid.options' => array(
         'recordsPerPage' => 10,
-        'templates' => array(
-            'default' => array(
-                'form_view' => 'zf-metal/datagrid/form/form-default',
-                'grid_view' => 'zf-metal/datagrid/grid/grid-default',
-                'detail_view' => 'zf-metal/datagrid/detail/detail-default',
-                'pagination_view' => 'zf-metal/datagrid/pagination/pagination-default'
-            ),
-            'ajax' => array(
-                'form_view' => 'zf-metal/datagrid/form/form-ajax',
-                'grid_view' => 'zf-metal/datagrid/grid/grid-ajax',
-                'detail_view' => 'zf-metal/datagrid/detail/detail-ajax',
-                'pagination_view' => 'zf-metal/datagrid/pagination/pagination-ajax'
-            )
-        )
+        'template_default' => 'default',
+        "formConfig" => [
+            'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
+            'style' => \ZfMetal\Commons\Consts::STYLE_MENU_VERTICAL,
+        ],
+        "crudConfig" => [
+            "enable" => false,
+            "add" => [
+                "enable" => true,
+                "class" => " glyphicon glyphicon-plus cursor-pointer",
+                "value" => ""
+            ],
+            "edit" => [
+                "enable" => true,
+                "class" => " glyphicon glyphicon-edit fa-xs cursor-pointer",
+                "value" => ""
+            ],
+            "del" => [
+                "enable" => true,
+                "class" => " glyphicon glyphicon-trash cursor-pointer",
+                "value" => ""
+            ],
+            "view" => [
+                "enable" => true,
+                "class" => " glyphicon glyphicon-list-alt cursor-pointer",
+                "value" => ""
+            ]
+        ],
     ),
     'view_helpers' => array(
         'invokables' => array(
@@ -60,5 +74,4 @@ return array(
             'widget/csvForm' => __DIR__ . '/../view/widget/csv-form.phtml',
         ),
     ),
-
 );

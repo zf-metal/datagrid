@@ -9,7 +9,7 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
     /**
      * @var array
      */
-    protected $templates;
+    protected $templateDefault = "default";
 
     /**
      * @var integer
@@ -45,6 +45,13 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
     protected $crudConfig = array();
 
     /**
+     * Form config
+     *
+     * @var Array
+     */
+    protected $formConfig = array();
+
+    /**
      * Source config
      *
      * @var Array
@@ -59,24 +66,12 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         return $this->customOptions;
     }
 
-    function mergeCustomOptions($customOptions) {
-        $this->setFromArray(array_merge($this->toArray(), $customOptions));
+    function getTemplateDefault() {
+        return $this->templateDefault;
     }
 
-    /**
-     * @return array
-     */
-    public function getTemplates() {
-        return $this->templates;
-    }
-
-    /**
-     * @param array $templates
-     * @return $this
-     */
-    public function setTemplates($templates) {
-        $this->templates = (array) $templates;
-        return $this;
+    function setTemplateDefault($templateDefault) {
+        $this->templateDefault = $templateDefault;
     }
 
     function getRecordsPerPage() {
@@ -118,19 +113,29 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
     function setColumnsConfig(Array $columnsConfig) {
         $this->columnsConfig = $columnsConfig;
     }
-    
-     function mergeColumnsConfig(Array $columnsConfig) {
-        $this->columnsConfig = array_merge_recursive($this->columnsConfig,$columnsConfig);
+
+    function mergeColumnsConfig(Array $columnsConfig) {
+        $this->columnsConfig = array_merge_recursive($this->columnsConfig, $columnsConfig);
     }
-    
-   
 
     function setSourceConfig(Array $sourceConfig) {
         $this->sourceConfig = $sourceConfig;
     }
 
-    function setCrudConfig(Array $crudConfig) {
-        $this->crudConfig = $crudConfig;
+    function setCrudConfig($crudConfig) {
+        if (is_a($crudConfig, \ZfMetal\Datagrid\Options\CrudConfig::class)) {
+            $this->crudConfig = $crudConfig;
+            return;
+        }
+        $this->crudConfig = new \ZfMetal\Datagrid\Options\CrudConfig($crudConfig);
+    }
+
+    function getFormConfig() {
+        return $this->formConfig;
+    }
+
+    function setFormConfig($formConfig) {
+        $this->formConfig = new \ZfMetal\Datagrid\Options\FormConfig($formConfig);
     }
 
 }

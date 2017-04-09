@@ -9,10 +9,6 @@ namespace ZfMetal\Datagrid;
  */
 class Crud {
 
-    //Instance
-    const instanceGrid = "grid";
-    const instanceView = "detail";
-    const instanceCrud = "formEntity";
     //MSJS
     const msjDeleteOk = "Record deleted OK";
     const msjDeleteFail = "Record deleted FAIL";
@@ -29,7 +25,7 @@ class Crud {
     protected $data;
     protected $id;
     protected $action;
-    protected $instanceToRender;
+    protected $instance;
     protected $msj;
     protected $record;
 
@@ -46,11 +42,6 @@ class Crud {
     }
     function getRecord() {
         return $this->record;
-    }
-
-    
-    function getInstanceToRender() {
-        return $this->instanceToRender;
     }
 
     function getForm() {
@@ -99,13 +90,13 @@ class Crud {
                 $this->editSubmit();
                 break;
             default:
-                return false;
+                return \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
         }
-        return true;
+        return $this->instance;
     }
 
     protected function delete() {
-        $this->instanceToRender = self::instanceGrid;
+        $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
 
         if ($this->getSource()->delRecord($this->id)) {
             $this->msj = self::msjDeleteOk;
@@ -115,7 +106,7 @@ class Crud {
     }
 
     protected function view() {
-        $this->instanceToRender = self::instanceView;
+        $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_VIEW;
         $this->record = $this->getSource()->viewRecord($this->id);
     }
 
@@ -129,17 +120,17 @@ class Crud {
             )
         ));
 
-        $this->instanceToRender = self::instanceCrud;
+        $this->instance= \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
     }
 
     protected function addSubmit() {
         $this->add();
         if ($this->getSource()->saveRecord($this->data)) {
             $this->msj = self::msjSaveOk;
-            $this->instanceToRender = self::instanceGrid;
+            $this->instance= \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
         } else {
             $this->msj = self::msjSaveFail;
-            $this->instanceToRender = self::instanceCrud;
+            $this->instance= \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
         }
     }
 
@@ -160,7 +151,7 @@ class Crud {
             )
         ));
 
-        $this->instanceToRender = self::instanceCrud;
+        $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
     }
 
     protected function editSubmit() {
@@ -168,10 +159,10 @@ class Crud {
 
         if ($this->getSource()->updateRecord($this->id, $this->data)) {
             $this->msj = self::msjEditOk;
-            $this->instanceToRender = self::instanceGrid;
+            $this->instance= \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
         } else {
             $this->msj = self::msjEditFail;
-            $this->instanceToRender = self::instanceCrud;
+            $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
         }
     }
 
