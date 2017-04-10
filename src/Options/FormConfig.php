@@ -25,14 +25,14 @@ class FormConfig extends AbstractOptions {
      * 
      * @var array
      */
-    protected $groups = array();
+    protected $horizontalGroups = array();
 
     /**
      * Render Form in Groups
      * 
      * @var array
      */
-    protected $columnGroups = array();
+    protected $verticalGroups = array();
 
     function getColumns() {
         return $this->columns;
@@ -42,10 +42,7 @@ class FormConfig extends AbstractOptions {
         return $this->style;
     }
 
-    function getGroups() {
-        return $this->groups;
-    }
-
+  
     function setColumns($columns) {
         $this->columns = $columns;
     }
@@ -54,18 +51,25 @@ class FormConfig extends AbstractOptions {
         $this->style = $style;
     }
 
-    function setGroups($groups) {
-        $this->groups = $groups;
-    }
-    
-    function getColumnGroups() {
-        return $this->columnGroups;
+    function getHorizontalGroups() {
+        return $this->horizontalGroups;
     }
 
-    function setColumnGroups($columnGroups) {
-        $this->columnGroups = $columnGroups;
+    function getVerticalGroups() {
+        return $this->verticalGroups;
+    }
+
+    function setHorizontalGroups($horizontalGroups) {
+        $this->horizontalGroups = $horizontalGroups;
         return $this;
     }
+
+    function setVerticalGroups($verticalGroups) {
+        $this->verticalGroups = $verticalGroups;
+        return $this;
+    }
+
+
 
 
 
