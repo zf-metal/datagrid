@@ -4,7 +4,7 @@
     <a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseFilter_<?php echo $this->grid->getId(); ?>" aria-expanded="true" aria-controls="collapseFilter_<?php echo $this->grid->getId(); ?>" >
         <i class="btn btn-default btn-sm glyphicon glyphicon-filter"> </i> 
     </a>
-
+    <div class="clearfix"></div>
     <div id="collapseFilter_<?php echo $this->grid->getId(); ?>" class="panel-body panel-collapse collapse"  role="tabpanel" aria-labelledby="headingOne">
             <?php echo $this->partial($this->partialFilter, array("grid" => $this->grid)); ?>
     </div>

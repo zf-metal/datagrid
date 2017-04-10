@@ -4,7 +4,7 @@ namespace ZfMetal\Datagrid\Options;
 
 use Zend\Stdlib\AbstractOptions;
 
-class FormConfig extends AbstractOptions{
+class FormConfig extends AbstractOptions {
 
     /**
      * Form Columns [COLUMNS_ONE, COLUMNS_TWO,COLUMNS_THREE,COLUMNS_FOUR]
@@ -26,6 +26,13 @@ class FormConfig extends AbstractOptions{
      * @var array
      */
     protected $groups = array();
+
+    /**
+     * Render Form in Groups
+     * 
+     * @var array
+     */
+    protected $columnGroups = array();
 
     function getColumns() {
         return $this->columns;
@@ -50,8 +57,16 @@ class FormConfig extends AbstractOptions{
     function setGroups($groups) {
         $this->groups = $groups;
     }
-
-
-
     
+    function getColumnGroups() {
+        return $this->columnGroups;
+    }
+
+    function setColumnGroups($columnGroups) {
+        $this->columnGroups = $columnGroups;
+        return $this;
+    }
+
+
+
 }

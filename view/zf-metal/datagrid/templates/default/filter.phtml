@@ -1,5 +1,8 @@
 <?php
-echo $this->renderForm($form, null, \ZfMetal\Commons\Consts::COLUMNS_THREE);
+$form = $this->grid->getFormFilters();
+?>
+<?php
+echo $this->renderForm($form, "grid-filter", \ZfMetal\Commons\Consts::COLUMNS_THREE);
 ?>
 
 <script type="text/javascript">

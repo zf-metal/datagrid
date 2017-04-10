@@ -6,9 +6,9 @@
     $form->setAttribute("action", "javascript:cdiForm_" . $this->grid->getId() . "('" . $form->getName() . "')");
     $formConfig = $this->grid->getOptions()->getFormConfig();
     ?>
-
+    
     <?php
-    echo $this->renderForm($form, $formConfig->getStyle(), $formConfig->getColumns(),$formConfig->getGroups());
+    echo $this->renderForm($form, $formConfig->getStyle(), $formConfig->getColumns(),$formConfig->getGroups(),$formConfig->getColumnGroups());
     ?>
     <div class="clearfix"></div>
     <div class="pull-right">

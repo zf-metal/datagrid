@@ -1,0 +1,29 @@
+<div  class="form-group<?php if ($this->formElementErrors($this->element)) echo " has-error" ?>">
+
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <label class="control-label"><?php echo ucfirst($this->translate($this->element->getLabel())); ?></label>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <label class="btn btn-default fa fa-upload">
+            <?php echo $this->formElement($this->element); ?>
+        </label>
+
+        <?php if ($element->getOption('description')): ?>
+            <p class="help-block"><?php echo $this->element->getOption('description') ?></p>
+        <?php endif; ?>
+
+        <?php if ($this->formElementErrors($this->element)) : ?>
+            <?php
+            echo $this->formElementErrors()
+                    ->setMessageOpenFormat('<span class="help-block">')
+                    ->setMessageSeparatorString('</span><span class="help-block">')
+                    ->setMessageCloseString('</span>')
+                    ->render($this->element);
+            ?>
+
+        <?php endif; ?>
+
+    </div>
+</div>
