@@ -21,7 +21,7 @@ class FormFilterFactory {
         $form->setAttribute('method', 'get');
 
         foreach ($form as $key => $element) {
-
+            
             /* @var $element \Zend\Form\Element */
 
             $element->setAttribute("required", false);
@@ -40,6 +40,10 @@ class FormFilterFactory {
             }
 
             if (preg_match("/text/i", $element->getAttribute("type"))) {
+                $element->setAttribute('class', 'form-control');
+            }
+
+             if (preg_match("/select/i", $element->getAttribute("type"))) {
                 $element->setAttribute('class', 'form-control');
             }
 
