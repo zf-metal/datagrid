@@ -27,7 +27,6 @@ class ModuleOptionsFactory implements FactoryInterface {
             $finalConfig = \Zend\Stdlib\ArrayUtils::merge($finalConfig, $options["customOptions"]);
         }
 
-
         return new \ZfMetal\Datagrid\Options\GridOptions($finalConfig);
     }
 

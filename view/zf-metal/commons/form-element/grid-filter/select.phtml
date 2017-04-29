@@ -1,0 +1,8 @@
+<div  class="form-group<?php if ($this->formElementErrors($this->element)) echo " has-error" ?>">
+    <label class="control-label">
+        <?php echo ucfirst($this->translate($element->getLabel())) ?>
+    </label>
+
+    <?php echo $this->formInput($this->element); ?>
+
+</div>
