@@ -1,6 +1,6 @@
 <?php
 
-namespace ZfMetal\Commons\Factory\Controller\Plugin;
+namespace ZfMetal\Datagrid\Factory\Controller\Plugin;
 
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;

@@ -209,6 +209,10 @@ class Grid {
 
 //-->CONFIG
 
+    /**
+     * 
+     * @return \ZfMetal\Datagrid\Options\GridOptions
+     */
     public function getOptions() {
         return $this->options;
     }

@@ -41,6 +41,14 @@ return array(
             ]
         ],
     ),
+    'controller_plugins' => [
+        'factories' => [
+            \ZfMetal\Datagrid\Controller\Plugin\GridBuilder::class => \ZfMetal\Datagrid\Factory\Controller\Plugin\GridBuilderFactory::class,
+        ],
+        'aliases' => [
+            'gridBuilder' => \ZfMetal\Datagrid\Controller\Plugin\GridBuilder::class,
+        ]
+    ],
     'view_helpers' => array(
         'invokables' => array(
             'JsCrud' => 'ZfMetal\Datagrid\View\Helper\JsCrud',
