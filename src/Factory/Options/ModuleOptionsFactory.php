@@ -15,16 +15,16 @@ class ModuleOptionsFactory implements FactoryInterface {
             $finalConfig = $config['zf-metal-datagrid.options'];
         }
 
-        if (isset($options["customOptionsKey"])) {
-            if (key_exists($options["customOptionsKey"], $config)) {
-                $customConfig = $config[$options["customOptionsKey"]];
+        if (isset($options["customKey"])) {
+            if (key_exists($options["customKey"], $config['zf-metal-datagrid.custom'])) {
+                $customConfig = $config['zf-metal-datagrid.custom'][$options["customKey"]];
                 $finalConfig = \Zend\Stdlib\ArrayUtils::merge($finalConfig, $customConfig, true);
             }
         }
   
 
-        if (isset($options["customOptions"]) && is_array($options["customOptions"])) {
-            $finalConfig = \Zend\Stdlib\ArrayUtils::merge($finalConfig, $options["customOptions"]);
+        if (isset($options["customValues"]) && is_array($options["customValues"])) {
+            $finalConfig = \Zend\Stdlib\ArrayUtils::merge($finalConfig, $options["customValues"]);
         }
 
         return new \ZfMetal\Datagrid\Options\GridOptions($finalConfig);
