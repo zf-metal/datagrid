@@ -26,7 +26,7 @@ return array(
             ],
             "edit" => [
                 "enable" => true,
-                "class" => " glyphicon glyphicon-edit fa-xs cursor-pointer",
+                "class" => " glyphicon glyphicon-edit cursor-pointer",
                 "value" => ""
             ],
             "del" => [
