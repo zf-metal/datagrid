@@ -20,12 +20,12 @@
                                 <!--SORT-->
                                 <?php if ($this->grid->getSort() && $this->grid->getSort()->getBy() == $column->getName()): ?>
                                     <?php if ($this->grid->getSort()->getDirection() == "DESC"): ?>
-                                        <a class="fa fa-sort-asc" href="<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "ASC") + $this->routeParams), true); ?>"></a>
+                                        <a class="glyphicon glyphicon-sort-by-attributes-alt" href="<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "ASC") + $this->routeParams), true); ?>"></a>
                                     <?php elseif ($this->grid->getSort()->getDirection() == "ASC"): ?>
-                                        <a class="fa fa-sort-desc" href="<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "DESC") + $this->routeParams), true); ?>"></a>
+                                        <a class="glyphicon glyphicon-sort-by-attributes" href="<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "DESC") + $this->routeParams), true); ?>"></a>
                                     <?php endif; ?>
                                 <?php else: ?>
-                                    <a class="fa fa-sort" href="<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "DESC") + $this->routeParams), true); ?>"></a>
+                                    <a class="glyphicon glyphicon-sort" href="<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "DESC") + $this->routeParams), true); ?>"></a>
                                 <?php endif; ?>
 
                             <?php endif; ?>
