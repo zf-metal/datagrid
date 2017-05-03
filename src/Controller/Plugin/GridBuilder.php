@@ -23,31 +23,31 @@ class GridBuilder extends AbstractPlugin {
      * @param integer $parentEntityId
      * @return \ZfMetal\Datagrid\Grid
      */
-    public function __invoke($entityFullClassName, $parentEntityName = null, $parentEntityId = null) {
-
-  
+    public function __invoke($entityFullClassName, $customKey, $parentEntityName = null, $parentEntityId = null) {
+        
+        
         /* @var $grid \ZfMetal\Datagrid\Grid */
-        $grid = $this->container->build("zf-metal-datagrid", ["customKey" => $entityFullClassName]);
+        $grid = $this->container->build("zf-metal-datagrid", ["customKey" => $customKey]);
 
         //Filter by Parent
         if ($parentEntityName && $parentEntityId) {
-            $query = $this->getEm()->createQueryBuilder()
-                    ->select('u')
-                    ->from($entityFullClassName, 'u')
-                    ->where("u." . $parentEntityName . " = :parentId")
-                    ->setParameter("parentId", $parentEntityId);
-
             $sourceConfig = $grid->getOptions()->getSourceConfig();
-
+            
             if (key_exists("doctrineOptions", $sourceConfig) AND key_exists("entityManager", $sourceConfig["doctrineOptions"])) {
                 $entityManager = $sourceConfig["doctrineOptions"]["entityManager"];
             } else {
                 $entityManager = "doctrine.entitymanager.orm_default";
             }
             $em = $this->container->get($entityManager);
+            
+            $query = $em->createQueryBuilder()
+                    ->select('u')
+                    ->from($entityFullClassName, 'u')
+                    ->where("u." . $parentEntityName . " = :parentId")
+                    ->setParameter("parentId", $parentEntityId);
 
             $source = new \ZfMetal\Datagrid\Source\DoctrineSource($em, $entityFullClassName, $query);
-            $this->grid->setSource($source);
+            $grid->setSource($source);
         }
 
         //Return Grid
