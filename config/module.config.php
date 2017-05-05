@@ -44,10 +44,62 @@ return array(
     'controller_plugins' => [
         'factories' => [
             \ZfMetal\Datagrid\Controller\Plugin\GridBuilder::class => \ZfMetal\Datagrid\Factory\Controller\Plugin\GridBuilderFactory::class,
+            \ZfMetal\Datagrid\Controller\Plugin\ManagerBuilder::class => \ZfMetal\Datagrid\Factory\Controller\Plugin\ManagerBuilderFactory::class,
         ],
         'aliases' => [
             'gridBuilder' => \ZfMetal\Datagrid\Controller\Plugin\GridBuilder::class,
+            'managerBuilder' => \ZfMetal\Datagrid\Controller\Plugin\ManagerBuilder::class,
         ]
+    ],
+    'controllers' => [
+        'factories' => [
+            \ZfMetal\Datagrid\Controller\ManagerController::class => \ZfMetal\Datagrid\Factory\Controller\ManagerControllerFactory::class,
+            \ZfMetal\Datagrid\Controller\RelatedEntityController::class => \ZfMetal\Datagrid\Factory\Controller\RelatedEntityControllerFactory::class,
+        ]
+    ],
+    'router' => [
+        'routes' => [
+            'ZfMetal_Datagrid' => [
+                'type' => 'Literal',
+                'may_terminate' => false,
+                'options' => [
+                    'route' => '/zfmetal/datagrid',
+                ],
+                'child_routes' => [
+                    'Manager' => [
+                        'type' => 'Literal',
+                        'may_terminate' => false,
+                        'options' => [
+                            'route' => '/manager',
+                        ],
+                        'child_routes' => [
+                            'Main' => [
+                                'type' => 'Segment',
+                                'may_terminate' => true,
+                                'options' => [
+                                    'route' => '/main/:customKey',
+                                    'defaults' => [
+                                        'controller' => \ZfMetal\Datagrid\Controller\ManagerController::class,
+                                        'action' => 'main',
+                                    ],
+                                ],
+                            ],
+                            'RelatedEntity' => [
+                                'type' => 'Segment',
+                                'may_terminate' => true,
+                                'options' => [
+                                    'route' => '/related-entity/:customKey/:mainCustomKey/:mainEntityField/:mainEntityId',
+                                    'defaults' => [
+                                        'controller' => \ZfMetal\Datagrid\Controller\RelatedEntityController::class,
+                                        'action' => 'grid',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
     ],
     'view_helpers' => array(
         'invokables' => array(
@@ -70,6 +122,8 @@ return array(
             'GridFieldFile' => 'ZfMetal\Datagrid\View\Helper\GridFieldFile',
             'GridFieldRelational' => 'ZfMetal\Datagrid\View\Helper\GridFieldRelational',
             'GridBtnAdd' => 'ZfMetal\Datagrid\View\Helper\GridBtnAdd',
+            //Manager
+            'ManagerRender' => 'ZfMetal\Datagrid\View\Helper\Manager',
         )
     ),
     'view_manager' => array(

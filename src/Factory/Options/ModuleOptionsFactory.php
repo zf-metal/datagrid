@@ -19,6 +19,8 @@ class ModuleOptionsFactory implements FactoryInterface {
             if (key_exists($options["customKey"], $config['zf-metal-datagrid.custom'])) {
                 $customConfig = $config['zf-metal-datagrid.custom'][$options["customKey"]];
                 $finalConfig = \Zend\Stdlib\ArrayUtils::merge($finalConfig, $customConfig, true);
+            }else{
+                throw new \Exception("Key '".$options["customKey"]."' not found");
             }
         }
   

@@ -31,6 +31,13 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
     protected $columnOrder = true;
 
     /**
+     * ID of the GRID
+     * 
+     * @var string
+     */
+    protected $gridId = "zfmdg";
+
+    /**
      * Columns config
      *
      * @var Array
@@ -57,6 +64,39 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
      * @var Array
      */
     protected $sourceConfig = array();
+
+    /**
+     *
+     * key => flap name 
+     * value => relatedKeyOption
+     * 
+     * @var array 
+     */
+    protected $managerConfig;
+
+    function getManagerConfig() {
+        return $this->managerConfig;
+    }
+
+    function setManagerConfig($managerConfig) {
+        foreach ($managerConfig as $key => $values) {
+            $this->managerConfig[$key] = new \ZfMetal\Datagrid\Options\ManagerConfig($values);
+        }
+
+        return $this;
+    }
+
+    function hasManagerConfigKey($key) {
+        return key_exists($key, $this->managerConfig);
+    }
+
+    function getManagerConfigKey($key) {
+        if ($this->hasManagerConfig($key)) {
+            return $this->managerConfig[$key];
+        } else {
+            return false;
+        }
+    }
 
     public function setCustomOptions(array $customOptions) {
         $this->customOptions = $customOptions;
@@ -136,6 +176,15 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
 
     function setFormConfig($formConfig) {
         $this->formConfig = new \ZfMetal\Datagrid\Options\FormConfig($formConfig);
+    }
+
+    function getGridId() {
+        return $this->gridId;
+    }
+
+    function setGridId($gridId) {
+        $this->gridId = $gridId;
+        return $this;
     }
 
 }

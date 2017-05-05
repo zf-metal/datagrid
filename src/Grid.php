@@ -22,13 +22,6 @@ class Grid {
     ];
 
     /**
-     * Identificador del Grid
-     * 
-     * @var string
-     */
-    protected $id = "Grid";
-
-    /**
      * Data source of grid
      *
      * @var \ZfMetal\Datagrid\Source\SourceInterface
@@ -146,7 +139,7 @@ class Grid {
     /**
      * Grid Options
      *
-     * @var Array
+     * @var \ZfMetal\Datagrid\Options\GridOptions
      */
     protected $options;
 
@@ -187,7 +180,7 @@ class Grid {
         $this->setMvcevent($mvcevent);
 
         $this->setOptions($options);
-        
+
         $this->setTemplate($options->getTemplateDefault());
     }
 
@@ -318,14 +311,14 @@ class Grid {
 
         //CRUD - to review 
         $this->processCrudActions();
-        
+
         //CRUD CONFIGURE
         $this->crudConfigure();
-        
+
         //IF THE INSTANCE IS NOT GRID, RETURN NOW
         if ($this->getInstance() !== self::INSTANCE_GRID) {
             $this->ready = true;
-          //  return $this;
+            //  return $this;
         }
 
         //Extract and generate source columns
@@ -360,7 +353,7 @@ class Grid {
     }
 
     protected function crudConfigure() {
-       // var_dump($this->getOptions()->getCrudConfig());
+        // var_dump($this->getOptions()->getCrudConfig());
         if ($this->getOptions()->getCrudConfig()->getEnable() === true) {
             $this->addCrudColumn("", "left", $this->getOptions()->getCrudConfig());
         }
@@ -399,7 +392,7 @@ class Grid {
     }
 
     public function addCrudColumn($name = "", $side = "left", $crudConfig = []) {
-        $column = new CrudColumn($name, $side, $crudConfig, $this->id);
+        $column = new CrudColumn($name, $side, $crudConfig, $this->getId());
         $column->setFilterActive(false);
         if ($side == "left") {
             array_unshift($this->extraColumns, $column);
@@ -491,7 +484,7 @@ class Grid {
 
     function getFormFilterFactory() {
         if (!isset($this->formFilterFactory)) {
-            $this->setFormFilterFactory(new Factory\FormFilterFactory($this->id));
+            $this->setFormFilterFactory(new Factory\FormFilterFactory($this->getId()));
         }
         return $this->formFilterFactory;
     }
@@ -602,11 +595,14 @@ class Grid {
     }
 
     public function getId() {
-        return $this->id;
+        return $this->getOptions()->getGridId();
     }
 
     public function setId($id) {
-        $this->id = str_replace(' ', '', $id);
+        if (preg_match('/\s/', $id)) {
+            throw new Exception("Id can't contain spaces");
+        }
+        $this->getOptions()->setGridId($id);
     }
 
     public function getRow() {
@@ -632,7 +628,6 @@ class Grid {
             throw new \Exception("Instance " . $instance . " not exist");
         }
     }
-
 
     function getAddBtn() {
         return $this->addBtn;

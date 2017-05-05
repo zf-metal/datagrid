@@ -1,0 +1,21 @@
+Back to .. [Manager](../manager.md)
+# ManagerBuilder 
+
+This Plugin allows us to generate a manager editor.
+
+### Parameters:
+* @param string $customKey  customKey configuration of ZfMetal\Datagrid
+* @param object $entity Doctrine Entity
+
+### Return:
+* @return \ZfMetal\Datagrid\Manager
+
+### Invoke:
+* managerBuilder
+
+### Example:
+```
+        echo $this->ManagerRender($this->manager);
+```
+
+

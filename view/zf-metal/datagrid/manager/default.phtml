@@ -1,0 +1,80 @@
+
+<div class="panel panel-default">
+
+    <!--ListSearch-->
+    <!--<div class="box pull-right" style="padding: 3px;">
+        <form role="search">
+            <div>
+                <i id="btn-search" class="btn btn-info fa fa-search nav-search-icon"></i>
+                <input id="input-text-search" type="text" class="" placeholder="" autocomplete="off" style="display: none;">
+                <div id="list-search" class="">
+                </div>
+            </div>
+        </form>
+    </div>-->
+
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <strong><?php echo $this->manager->getEntity(); ?></strong>
+        </h4>
+    </div>
+
+    <div class="panel-body">
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#mainTab" data-toggle="tab" aria-expanded="true"><?php echo $this->translate('Main'); ?></a>
+            </li>
+
+            <?php foreach ($this->manager->getGridOptions()->getManagerConfig() as $key => $value): ?>
+                <li class=""><a href="#<?php echo str_replace(" ", "", $key); ?>Tab" data-toggle="tab" aria-expanded="true"><?php echo $key; ?></a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+        <div class="tab-content">
+
+            <div class="tab-pane fade active in" id="mainTab">
+                <div id="main-content">
+                    <?php echo $this->flashCurrent(); ?>
+                    <br>
+                    <?php echo $this->renderForm($this->manager->getForm(), $this->manager->getGridOptions()->getFormConfig()->getStyle(), $this->manager->getGridOptions()->getFormConfig()->getColumns()); ?>
+                </div>
+            </div>
+
+            <?php foreach ($this->manager->getGridOptions()->getManagerConfig() as $key => $value): ?>
+                <div class="tab-pane fade" id="<?php echo str_replace(" ", "", $key); ?>Tab">
+
+                    <h4><?php echo $key; ?></h4>
+                    <br>
+                    <div id="<?php echo str_replace(" ", "", $key); ?>-content">
+                        <i class="glyphicon glyphicon-transfer"> Cargando...</i>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+<?php foreach ($this->manager->getGridOptions()->getManagerConfig() as $key => $value): ?>
+
+    <?php
+    $url = $this->url("ZfMetal_Datagrid/Manager/RelatedEntity", [
+        "customKey" => $value->getCustomKey(),
+        "mainCustomKey" => $this->manager->getCustomKey(),
+        "mainEntityField" => $value->getEntityField(),
+        "mainEntityId" => $this->manager->getEntity()->getId()
+    ]);
+    ?>
+            $.get("<?php echo $url; ?>").done(function (data) {
+                $("#<?php echo str_replace(" ", "", $key); ?>-content").html(data);
+            });
+<?php endforeach; ?>
+
+    });
+</script>
