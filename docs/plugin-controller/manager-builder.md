@@ -15,7 +15,14 @@ This Plugin allows us to generate a manager editor.
 
 ### Example:
 ```
-        echo $this->ManagerRender($this->manager);
+        $id = $this->params("id");
+        $entity = null;
+        if ($id) {
+            $entity = $this->getEm()->getRepository(self::ENTITY)->find($id);
+        }
+        $manager = $this->managerBuilder('demo-entity-cliente', $entity);
+        return ["manager" => $manager];
+       
 ```
 
 

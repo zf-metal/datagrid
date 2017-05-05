@@ -14,12 +14,6 @@ This Helper allows us to render a manager editor.
 
 ### Example:
 ```
-        $id = $this->params("id");
-        $entity = null;
-        if ($id) {
-            $entity = $this->getEm()->getRepository(self::ENTITY)->find($id);
-        }
-        $manager = $this->managerBuilder('demo-entity-cliente', $entity);
-        return ["manager" => $manager];
+        echo $this->ManagerRender($this->manager);
 ```
 
