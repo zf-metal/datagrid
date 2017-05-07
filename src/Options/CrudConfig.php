@@ -5,6 +5,10 @@ namespace ZfMetal\Datagrid\Options;
 use Zend\Stdlib\AbstractOptions;
 
 class CrudConfig extends AbstractOptions {
+    
+    
+    
+    
 
     /**
      * Enable/Disable Crud
@@ -12,6 +16,14 @@ class CrudConfig extends AbstractOptions {
      * @var boolean
      */
     protected $enable = false;
+    
+    
+    /**
+     * left | right
+     * 
+     * @var boolean
+     */
+    protected $side = "left";
 
     /**
      * 
@@ -97,5 +109,19 @@ class CrudConfig extends AbstractOptions {
         $this->view = new \ZfMetal\Datagrid\Options\CrudItemConfig($view);
         return $this;
     }
+    
+    function getSide() {
+        return $this->side;
+    }
+
+    function setSide($side) {
+        if($side != "left" && $side != "right"){
+            throw new \Exception("Crud Columns Side must be left or right.");
+        }
+        $this->side = $side;
+        return $this;
+    }
+
+
 
 }

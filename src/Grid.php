@@ -355,7 +355,7 @@ class Grid {
     protected function crudConfigure() {
         // var_dump($this->getOptions()->getCrudConfig());
         if ($this->getOptions()->getCrudConfig()->getEnable() === true) {
-            $this->addCrudColumn("", "left", $this->getOptions()->getCrudConfig());
+            $this->addCrudColumn("", $this->getOptions()->getCrudConfig()->getSide(), $this->getOptions()->getCrudConfig());
         }
     }
 
