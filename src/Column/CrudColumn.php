@@ -32,7 +32,7 @@ class CrudColumn extends ExtraColumn {
         $crudConfig["edit"] = $gridCrudConfig->getEdit()->toArray();
         $crudConfig["del"] = $gridCrudConfig->getDel()->toArray();
         $crudConfig["view"] = $gridCrudConfig->getView()->toArray();
-        
+
         $this->gridId = $gridId;
         $this->name = $name;
         $this->displayName = $name;
@@ -48,8 +48,8 @@ class CrudColumn extends ExtraColumn {
         if ($this->add["enable"]) {
             $this->displayName = " <" . $this->add["htmltag"] . " class='" . $this->add["class"] . "' " . $this->add["action"] . " >" . $this->add["value"] . "</" . $this->add["htmltag"] . ">";
         }
-        
-          if ($this->view["enable"]) {
+
+        if ($this->view["enable"]) {
             $this->originalValue .= " <" . $this->view["htmltag"] . " class='" . $this->view["class"] . "' " . $this->view["action"] . " >" . $this->view["value"] . "</" . $this->view["htmltag"] . ">";
         }
 
@@ -59,7 +59,6 @@ class CrudColumn extends ExtraColumn {
         if ($this->del["enable"]) {
             $this->originalValue .= " <" . $this->del["htmltag"] . " class='" . $this->del["class"] . "' " . $this->del["action"] . " >" . $this->del["value"] . "</" . $this->del["htmltag"] . ">";
         }
-      
     }
 
     public function __toString() {
