@@ -48,6 +48,10 @@ class CrudColumn extends ExtraColumn {
         if ($this->add["enable"]) {
             $this->displayName = " <" . $this->add["htmltag"] . " class='" . $this->add["class"] . "' " . $this->add["action"] . " >" . $this->add["value"] . "</" . $this->add["htmltag"] . ">";
         }
+        
+          if ($this->view["enable"]) {
+            $this->originalValue .= " <" . $this->view["htmltag"] . " class='" . $this->view["class"] . "' " . $this->view["action"] . " >" . $this->view["value"] . "</" . $this->view["htmltag"] . ">";
+        }
 
         if ($this->edit["enable"]) {
             $this->originalValue = " <" . $this->edit["htmltag"] . " class='" . $this->edit["class"] . "' " . $this->edit["action"] . " >" . $this->edit["value"] . "</" . $this->edit["htmltag"] . ">";
@@ -55,9 +59,7 @@ class CrudColumn extends ExtraColumn {
         if ($this->del["enable"]) {
             $this->originalValue .= " <" . $this->del["htmltag"] . " class='" . $this->del["class"] . "' " . $this->del["action"] . " >" . $this->del["value"] . "</" . $this->del["htmltag"] . ">";
         }
-        if ($this->view["enable"]) {
-            $this->originalValue .= " <" . $this->view["htmltag"] . " class='" . $this->view["class"] . "' " . $this->view["action"] . " >" . $this->view["value"] . "</" . $this->view["htmltag"] . ">";
-        }
+      
     }
 
     public function __toString() {
