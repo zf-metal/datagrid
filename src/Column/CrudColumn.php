@@ -16,6 +16,7 @@ class CrudColumn extends ExtraColumn {
     protected $edit = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary glyphicon glyphicon-edit", "value" => "", "action" => "onclick='cdiEditRecord({{id}})'"];
     protected $del = ["enable" => true, "htmltag" => "a", "class" => "btn btn-danger glyphicon glyphicon-trash", "value" => "", "action" => "onclick='cdiDeleteRecord({{id}})'"];
     protected $view = ["enable" => true, "htmltag" => "a", "class" => "btn btn-success glyphicon glyphicon-list-alt", "value" => "", "action" => "onclick='cdiViewRecord({{id}})'"];
+    protected $mananger = ["enable" => false, "htmltag" => "a", "class" => "btn btn-success glyphicon glyphicon-asterisk", "value" => "", "action" => ""];
     protected $filterActive = true;
     protected $filter;
     protected $gridId = null;
@@ -25,6 +26,7 @@ class CrudColumn extends ExtraColumn {
         $this->edit["action"] = "onclick='cdiEditRecord_" . $this->gridId . "({{id}})'";
         $this->del["action"] = "onclick='cdiDeleteRecord_" . $this->gridId . "({{id}})'";
         $this->view["action"] = "onclick='cdiViewRecord_" . $this->gridId . "({{id}})'";
+        $this->manager["action"] = "";
     }
 
     function __construct($name, $side, $gridCrudConfig, $gridId) {
@@ -32,6 +34,7 @@ class CrudColumn extends ExtraColumn {
         $crudConfig["edit"] = $gridCrudConfig->getEdit()->toArray();
         $crudConfig["del"] = $gridCrudConfig->getDel()->toArray();
         $crudConfig["view"] = $gridCrudConfig->getView()->toArray();
+        $crudConfig["manager"] = $gridCrudConfig->getManager()->toArray();
 
         $this->gridId = $gridId;
         $this->name = $name;
@@ -44,6 +47,9 @@ class CrudColumn extends ExtraColumn {
         (isset($crudConfig["edit"])) ? $this->edit = array_merge($this->edit, $crudConfig["edit"]) : null;
         (isset($crudConfig["del"])) ? $this->del = array_merge($this->del, $crudConfig["del"]) : null;
         (isset($crudConfig["view"])) ? $this->view = array_merge($this->view, $crudConfig["view"]) : null;
+        (isset($crudConfig["manager"])) ? $this->view = array_merge($this->view, $crudConfig["manager"]) : null;
+
+
 
         if ($this->add["enable"]) {
             $this->displayName = " <" . $this->add["htmltag"] . " class='" . $this->add["class"] . "' " . $this->add["action"] . " >" . $this->add["value"] . "</" . $this->add["htmltag"] . ">";
@@ -56,6 +62,11 @@ class CrudColumn extends ExtraColumn {
         if ($this->edit["enable"]) {
             $this->originalValue .= " <" . $this->edit["htmltag"] . " class='" . $this->edit["class"] . "' " . $this->edit["action"] . " >" . $this->edit["value"] . "</" . $this->edit["htmltag"] . ">";
         }
+        
+        if ($this->manager["enable"]) {
+            $this->originalValue .= " <" . $this->manager["htmltag"] . " class='" . $this->manager["class"] . "' " . $this->manager["action"] . " >" . $this->manager["value"] . "</" . $this->manager["htmltag"] . ">";
+        }
+        
         if ($this->del["enable"]) {
             $this->originalValue .= " <" . $this->del["htmltag"] . " class='" . $this->del["class"] . "' " . $this->del["action"] . " >" . $this->del["value"] . "</" . $this->del["htmltag"] . ">";
         }
@@ -132,6 +143,17 @@ class CrudColumn extends ExtraColumn {
     function setAdd($add) {
         $this->add = $add;
     }
+    
+    function getMananger() {
+        return $this->mananger;
+    }
+
+    function setMananger($mananger) {
+        $this->mananger = $mananger;
+        return $this;
+    }
+
+
 
 }
 

@@ -38,7 +38,12 @@ return array(
                 "enable" => true,
                 "class" => " glyphicon glyphicon-list-alt cursor-pointer",
                 "value" => ""
-            ]
+            ],
+            "manager" => [
+                "enable" => false,
+                "class" => " glyphicon glyphicon-asterisk fa-xs cursor-pointer",
+                "value" => ""
+            ],
         ],
     ),
     'controller_plugins' => [

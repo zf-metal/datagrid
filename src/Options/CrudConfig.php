@@ -48,6 +48,12 @@ class CrudConfig extends AbstractOptions {
      * @var \ZfMetal\Datagrid\Option\CrudItemConfig
      */
     protected $view;
+    
+      /**
+     * 
+     * @var \ZfMetal\Datagrid\Option\CrudItemConfig
+     */
+    protected $mananger;
 
     function getEnable() {
         return $this->enable;
@@ -73,7 +79,12 @@ class CrudConfig extends AbstractOptions {
     function getView() {
         return $this->view;
     }
+    
+    function getMananger() {
+        return $this->mananger;
+    }
 
+        
     function setAdd($add) {
         if (is_a($add, \ZfMetal\Datagrid\Options\CrudItemConfig::class)) {
             $this->add = $add;
@@ -109,6 +120,17 @@ class CrudConfig extends AbstractOptions {
         $this->view = new \ZfMetal\Datagrid\Options\CrudItemConfig($view);
         return $this;
     }
+    
+      function setManager($manager) {
+        if (is_a($manager, \ZfMetal\Datagrid\Options\CrudItemConfig::class)) {
+            $this->manager = $manager;
+            return $this;
+        }
+        $this->view = new \ZfMetal\Datagrid\Options\CrudItemConfig($manager);
+        return $this;
+    }
+    
+    
     
     function getSide() {
         return $this->side;

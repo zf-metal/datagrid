@@ -7,6 +7,7 @@ return array(
         'template_default' => 'default',
         "crudConfig" => [
             "enable" => true,
+            "side" => "left",
             "add" => [
                 "enable" => true,
                 "class" => " glyphicon glyphicon-plus cursor-pointer",
@@ -26,7 +27,12 @@ return array(
                 "enable" => true,
                 "class" => " glyphicon glyphicon-list-alt cursor-pointer",
                 "value" => ""
-            ]
+            ],
+            "manager" => [
+                "enable" => false,
+                "class" => " glyphicon glyphicon-asterisk fa-xs cursor-pointer",
+                "value" => ""
+            ],
         ],
     )
 );
