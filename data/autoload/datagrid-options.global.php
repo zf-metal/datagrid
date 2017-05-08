@@ -31,7 +31,8 @@ return array(
             "manager" => [
                 "enable" => false,
                 "class" => " glyphicon glyphicon-asterisk fa-xs cursor-pointer",
-                "value" => ""
+                "value" => "",
+                 "action" => ""
             ],
         ],
     )
