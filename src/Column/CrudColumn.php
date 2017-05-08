@@ -22,10 +22,10 @@ class CrudColumn extends ExtraColumn {
     protected $gridId = null;
 
     protected function processDefaultAction() {
-        $this->add["action"] = (empty($this->add["action"]))?"onclick='cdiAddRecord_" . $this->gridId . "()'":"";
-        $this->edit["action"] = (empty($this->edit["action"]))?"onclick='cdiEditRecord_" . $this->gridId . "({{id}})'":"";
-        $this->del["action"] = (empty($this->del["action"]))?"onclick='cdiDeleteRecord_" . $this->gridId . "({{id}})'":"";
-        $this->view["action"] = (empty($this->view["action"]))?"onclick='cdiViewRecord_" . $this->gridId . "({{id}})'":"";
+        $this->add["action"] = (empty($this->add["action"]))?"onclick='cdiAddRecord_" . $this->gridId . "()'":$this->add["action"];
+        $this->edit["action"] = (empty($this->edit["action"]))?"onclick='cdiEditRecord_" . $this->gridId . "({{id}})'":$this->edit["action"];
+        $this->del["action"] = (empty($this->del["action"]))?"onclick='cdiDeleteRecord_" . $this->gridId . "({{id}})'":$this->del["action"];
+        $this->view["action"] = (empty($this->view["action"]))?"onclick='cdiViewRecord_" . $this->gridId . "({{id}})'":$this->view["action"];
 
     }
 
@@ -45,14 +45,16 @@ class CrudColumn extends ExtraColumn {
         (isset($crudConfig["edit"])) ? $this->edit = array_merge($this->edit, $crudConfig["edit"]) : null;
         (isset($crudConfig["del"])) ? $this->del = array_merge($this->del, $crudConfig["del"]) : null;
         (isset($crudConfig["view"])) ? $this->view = array_merge($this->view, $crudConfig["view"]) : null;
-        (isset($crudConfig["manager"])) ? $this->view = array_merge($this->manager, $crudConfig["manager"]) : null;
+        (isset($crudConfig["manager"])) ? $this->manager = array_merge($this->manager, $crudConfig["manager"]) : null;
 
         $this->processDefaultAction();
 
         if ($this->add["enable"]) {
             $this->displayName = " <" . $this->add["htmltag"] . " class='" . $this->add["class"] . "' " . $this->add["action"] . " >" . $this->add["value"] . "</" . $this->add["htmltag"] . ">";
         }
-
+        
+        $this->originalValue = "";
+        
         if ($this->view["enable"]) {
             $this->originalValue .= " <" . $this->view["htmltag"] . " class='" . $this->view["class"] . "' " . $this->view["action"] . " >" . $this->view["value"] . "</" . $this->view["htmltag"] . ">";
         }
