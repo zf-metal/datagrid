@@ -41,7 +41,7 @@ return array(
                 "value" => ""
             ],
             "manager" => [
-                "enable" => true,
+                "enable" => false,
                 "class" => " glyphicon glyphicon-asterisk fa-xs cursor-pointer",
                 "value" => "",
                 "action" => ""
