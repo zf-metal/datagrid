@@ -25,6 +25,18 @@ class CrudItemConfig extends AbstractOptions {
      * @var string
      */
     protected $value;
+    
+     /**
+     * 
+     * @var string
+     */
+    protected $action;
+    
+     /**
+     * 
+     * @var string
+     */
+    protected $htmltag = 'a';
 
     function getEnable() {
         return $this->enable;
@@ -52,6 +64,26 @@ class CrudItemConfig extends AbstractOptions {
     function setValue($value) {
         $this->value = $value;
     }
+    
+    function getAction() {
+        return $this->action;
+    }
+
+    function getHtmltag() {
+        return $this->htmltag;
+    }
+
+    function setAction($action) {
+        $this->action = $action;
+        return $this;
+    }
+
+    function setHtmltag($htmltag) {
+        $this->htmltag = $htmltag;
+        return $this;
+    }
+
+
     
   
 

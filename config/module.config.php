@@ -19,6 +19,7 @@ return array(
         ],
         "crudConfig" => [
             "enable" => false,
+            'side' => "left",
             "add" => [
                 "enable" => true,
                 "class" => " glyphicon glyphicon-plus cursor-pointer",
@@ -40,7 +41,7 @@ return array(
                 "value" => ""
             ],
             "manager" => [
-                "enable" => false,
+                "enable" => true,
                 "class" => " glyphicon glyphicon-asterisk fa-xs cursor-pointer",
                 "value" => "",
                 "action" => ""

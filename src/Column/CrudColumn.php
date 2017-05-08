@@ -16,7 +16,7 @@ class CrudColumn extends ExtraColumn {
     protected $edit = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary glyphicon glyphicon-edit", "value" => "", "action" => "onclick='cdiEditRecord({{id}})'"];
     protected $del = ["enable" => true, "htmltag" => "a", "class" => "btn btn-danger glyphicon glyphicon-trash", "value" => "", "action" => "onclick='cdiDeleteRecord({{id}})'"];
     protected $view = ["enable" => true, "htmltag" => "a", "class" => "btn btn-success glyphicon glyphicon-list-alt", "value" => "", "action" => "onclick='cdiViewRecord({{id}})'"];
-    protected $mananger = ["enable" => false, "htmltag" => "a", "class" => "btn btn-success glyphicon glyphicon-asterisk", "value" => "", "action" => ""];
+    protected $manager = ["enable" => false, "htmltag" => "a", "class" => "btn btn-success glyphicon glyphicon-asterisk", "value" => "", "action" => ""];
     protected $filterActive = true;
     protected $filter;
     protected $gridId = null;
@@ -47,7 +47,7 @@ class CrudColumn extends ExtraColumn {
         (isset($crudConfig["edit"])) ? $this->edit = array_merge($this->edit, $crudConfig["edit"]) : null;
         (isset($crudConfig["del"])) ? $this->del = array_merge($this->del, $crudConfig["del"]) : null;
         (isset($crudConfig["view"])) ? $this->view = array_merge($this->view, $crudConfig["view"]) : null;
-        (isset($crudConfig["manager"])) ? $this->view = array_merge($this->view, $crudConfig["manager"]) : null;
+        (isset($crudConfig["manager"])) ? $this->view = array_merge($this->manager, $crudConfig["manager"]) : null;
 
 
 
