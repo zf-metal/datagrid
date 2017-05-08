@@ -30,7 +30,7 @@ class CrudItemConfig extends AbstractOptions {
      * 
      * @var string
      */
-    protected $action;
+    protected $action = null;
     
      /**
      * 

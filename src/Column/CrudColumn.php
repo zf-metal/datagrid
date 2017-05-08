@@ -22,10 +22,10 @@ class CrudColumn extends ExtraColumn {
     protected $gridId = null;
 
     protected function processDefaultAction() {
-        $this->add["action"] = "onclick='cdiAddRecord_" . $this->gridId . "()'";
-        $this->edit["action"] = "onclick='cdiEditRecord_" . $this->gridId . "({{id}})'";
-        $this->del["action"] = "onclick='cdiDeleteRecord_" . $this->gridId . "({{id}})'";
-        $this->view["action"] = "onclick='cdiViewRecord_" . $this->gridId . "({{id}})'";
+        $this->add["action"] = (empty($this->add["action"]))?"onclick='cdiAddRecord_" . $this->gridId . "()'":"";
+        $this->edit["action"] = (empty($this->edit["action"]))?"onclick='cdiEditRecord_" . $this->gridId . "({{id}})'":"";
+        $this->del["action"] = (empty($this->del["action"]))?"onclick='cdiDeleteRecord_" . $this->gridId . "({{id}})'":"";
+        $this->view["action"] = (empty($this->view["action"]))?"onclick='cdiViewRecord_" . $this->gridId . "({{id}})'":"";
         $this->manager["action"] = "";
     }
 
@@ -41,15 +41,13 @@ class CrudColumn extends ExtraColumn {
         $this->displayName = $name;
         $this->setSide($side);
 
-        $this->processDefaultAction();
-
         (isset($crudConfig["add"])) ? $this->add = array_merge($this->add, $crudConfig["add"]) : null;
         (isset($crudConfig["edit"])) ? $this->edit = array_merge($this->edit, $crudConfig["edit"]) : null;
         (isset($crudConfig["del"])) ? $this->del = array_merge($this->del, $crudConfig["del"]) : null;
         (isset($crudConfig["view"])) ? $this->view = array_merge($this->view, $crudConfig["view"]) : null;
         (isset($crudConfig["manager"])) ? $this->view = array_merge($this->manager, $crudConfig["manager"]) : null;
 
-
+        $this->processDefaultAction();
 
         if ($this->add["enable"]) {
             $this->displayName = " <" . $this->add["htmltag"] . " class='" . $this->add["class"] . "' " . $this->add["action"] . " >" . $this->add["value"] . "</" . $this->add["htmltag"] . ">";
