@@ -26,7 +26,7 @@ class CrudColumn extends ExtraColumn {
         $this->edit["action"] = (empty($this->edit["action"]))?"onclick='cdiEditRecord_" . $this->gridId . "({{id}})'":"";
         $this->del["action"] = (empty($this->del["action"]))?"onclick='cdiDeleteRecord_" . $this->gridId . "({{id}})'":"";
         $this->view["action"] = (empty($this->view["action"]))?"onclick='cdiViewRecord_" . $this->gridId . "({{id}})'":"";
-        $this->manager["action"] = "";
+
     }
 
     function __construct($name, $side, $gridCrudConfig, $gridId) {
