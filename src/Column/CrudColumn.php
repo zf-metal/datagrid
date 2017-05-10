@@ -20,7 +20,8 @@ class CrudColumn extends ExtraColumn {
     protected $filterActive = true;
     protected $filter;
     protected $gridId = null;
-
+    protected $displayName = null;
+    
     protected function processDefaultAction() {
         $this->add["action"] = (empty($this->add["action"]))?"onclick='cdiAddRecord_" . $this->gridId . "()'":$this->add["action"];
         $this->edit["action"] = (empty($this->edit["action"]))?"onclick='cdiEditRecord_" . $this->gridId . "({{id}})'":$this->edit["action"];
@@ -152,6 +153,13 @@ class CrudColumn extends ExtraColumn {
         $this->mananger = $mananger;
         return $this;
     }
+    
+    function getDisplayName() {
+        return $this->displayName;
+    }
+
+    
+
 
 
 
