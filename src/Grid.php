@@ -106,9 +106,9 @@ class Grid {
     protected $extraColumns = array();
 
     /**
-     * A crud columns collection
+     * Crud column
      * 
-     * @var array
+     * @var \ZfMetal\Datagrid\Column\CrudColumn
      */
     protected $crudColumn = array();
 
@@ -392,12 +392,12 @@ class Grid {
     }
 
     public function addCrudColumn($name = "", $side = "left", $crudConfig = []) {
-        $column = new CrudColumn($name, $side, $crudConfig, $this->getId());
-        $column->setFilterActive(false);
+        $this->crudColumn = new CrudColumn($name, $side, $crudConfig, $this->getId());
+        $this->crudColumn->setFilterActive(false);
         if ($side == "left") {
-            array_unshift($this->extraColumns, $column);
+            array_unshift($this->extraColumns, $this->crudColumn);
         } else if ($side == "right") {
-            array_push($this->extraColumns, $column);
+            array_push($this->extraColumns, $this->crudColumn);
         }
     }
 

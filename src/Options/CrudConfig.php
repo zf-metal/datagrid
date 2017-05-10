@@ -27,31 +27,31 @@ class CrudConfig extends AbstractOptions {
 
     /**
      * 
-     * @var \ZfMetal\Datagrid\Option\CrudItemConfig
+     * @var \ZfMetal\Datagrid\Options\CrudItemConfig
      */
     protected $add;
 
     /**
      * 
-     * @var \ZfMetal\Datagrid\Option\CrudItemConfig
+     * @var \ZfMetal\Datagrid\Options\CrudItemConfig
      */
     protected $edit;
 
     /**
      * 
-     * @var \ZfMetal\Datagrid\Option\CrudItemConfig
+     * @var \ZfMetal\Datagrid\Options\CrudItemConfig
      */
     protected $del;
 
     /**
      * 
-     * @var \ZfMetal\Datagrid\Option\CrudItemConfig
+     * @var \ZfMetal\Datagrid\Options\CrudItemConfig
      */
     protected $view;
     
       /**
      * 
-     * @var \ZfMetal\Datagrid\Option\CrudItemConfig
+     * @var \ZfMetal\Datagrid\Options\CrudItemConfig
      */
     protected $manager;
 
