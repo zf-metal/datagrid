@@ -11,8 +11,6 @@ use \DoctrineORMModule\Form\Annotation\AnnotationBuilder as DoctrineAnnotationBu
  */
 trait CrudTrait {
 
-
-
     /**
      * Datagrid Entity Name
      * 
@@ -45,40 +43,50 @@ trait CrudTrait {
         $this->form = $form;
     }
 
-    public function buildForm($id = null) {
+    public function buildForm() {
         $builder = new DoctrineAnnotationBuilder($this->getEm());
         $form = $builder->createForm($this->entityName);
         $form->setHydrator(new \DoctrineORMModule\Stdlib\Hydrator\DoctrineEntity($this->getEm()));
         $this->form = $form;
     }
 
+    public function buildCrudForm() {
+        $builder = new DoctrineAnnotationBuilder($this->getEm());
+        $form = $builder->createForm($this->entityName);
+        $form->setHydrator(new \DoctrineORMModule\Stdlib\Hydrator\DoctrineEntity($this->getEm()));
+        $argv = ['form' => $form];
+        $this->getEventManager()->trigger(__FUNCTION__, $this, $argv);
+        $this->crudForm = $form;
+    }
+
     public function getCrudForm($id = null) {
         if (!isset($this->crudForm)) {
-            $this->crudForm = clone $this->getForm();
-      
-        if ($id) {
-            $record = $this->getEm()->getRepository($this->entityName)->find($id);
-        } else {
-            $record = new $this->entityName;
-        }
+            $this->crudForm = $this->buildCrudForm();
 
-        $this->crudForm->setObject($record);
-        $this->crudForm->setAttribute('method', 'post');
-        $this->crudForm->add(array(
-            'name' => 'submit',
-            'type' => 'Zend\Form\Element\Submit',
-            'attributes' => array(
-                'value' => 'submit',
-                'class' => 'btn btn-success'
-            )
-        ));
+            if ($id) {
+                $record = $this->getEm()->getRepository($this->entityName)->find($id);
+            } else {
+                $record = new $this->entityName;
+            }
 
-        $this->crudForm->bind($record);
+
+
+
+            $this->crudForm->setObject($record);
+            $this->crudForm->setAttribute('method', 'post');
+            $this->crudForm->add(array(
+                'name' => 'submit',
+                'type' => 'Zend\Form\Element\Submit',
+                'attributes' => array(
+                    'value' => 'submit',
+                    'class' => 'btn btn-success'
+                )
+            ));
+
+            $this->crudForm->bind($record);
         }
         return $this->crudForm;
     }
-
-
 
     function getRepository() {
         if (isset($this->repository)) {
