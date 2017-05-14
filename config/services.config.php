@@ -9,6 +9,7 @@ $services = [
     'factories' => [
         \ZfMetal\Datagrid\Grid::class => \ZfMetal\Datagrid\Factory\GridFactory::class,
         'zf-metal-datagrid.options' => \ZfMetal\Datagrid\Factory\Options\ModuleOptionsFactory::class,
+        'zf-metal-doctrine-annotation-builder' => \ZfMetal\Datagrid\Factory\DoctrineFormAnnotationBuilderFactory::class,
     ],
     'aliases' => [
         "zf-metal-datagrid" => \ZfMetal\Datagrid\Grid::class,

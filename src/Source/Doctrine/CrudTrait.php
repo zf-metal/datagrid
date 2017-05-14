@@ -32,9 +32,27 @@ trait CrudTrait {
      */
     protected $crudForm;
 
+    /**
+     *
+     * @var \DoctrineORMModule\Form\Annotation\AnnotationBuilder
+     */
+    protected $doctrineAnnotationBuilder;
+
+    function getDoctrineAnnotationBuilder() {
+        if (!$this->doctrineAnnotationBuilder) {
+            $this->doctrineAnnotationBuilder = new DoctrineAnnotationBuilder($this->getEm());
+        }
+        return $this->doctrineAnnotationBuilder;
+    }
+
+    function setDoctrineAnnotationBuilder(\DoctrineORMModule\Form\Annotation\AnnotationBuilder $doctrineAnnotationBuilder) {
+        $this->doctrineAnnotationBuilder = $doctrineAnnotationBuilder;
+        return $this;
+    }
+
     function getForm() {
         if (!isset($this->form)) {
-            $this->buildForm();
+            $this->form = $this->buildForm();
         }
         return $this->form;
     }
@@ -44,19 +62,16 @@ trait CrudTrait {
     }
 
     public function buildForm() {
-        $builder = new DoctrineAnnotationBuilder($this->getEm());
-        $form = $builder->createForm($this->entityName);
+        $form = $this->getDoctrineAnnotationBuilder()->createForm($this->entityName);
         $form->setHydrator(new \DoctrineORMModule\Stdlib\Hydrator\DoctrineEntity($this->getEm()));
-        $this->form = $form;
+        return $form;
     }
 
     public function buildCrudForm() {
-        $builder = new DoctrineAnnotationBuilder($this->getEm());
-        $form = $builder->createForm($this->entityName);
-        $form->setHydrator(new \DoctrineORMModule\Stdlib\Hydrator\DoctrineEntity($this->getEm()));
+        $form = $this->buildForm();
         $argv = ['form' => $form];
         $this->getEventManager()->trigger(__FUNCTION__, $this, $argv);
-        $this->crudForm = $form;
+        return $form;
     }
 
     public function getCrudForm($id = null) {
@@ -68,9 +83,6 @@ trait CrudTrait {
             } else {
                 $record = new $this->entityName;
             }
-
-
-
 
             $this->crudForm->setObject($record);
             $this->crudForm->setAttribute('method', 'post');

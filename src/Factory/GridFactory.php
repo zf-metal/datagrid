@@ -57,6 +57,7 @@ class GridFactory implements FactoryInterface {
 
 
         $source = new \ZfMetal\Datagrid\Source\DoctrineSource($em, $entityName, $qb);
+        $source->setDoctrineAnnotationBuilder($this->container->get('zf-metal-doctrine-annotation-builder'));
         $source->setEm($em);
         $this->grid->setSource($source);
     }
