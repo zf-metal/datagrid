@@ -42,8 +42,10 @@ class GridFactory implements FactoryInterface {
         $doctrineOptions = $this->gridOptions->getSourceConfig()["doctrineOptions"];
         if (isset($doctrineOptions["entityManager"])) {
             $em = $this->container->get($doctrineOptions["entityManager"]);
+            $doctrineAnnotationBuilder = $this->container->build('zf-metal-doctrine-annotation-builder',$doctrineOptions);
         } else {
             $em = $this->container->get('Doctrine\ORM\EntityManager');
+            $doctrineAnnotationBuilder = $this->container->get('zf-metal-doctrine-annotation-builder');
         }
 
         if (isset($doctrineOptions["entityName"])) {
@@ -57,7 +59,7 @@ class GridFactory implements FactoryInterface {
 
 
         $source = new \ZfMetal\Datagrid\Source\DoctrineSource($em, $entityName, $qb);
-        $source->setDoctrineAnnotationBuilder($this->container->get('zf-metal-doctrine-annotation-builder'));
+        $source->setDoctrineAnnotationBuilder($doctrineAnnotationBuilder);
         $source->setEm($em);
         $this->grid->setSource($source);
     }
