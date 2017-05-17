@@ -38,6 +38,13 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
     protected $gridId = "zfmdg";
 
     /**
+     * Title of the GRID
+     * 
+     * @var string
+     */
+    protected $title = "";
+
+    /**
      * Columns config
      *
      * @var Array
@@ -186,5 +193,16 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         $this->gridId = $gridId;
         return $this;
     }
+    
+    function getTitle() {
+        return $this->title;
+    }
+
+    function setTitle($title) {
+        $this->title = $title;
+        return $this;
+    }
+
+
 
 }
