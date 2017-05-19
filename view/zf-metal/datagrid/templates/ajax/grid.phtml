@@ -1,13 +1,12 @@
-<div id="<?php echo $this->grid->getId(); ?>" >
+<div id="<?php echo $this->grid->getId(); ?>" >    
 
+    <?php if ($this->grid->getOptions()->getMultiFilterConfig()->getEnable()): ?>
+        <?php echo $this->partial($this->partialFilter, array("grid" => $this->grid)); ?>
+    <?php endif; ?>
 
-    <a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseFilter_<?php echo $this->grid->getId(); ?>" aria-expanded="true" aria-controls="collapseFilter_<?php echo $this->grid->getId(); ?>" >
-        <i class="btn btn-default btn-sm glyphicon glyphicon-filter"> </i> 
-    </a>
-    <div class="clearfix"></div>
-    <div id="collapseFilter_<?php echo $this->grid->getId(); ?>" class="panel-body panel-collapse collapse"  role="tabpanel" aria-labelledby="headingOne">
-            <?php echo $this->partial($this->partialFilter, array("grid" => $this->grid)); ?>
-    </div>
+    <?php if ($this->grid->getOptions()->getMultiSearchConfig()->getEnable()): ?>     
+        <?php echo $this->partial($this->partialSearch, array("grid" => $this->grid)); ?>
+    <?php endif; ?>
 
 
     <table class="table table-bordered <?php echo $this->grid->getTableClass(); ?>">
@@ -64,11 +63,11 @@
     </table>
 
 
-<?php
-echo $this->paginationControl($this->grid->getPaginator(), 'Sliding', $this->partialPagination, array("routeParams" => $this->routeParams,
-    'route' => $this->route, 'gridId' => $this->grid->getId()));
-?>
+    <?php
+    echo $this->paginationControl($this->grid->getPaginator(), 'Sliding', $this->partialPagination, array("routeParams" => $this->routeParams,
+        'route' => $this->route, 'gridId' => $this->grid->getId()));
+    ?>
 
 
-<?php echo $this->GridCrudAjax($this->grid->getId(), $this->url($this->route, array(), array(), true)); ?>
+    <?php echo $this->GridCrudAjax($this->grid->getId(), $this->url($this->route, array(), array(), true)); ?>
 </div>

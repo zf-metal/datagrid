@@ -1,12 +1,13 @@
 <div id="<?php echo $this->grid->getId(); ?>" >
 
-    <a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseFilter_<?php echo $this->grid->getId(); ?>" aria-expanded="true" aria-controls="collapseFilter_<?php echo $this->grid->getId(); ?>" >
-        <i class="btn btn-default btn-sm glyphicon glyphicon-filter "> </i> 
-    </a>
-      <div class="clearfix"></div>
-    <div id="collapseFilter_<?php echo $this->grid->getId(); ?>" class="panel-body panel-collapse collapse"  role="tabpanel" aria-labelledby="headingOne">
+
+    <?php if ($this->grid->getOptions()->getMultiFilterConfig()->getEnable()): ?>
         <?php echo $this->partial($this->partialFilter, array("grid" => $this->grid)); ?>
-    </div>
+    <?php endif; ?>
+
+    <?php if ($this->grid->getOptions()->getMultiSearchConfig()->getEnable()): ?>     
+        <?php echo $this->partial($this->partialSearch, array("grid" => $this->grid)); ?>
+    <?php endif; ?>
 
     <table class="table table-bordered  <?php echo $this->grid->getTableClass(); ?>">
         <!--HEADER-->
@@ -58,12 +59,12 @@
     </table>
 
 
-<?php
-echo $this->paginationControl($this->grid->getPaginator(), 'Sliding', $this->partialPagination, array("routeParams" => $this->routeParams,
-    'route' => $this->route));
-?>
+    <?php
+    echo $this->paginationControl($this->grid->getPaginator(), 'Sliding', $this->partialPagination, array("routeParams" => $this->routeParams,
+        'route' => $this->route));
+    ?>
 
 
-<?php echo $this->GridCrud($this->grid->getId()); ?>
+    <?php echo $this->GridCrud($this->grid->getId()); ?>
 
 </div>

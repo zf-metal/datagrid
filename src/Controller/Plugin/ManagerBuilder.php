@@ -16,18 +16,20 @@ class ManagerBuilder extends AbstractPlugin {
     }
 
     public function __invoke($customKey, $entity = null) {
-        
+
         //Get GridOptions
         $gridOptions = $this->container->build('zf-metal-datagrid.options', ["customKey" => $customKey]);
-        
+
         //Get EntityManager and EntityName
         $entityName = $gridOptions->getSourceConfig()["doctrineOptions"]["entityName"];
         $emKey = $gridOptions->getSourceConfig()["doctrineOptions"]["entityManager"];
         $em = $this->container->get($emKey);
 
         //Generate Form
-        $form = $this->getController()->formBuilder($em, $entityName);
-        
+        $addSubmit = true;
+        $addId = true;
+        $form = $this->getController()->formBuilder($em, $entityName, $addSubmit, $addId);
+
         //If entitiy is set, then bind form
         if ($entity) {
             $form->bind($entity);
@@ -35,10 +37,9 @@ class ManagerBuilder extends AbstractPlugin {
 
         //Process Form
         $formResult = $this->getController()->formProcess($em, $form, true);
-        
+
         //return manager
         return new \ZfMetal\Datagrid\Manager($em, $customKey, $gridOptions, $entity, $form, $formResult);
-
     }
 
 }

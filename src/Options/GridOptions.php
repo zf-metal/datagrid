@@ -7,30 +7,6 @@ use Zend\Stdlib\AbstractOptions;
 class GridOptions extends AbstractOptions implements GridOptionsInterface {
 
     /**
-     * @var array
-     */
-    protected $templateDefault = "default";
-
-    /**
-     * @var integer
-     */
-    protected $recordsPerPage = 10;
-
-    /**
-     * Activate Columns Filter
-     * 
-     * @var boolean
-     */
-    protected $columnFilter = true;
-
-    /**
-     * Activate Columns Sort
-     * 
-     * @var boolean
-     */
-    protected $columnOrder = true;
-
-    /**
      * ID of the GRID
      * 
      * @var string
@@ -45,32 +21,54 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
     protected $title = "";
 
     /**
+     * @var array
+     */
+    protected $templateDefault = "default";
+
+    /**
+     * @var integer
+     */
+    protected $recordsPerPage = 10;
+
+    /**
      * Columns config
      *
-     * @var Array
+     * @var array
      */
     protected $columnsConfig = array();
 
     /**
      * Crud config
      *
-     * @var Array
+     * @var array
      */
     protected $crudConfig = array();
 
     /**
      * Form config
      *
-     * @var Array
+     * @var array
      */
     protected $formConfig = array();
 
     /**
      * Source config
      *
-     * @var Array
+     * @var array
      */
     protected $sourceConfig = array();
+
+    /**
+     * 
+     * @var array 
+     */
+    protected $multiSearchConfig;
+
+    /**
+     * 
+     * @var array 
+     */
+    protected $multiFilterConfig;
 
     /**
      *
@@ -129,22 +127,6 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         $this->recordsPerPage = $recordsPerPage;
     }
 
-    function getColumnFilter() {
-        return $this->columnFilter;
-    }
-
-    function getColumnOrder() {
-        return $this->columnOrder;
-    }
-
-    function setColumnFilter($columnFilter) {
-        $this->columnFilter = $columnFilter;
-    }
-
-    function setColumnOrder($columnOrder) {
-        $this->columnOrder = $columnOrder;
-    }
-
     function getColumnsConfig() {
         return $this->columnsConfig;
     }
@@ -185,6 +167,22 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         $this->formConfig = new \ZfMetal\Datagrid\Options\FormConfig($formConfig);
     }
 
+    function getMultiSearchConfig() {
+        return $this->multiSearchConfig;
+    }
+
+    function setMultiSearchConfig($multiSearchConfig) {
+        $this->multiSearchConfig = new \ZfMetal\Datagrid\Options\MultiSearchConfig($multiSearchConfig);
+    }
+
+    function getMultiFilterConfig() {
+        return $this->multiFilterConfig;
+    }
+
+    function setMultiFilterConfig($multiFilterConfig) {
+        $this->multiFilterConfig = new \ZfMetal\Datagrid\Options\MultiFilterConfig($multiFilterConfig);
+    }
+
     function getGridId() {
         return $this->gridId;
     }
@@ -193,7 +191,7 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         $this->gridId = $gridId;
         return $this;
     }
-    
+
     function getTitle() {
         return $this->title;
     }
@@ -202,7 +200,5 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         $this->title = $title;
         return $this;
     }
-
-
 
 }

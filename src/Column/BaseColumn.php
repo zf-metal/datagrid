@@ -9,26 +9,7 @@ namespace ZfMetal\Datagrid\Column;
  */
 class BaseColumn extends AbstractColumn {
 
-      const type = "base";
-    
-    /**
-     * Class to apply in td on column
-     * 
-     * @var string
-     */
-    protected $tdClass;
-
-    
-    function getTdClass() {
-        return $this->tdClass;
-    }
-
-    function setTdClass($tdClass) {
-        $this->tdClass = $tdClass;
-    }
-    
-    
-
+    const type = "base";
 
 }
 

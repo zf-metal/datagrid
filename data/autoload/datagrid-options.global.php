@@ -3,8 +3,20 @@
 //move to root "config/autoload/"
 return array(
     'zf-metal-datagrid.options' => array(
-        'recordsPerPage' => 10,
+        'records_per_page' => 10,
         'template_default' => 'default',
+        'multi_filter_config' => [
+            "enable" => true,
+            "properties_disabled" => []
+        ],
+        "multi_search_config" => [
+            "enable" => false,
+            "properties_enabled" => []
+        ],
+        "formConfig" => [
+            'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
+            'style' => \ZfMetal\Commons\Consts::STYLE_MENU_VERTICAL,
+        ],
         "crudConfig" => [
             "enable" => true,
             "side" => "left",
@@ -32,7 +44,7 @@ return array(
                 "enable" => false,
                 "class" => " glyphicon glyphicon-asterisk fa-xs cursor-pointer",
                 "value" => "",
-                 "action" => ""
+                "action" => ""
             ],
         ],
     )
