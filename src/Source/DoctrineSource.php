@@ -36,14 +36,12 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
      */
     protected $qb;
 
-
     /**
      * Description
      * 
      * @var type
      */
     protected $paginator;
-
 
     /**
      * Doctrine Source Construct
@@ -152,10 +150,20 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
     }
 
     public function applySearch() {
-        $doctrineFilter = new \ZfMetal\Datagrid\Source\Doctrine\Filter($this->getQb(), \ZfMetal\Datagrid\Source\Doctrine\Filter::LOGICAL_OPERATOR_OR);
         if (is_a($this->getSearch(), "\ZfMetal\Datagrid\Search")) {
-            foreach ($this->getSearch() as $key => $filter) {
-                $doctrineFilter->applyFilter($filter, $key);
+            $expr = new \Doctrine\ORM\Query\Expr();
+            $ra = $this->getQb()->getRootAliases()[0];
+            $where = "";
+            if ($this->getSearch()->count()) {
+                foreach ($this->getSearch() as $key => $filter) {
+                    $name = $ra . "." . $filter->getColumn()->getName();
+                    $valueParameterName = ':ms_' . $filter->getColumn()->getName();
+                    $value = $filter->getValue();
+                    $this->getQb()->setParameter($valueParameterName, '%' . $value . '%');
+                    $where .= $expr->like($name, $valueParameterName) . " OR ";
+                }
+                $where = trim($where, " OR ");
+                $this->getQb()->andWhere($where);
             }
         }
     }
@@ -173,7 +181,5 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
             }
         }
     }
-
-  
 
 }

@@ -1,15 +1,16 @@
 <div id="<?php echo $this->grid->getId(); ?>" >
 
+    <div class="row">
+        <?php if ($this->grid->getOptions()->getMultiSearchConfig()->getEnable()): ?>     
+            <?php echo $this->partial($this->partialSearch, array("grid" => $this->grid)); ?>
+        <?php endif; ?>     
+        
+        <?php if ($this->grid->getOptions()->getMultiFilterConfig()->getEnable()): ?>
+            <?php echo $this->partial($this->partialFilter, array("grid" => $this->grid)); ?>
+        <?php endif; ?>
 
-    <?php if ($this->grid->getOptions()->getMultiFilterConfig()->getEnable()): ?>
-        <?php echo $this->partial($this->partialFilter, array("grid" => $this->grid)); ?>
-    <?php endif; ?>
 
-    <?php if ($this->grid->getOptions()->getMultiSearchConfig()->getEnable()): ?>     
-        <?php echo $this->partial($this->partialSearch, array("grid" => $this->grid)); ?>
-    <br><br><div class="clearfix"></div>
-    <?php endif; ?>
-
+    </div>
     <table class="table table-bordered  <?php echo $this->grid->getTableClass(); ?>">
         <!--HEADER-->
         <thead>

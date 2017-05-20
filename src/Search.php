@@ -1,16 +1,15 @@
 <?php
 
-
 namespace ZfMetal\Datagrid;
 
 use Iterator;
-
+use Countable;
 /**
  * Description of 
  *
  * @author Cristian Incarnato <cristian.cdi@gmail.com>
  */
-class Search implements Iterator {
+class Search implements Iterator, Countable {
 
     /**
      * Description
@@ -18,13 +17,11 @@ class Search implements Iterator {
      * @var array
      */
     protected $search = array();
-    
     private $position = 0;
 
     public function addSearch(\ZfMetal\Datagrid\Filter $filter) {
-        $this->search[]=$filter;
+        $this->search[] = $filter;
     }
- 
 
     public function __construct() {
         $this->position = 0;
@@ -49,5 +46,11 @@ class Search implements Iterator {
     function valid() {
         return isset($this->search[$this->position]);
     }
+
+    function count() {
+        return count($this->search);
+    }
+    
+    
 
 }

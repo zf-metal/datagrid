@@ -9,12 +9,19 @@ $searchForm->setAttribute('action', 'javascript:' . $grid->get_f_search() . '()'
 /* @var $element \Zend\Form\Element\Text */
 $element = $searchForm->get($grid->getMultiSearhKey());
 $element->setAttribute('class', 'form-control');
-
+$element->setAttribute('placeholder', 'Search');
 ?>
-<div class="pull-right">
+<div class=" col-lg-3 col-md-4 col-sm-6 col-xs-12 pull-right">
     <?php echo $this->form()->openTag($searchForm); ?>
 
-    <?php echo $this->formInput($element); ?>
+    <div class="form-group pull-left">
+        <div class="input-group">
+            <?php echo $this->formInput($element); ?>
+            <span class="input-group-addon" >
+                <i class="glyphicon glyphicon-search search-icon"></i>
+            </span> 
+        </div>
+    </div>
 
     <?php echo $this->form()->closeTag($searchForm); ?>
 </div>

@@ -198,6 +198,52 @@ class Grid {
         $this->setTemplate($options->getTemplateDefault());
     }
 
+    public function prepare() {
+
+        if (!isset($this->source)) {
+            throw new \ZfMetal\Datagrid\Exception\SourceException();
+        }
+
+        //CRUD - to review 
+        $this->processCrudActions();
+
+        //CRUD CONFIGURE
+        $this->crudConfigure();
+
+        //IF THE INSTANCE IS NOT GRID, RETURN NOW
+        if ($this->getInstance() !== self::INSTANCE_GRID) {
+            $this->ready = true;
+            //  return $this;
+        }
+
+        //Extract and generate source columns
+        $this->buildColumns();
+
+        //Filters
+        $this->generateFormFilters();
+        $this->buildFilters();
+        $this->getSource()->setFilters($this->getFilters());
+        $this->getSource()->setSearch($this->getSearch());
+
+        //Order (SORT)
+        $this->prepareSort();
+
+        //Paginator
+        $this->preparePaginator();
+
+        //Data
+        $this->data = $this->paginator->getCurrentItems();
+        $this->processData();
+
+        //Extra Columns (todo)
+        $this->mergeExtraColumn();
+
+        //Order Columns..Need review to enable
+        //$this->processOrderColumn();
+        $this->ready = true;
+        return $this;
+    }
+
     function getMvcevent() {
         return $this->mvcevent;
     }
@@ -312,52 +358,6 @@ class Grid {
     }
 
     #<-COLUMNS
-
-    public function prepare() {
-
-        if (!isset($this->source)) {
-            throw new \ZfMetal\Datagrid\Exception\SourceException();
-        }
-
-        //CRUD - to review 
-        $this->processCrudActions();
-
-        //CRUD CONFIGURE
-        $this->crudConfigure();
-
-        //IF THE INSTANCE IS NOT GRID, RETURN NOW
-        if ($this->getInstance() !== self::INSTANCE_GRID) {
-            $this->ready = true;
-            //  return $this;
-        }
-
-        //Extract and generate source columns
-        $this->buildColumns();
-
-        //Filters
-        $this->generateFormFilters();
-        $this->buildFilters();
-        $this->getSource()->setFilters($this->getFilters());
-        $this->getSource()->setSearch($this->getSearch());
-
-        //Order (SORT)
-        $this->prepareSort();
-
-        //Paginator
-        $this->preparePaginator();
-
-        //Data
-        $this->data = $this->paginator->getCurrentItems();
-        $this->processData();
-
-        //Extra Columns (todo)
-        $this->mergeExtraColumn();
-
-        //Order Columns..Need review to enable
-        //$this->processOrderColumn();
-        $this->ready = true;
-        return $this;
-    }
 
     protected function crudConfigure() {
         if ($this->getOptions()->getCrudConfig()->getEnable() === true) {
@@ -539,7 +539,8 @@ class Grid {
 
     function getFormSearch() {
         if (!$this->formSearch) {
-            $this->formSearch = new \ZfMetal\Datagrid\Form\MultiSearch($this->getId(),$this->getMultiSearhKey());
+            $this->formSearch = new \ZfMetal\Datagrid\Form\MultiSearch($this->getId(), $this->getMultiSearhKey());
+            $this->formSearch->setData($this->getQuery());
         }
         return $this->formSearch;
     }
@@ -718,8 +719,8 @@ class Grid {
     function setCrudColumn($crudColumn) {
         $this->crudColumn = $crudColumn;
     }
-    
-       function getRecordDetail() {
+
+    function getRecordDetail() {
         return $this->crud->getRecord();
     }
 
@@ -742,8 +743,8 @@ class Grid {
     public function get_f_edit() {
         return \ZfMetal\Datagrid\C::F_EDIT . $this->getId();
     }
-    
-      public function get_f_view() {
+
+    public function get_f_view() {
         return \ZfMetal\Datagrid\C::F_VIEW . $this->getId();
     }
 

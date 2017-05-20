@@ -1,33 +1,37 @@
-<a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseFilter_<?php echo $this->grid->getId(); ?>" aria-expanded="true" aria-controls="collapseFilter_<?php echo $this->grid->getId(); ?>" >
-    <i class="btn btn-default btn-sm glyphicon glyphicon-filter "> </i> 
-</a>
 
+<div class=" col-lg-2 col-xs-12 pull-right">
+    <a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseFilter_<?php echo $this->grid->getId(); ?>" aria-expanded="true" aria-controls="collapseFilter_<?php echo $this->grid->getId(); ?>" >
+        <i class="btn btn-default glyphicon glyphicon-filter "> </i> 
+    </a>
+</div>     
 <div class="clearfix"></div>
-<div id="collapseFilter_<?php echo $this->grid->getId(); ?>" class="panel-body panel-collapse collapse"  role="tabpanel" aria-labelledby="headingOne">
+<div class=" col-lg-12 col-xs-12">
+    <div id="collapseFilter_<?php echo $this->grid->getId(); ?>" class="panel-body panel-collapse collapse"  role="tabpanel" aria-labelledby="headingOne">
 
-    <?php
-    $form = $this->grid->getFormFilters();
-    ?>
-    <?php
-    echo $this->renderForm($form, "grid-filter", \ZfMetal\Commons\Consts::COLUMNS_THREE);
-    ?>
+        <?php
+        $form = $this->grid->getFormFilters();
+        ?>
+        <?php
+        echo $this->renderForm($form, "grid-filter", \ZfMetal\Commons\Consts::COLUMNS_THREE);
+        ?>
+    </div>
+    <script type="text/javascript">
+        function changeOp(element, value) {
+            $('[name="' + element + '"]').val(value);
+        }
+
+        function resetFormFilter_<?php echo $form->getName(); ?>(sub = false) {
+            $(':input', '#<?php echo $form->getName(); ?>')
+                    .not(':button, :submit, :reset, :hidden')
+                    .val('')
+                    .removeAttr('checked')
+                    .removeAttr('selected');
+
+            if (sub === true) {
+                $('#<?php echo $form->getName(); ?>').submit();
+        }
+
+        }
+
+    </script>
 </div>
-<script type="text/javascript">
-    function changeOp(element, value) {
-        $('[name="' + element + '"]').val(value);
-    }
-
-    function resetFormFilter_<?php echo $form->getName(); ?>(sub = false) {
-        $(':input', '#<?php echo $form->getName(); ?>')
-                .not(':button, :submit, :reset, :hidden')
-                .val('')
-                .removeAttr('checked')
-                .removeAttr('selected');
-
-        if (sub === true) {
-            $('#<?php echo $form->getName(); ?>').submit();
-    }
-
-    }
-
-</script>

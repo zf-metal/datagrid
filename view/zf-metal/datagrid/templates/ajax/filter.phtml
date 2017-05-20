@@ -1,33 +1,38 @@
-<a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseFilter_<?php echo $this->grid->getId(); ?>" aria-expanded="true" aria-controls="collapseFilter_<?php echo $this->grid->getId(); ?>" >
-    <i class="btn btn-default btn-sm glyphicon glyphicon-filter"> </i> 
-</a>
-<div class="clearfix"></div>
-<div id="collapseFilter_<?php echo $this->grid->getId(); ?>" class="panel-body panel-collapse collapse"  role="tabpanel" aria-labelledby="headingOne">
 
-    <?php
-    $form = $this->grid->getFormFilters();
-    $form->setAttribute("action", "javascript:".\ZfMetal\Datagrid\C::F_FILTER . $this->grid->getId() . "('" . $form->getName() . "')");
-    ?>
-    <?php
-    echo $this->renderForm($form, "grid-filter", \ZfMetal\Commons\Consts::COLUMNS_THREE);
-    ?>
+<div class=" col-lg-2 col-xs-12 pull-right">
+    <a class="pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseFilter_<?php echo $this->grid->getId(); ?>" aria-expanded="true" aria-controls="collapseFilter_<?php echo $this->grid->getId(); ?>" >
+        <i class="btn btn-default glyphicon glyphicon-filter"> </i> 
+    </a>
 </div>
-<script type="text/javascript">
-    function changeOp(element, value) {
-        $('[name="' + element + '"]').val(value);
-    }
+<div class="clearfix"></div>
+<div class=" col-lg-12 col-xs-12">
+    <div id="collapseFilter_<?php echo $this->grid->getId(); ?>" class="panel-body panel-collapse collapse"  role="tabpanel" aria-labelledby="headingOne">
 
-    function resetFormFilter_<?php echo $form->getName(); ?>(sub = false) {
-        $(':input', '#<?php echo $form->getName(); ?>')
-                .not(':button, :submit, :reset, :hidden')
-                .val('')
-                .removeAttr('checked')
-                .removeAttr('selected');
+        <?php
+        $form = $this->grid->getFormFilters();
+        $form->setAttribute("action", "javascript:" . \ZfMetal\Datagrid\C::F_FILTER . $this->grid->getId() . "('" . $form->getName() . "')");
+        ?>
+        <?php
+        echo $this->renderForm($form, "grid-filter", \ZfMetal\Commons\Consts::COLUMNS_THREE);
+        ?>
+    </div>
+    <script type="text/javascript">
+        function changeOp(element, value) {
+            $('[name="' + element + '"]').val(value);
+        }
 
-        if (sub === true) {
-            $('#<?php echo $form->getName(); ?>').submit();
-    }
+        function resetFormFilter_<?php echo $form->getName(); ?>(sub = false) {
+            $(':input', '#<?php echo $form->getName(); ?>')
+                    .not(':button, :submit, :reset, :hidden')
+                    .val('')
+                    .removeAttr('checked')
+                    .removeAttr('selected');
 
-    }
+            if (sub === true) {
+                $('#<?php echo $form->getName(); ?>').submit();
+        }
 
-</script>
+        }
+
+    </script>
+</div>
