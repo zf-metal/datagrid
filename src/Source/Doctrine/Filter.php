@@ -16,7 +16,18 @@ class Filter {
     const LOGICAL_OPERATOR_AND = "and";
     const LOGICAL_OPERATOR_OR = "or";
 
+     /**
+     * QueryBuilder
+     * 
+     * @var \Doctrine\ORM\QueryBuilder
+     */
     protected $qb;
+    
+     /**
+     * logicalOperator
+     * 
+     * @var string
+     */
     protected $logicalOperator = self::LOGICAL_OPERATOR_AND;
 
     /**

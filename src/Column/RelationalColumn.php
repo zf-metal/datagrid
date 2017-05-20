@@ -12,11 +12,10 @@ class RelationalColumn extends AbstractColumn {
     const type = "relational";
     
     
-    protected $orderProperty = 'id';
-    
+    protected $orderProperty = 'id';  
     protected $relationalId;
     protected $relationalEntity;
-    
+    protected $multiSearchProperty;
     
     function getRelationalId() {
         return $this->relationalId;
@@ -41,6 +40,15 @@ class RelationalColumn extends AbstractColumn {
 
     function setOrderProperty($orderProperty) {
         $this->orderProperty = $orderProperty;
+    }
+
+    function getMultiSearchProperty() {
+        return $this->multiSearchProperty;
+    }
+
+    function setMultiSearchProperty($multiSearchProperty) {
+        $this->multiSearchProperty = $multiSearchProperty;
+        return $this;
     }
 
 

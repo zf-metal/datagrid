@@ -121,6 +121,11 @@ class ColumnFactory {
             $this->column->setOrderProperty($this->config["orderProperty"]);
         }
         
+         if (isset($this->config["multiSearchProperty"])) {
+            $this->column->setMultiSearchProperty($this->config["multiSearchProperty"]);
+        }
+        
+        
         return $this->column;
     }
 

@@ -150,22 +150,9 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
     }
 
     public function applySearch() {
-        if (is_a($this->getSearch(), "\ZfMetal\Datagrid\Search")) {
-            $expr = new \Doctrine\ORM\Query\Expr();
-            $ra = $this->getQb()->getRootAliases()[0];
-            $where = "";
-            if ($this->getSearch()->count()) {
-                foreach ($this->getSearch() as $key => $filter) {
-                    $name = $ra . "." . $filter->getColumn()->getName();
-                    $valueParameterName = ':ms_' . $filter->getColumn()->getName();
-                    $value = $filter->getValue();
-                    $this->getQb()->setParameter($valueParameterName, '%' . $value . '%');
-                    $where .= $expr->like($name, $valueParameterName) . " OR ";
-                }
-                $where = trim($where, " OR ");
-                $this->getQb()->andWhere($where);
-            }
-        }
+          $doctrineSearch = new \ZfMetal\Datagrid\Source\Doctrine\Search($this->getQb());
+          $doctrineSearch->applySearch($this->getSearch());
+          
     }
 
     public function applySort() {

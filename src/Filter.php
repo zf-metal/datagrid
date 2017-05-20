@@ -52,6 +52,14 @@ class Filter {
      * @var string|array
      */
     protected $value;
+    
+    
+     /**
+     * define if a relational column
+     * 
+     * @var boolean
+     */
+    protected $relational = false;
 
     function __construct(\ZfMetal\Datagrid\Column\ColumnInterface $column, $inputFilterValue) {
         $this->column = $column;
@@ -68,11 +76,12 @@ class Filter {
      * @return type
      */
     private function prepare() {
-        
+
         if ($this->getColumn() instanceof \ZfMetal\Datagrid\Column\RelationalColumn) {
-             $operator = self::EQUAL;
+            $operator = self::EQUAL;
             $value = $this->inputFilterValue;
-        }else if (substr($this->inputFilterValue, 0, 2) == '=(') {
+            $this->setRelational(true);
+        } else if (substr($this->inputFilterValue, 0, 2) == '=(') {
             $operator = self::IN;
             $value = substr($this->inputFilterValue, 2);
             if (substr($value, -1) == ')') {
@@ -183,5 +192,18 @@ class Filter {
     function getValue() {
         return $this->value;
     }
+
+    function getRelational() {
+        return $this->relational;
+    }
+
+    function setRelational($relational) {
+        $this->relational = $relational;
+        return $this;
+    }
+
+
+    
+
 
 }
