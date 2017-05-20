@@ -28,6 +28,7 @@ return array(
         "crudConfig" => [
             "enable" => false,
             'side' => "left",
+            'displayName' => null,
             "add" => [
                 "enable" => true,
                 "class" => " glyphicon glyphicon-plus cursor-pointer",

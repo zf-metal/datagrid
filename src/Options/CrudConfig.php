@@ -6,9 +6,6 @@ use Zend\Stdlib\AbstractOptions;
 
 class CrudConfig extends AbstractOptions {
     
-    
-    
-    
 
     /**
      * Enable/Disable Crud
@@ -24,6 +21,14 @@ class CrudConfig extends AbstractOptions {
      * @var boolean
      */
     protected $side = "left";
+    
+    
+    /**
+     * displayName
+     * 
+     * @var string
+     */
+    protected $displayName = null;
 
     /**
      * 
@@ -141,6 +146,15 @@ class CrudConfig extends AbstractOptions {
             throw new \Exception("Crud Columns Side must be left or right.");
         }
         $this->side = $side;
+        return $this;
+    }
+
+    function getDisplayName() {
+        return $this->displayName;
+    }
+
+    function setDisplayName($displayName) {
+        $this->displayName = $displayName;
         return $this;
     }
 

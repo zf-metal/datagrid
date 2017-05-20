@@ -17,20 +17,26 @@ class CrudColumn extends ExtraColumn {
     protected $del = ["enable" => true, "htmltag" => "a", "class" => "btn btn-danger glyphicon glyphicon-trash", "value" => ""];
     protected $view = ["enable" => true, "htmltag" => "a", "class" => "btn btn-success glyphicon glyphicon-list-alt", "value" => ""];
     protected $manager = ["enable" => false, "htmltag" => "a", "class" => "btn btn-success glyphicon glyphicon-asterisk", "value" => "", "action" => ""];
+    protected $addAction;
+    protected $editAction;
+    protected $delAction;
+    protected $viewAction;
+    protected $managerAction;
     protected $filterActive = true;
     protected $filter;
     protected $gridId = null;
     protected $displayName = null;
-    
-    protected function processDefaultAction() {
-        $this->add["action"] = (empty($this->add["action"]))?"onclick='".\ZfMetal\Datagrid\C::F_ADD . $this->gridId . "()'":$this->add["action"];
-        $this->edit["action"] = (empty($this->edit["action"]))?"onclick='".\ZfMetal\Datagrid\C::F_EDIT . $this->gridId . "({{id}})'":$this->edit["action"];
-        $this->del["action"] = (empty($this->del["action"]))?"onclick='".\ZfMetal\Datagrid\C::F_DELETE . $this->gridId . "({{id}})'":$this->del["action"];
-        $this->view["action"] = (empty($this->view["action"]))?"onclick='".\ZfMetal\Datagrid\C::F_VIEW . $this->gridId . "({{id}})'":$this->view["action"];
 
+    protected function processDefaultAction() {
+        $this->add["action"] = (empty($this->add["action"])) ? "onclick='" . \ZfMetal\Datagrid\C::F_ADD . $this->gridId . "()'" : $this->add["action"];
+        $this->edit["action"] = (empty($this->edit["action"])) ? "onclick='" . \ZfMetal\Datagrid\C::F_EDIT . $this->gridId . "({{id}})'" : $this->edit["action"];
+        $this->del["action"] = (empty($this->del["action"])) ? "onclick='" . \ZfMetal\Datagrid\C::F_DELETE . $this->gridId . "({{id}})'" : $this->del["action"];
+        $this->view["action"] = (empty($this->view["action"])) ? "onclick='" . \ZfMetal\Datagrid\C::F_VIEW . $this->gridId . "({{id}})'" : $this->view["action"];
     }
 
     function __construct($name, $side, $gridCrudConfig, $gridId) {
+        $this->setDisplayName($gridCrudConfig->getDisplayName());
+        
         $crudConfig["add"] = $gridCrudConfig->getAdd()->toArray();
         $crudConfig["edit"] = $gridCrudConfig->getEdit()->toArray();
         $crudConfig["del"] = $gridCrudConfig->getDel()->toArray();
@@ -39,7 +45,6 @@ class CrudColumn extends ExtraColumn {
 
         $this->gridId = $gridId;
         $this->name = $name;
-        $this->displayName = $name;
         $this->setSide($side);
 
         (isset($crudConfig["add"])) ? $this->add = array_merge($this->add, $crudConfig["add"]) : null;
@@ -51,30 +56,55 @@ class CrudColumn extends ExtraColumn {
         $this->processDefaultAction();
 
         if ($this->add["enable"]) {
-            $this->displayName = " <" . $this->add["htmltag"] . " class='" . $this->add["class"] . "' " . $this->add["action"] . " >" . $this->add["value"] . "</" . $this->add["htmltag"] . ">";
+            $this->buildAddAction();
         }
-        
+
         $this->originalValue = "";
-        
+
         if ($this->view["enable"]) {
-            $this->originalValue .= " <" . $this->view["htmltag"] . " class='" . $this->view["class"] . "' " . $this->view["action"] . " >" . $this->view["value"] . "</" . $this->view["htmltag"] . ">";
+            $this->originalValue .= $this->buildViewAction();
         }
 
         if ($this->edit["enable"]) {
-            $this->originalValue .= " <" . $this->edit["htmltag"] . " class='" . $this->edit["class"] . "' " . $this->edit["action"] . " >" . $this->edit["value"] . "</" . $this->edit["htmltag"] . ">";
+            $this->originalValue .= $this->buildEditAction();
         }
-        
+
         if ($this->manager["enable"]) {
-            $this->originalValue .= " <" . $this->manager["htmltag"] . " class='" . $this->manager["class"] . "' " . $this->manager["action"] . " >" . $this->manager["value"] . "</" . $this->manager["htmltag"] . ">";
+            $this->originalValue .= $this->buildManagerAction();
         }
-        
+
         if ($this->del["enable"]) {
-            $this->originalValue .= " <" . $this->del["htmltag"] . " class='" . $this->del["class"] . "' " . $this->del["action"] . " >" . $this->del["value"] . "</" . $this->del["htmltag"] . ">";
+            $this->originalValue .= $this->buildDelAction();
         }
     }
 
+    protected function buildAddAction() {
+        $this->addAction = " <" . $this->add["htmltag"] . " class='" . $this->add["class"] . "' " . $this->add["action"] . " >" . $this->add["value"] . "</" . $this->add["htmltag"] . ">";
+        return $this->addAction;
+    }
+
+    protected function buildEditAction() {
+        $this->editAction = " <" . $this->edit["htmltag"] . " class='" . $this->edit["class"] . "' " . $this->edit["action"] . " >" . $this->edit["value"] . "</" . $this->edit["htmltag"] . ">";
+        return $this->editAction;
+    }
+
+    protected function buildDelAction() {
+        $this->delAction = " <" . $this->del["htmltag"] . " class='" . $this->del["class"] . "' " . $this->del["action"] . " >" . $this->del["value"] . "</" . $this->del["htmltag"] . ">";
+        return $this->delAction;
+    }
+
+    protected function buildViewAction() {
+        $this->viewAction = " <" . $this->view["htmltag"] . " class='" . $this->view["class"] . "' " . $this->view["action"] . " >" . $this->view["value"] . "</" . $this->view["htmltag"] . ">";
+        return $this->viewAction;
+    }
+
+    protected function buildManagerAction() {
+        $this->managerAction = " <" . $this->manager["htmltag"] . " class='" . $this->manager["class"] . "' " . $this->manager["action"] . " >" . $this->manager["value"] . "</" . $this->manager["htmltag"] . ">";
+        return $this->managerAction;
+    }
+
     public function __toString() {
-        return $this->displayName;
+        return $this->getDisplayName();
     }
 
     public function getSide() {
@@ -144,7 +174,7 @@ class CrudColumn extends ExtraColumn {
     function setAdd($add) {
         $this->add = $add;
     }
-    
+
     function getMananger() {
         return $this->mananger;
     }
@@ -153,15 +183,63 @@ class CrudColumn extends ExtraColumn {
         $this->mananger = $mananger;
         return $this;
     }
-    
+
     function getDisplayName() {
+        if(!$this->displayName){
+            return $this->getAddAction();
+        }
         return $this->displayName;
     }
 
-    
+    function setDisplayName($displayName) {
+        $this->displayName = $displayName;
+        return $this;
+    }
 
+    function getAddAction() {
+        return $this->addAction;
+    }
 
+    function getEditAction() {
+        return $this->editAction;
+    }
 
+    function getDelAction() {
+        return $this->delAction;
+    }
+
+    function getViewAction() {
+        return $this->viewAction;
+    }
+
+    function getManagerAction() {
+        return $this->managerAction;
+    }
+
+    function setAddAction($addAction) {
+        $this->addAction = $addAction;
+        return $this;
+    }
+
+    function setEditAction($editAction) {
+        $this->editAction = $editAction;
+        return $this;
+    }
+
+    function setDelAction($delAction) {
+        $this->delAction = $delAction;
+        return $this;
+    }
+
+    function setViewAction($viewAction) {
+        $this->viewAction = $viewAction;
+        return $this;
+    }
+
+    function setManagerAction($managerAction) {
+        $this->managerAction = $managerAction;
+        return $this;
+    }
 
 }
 
