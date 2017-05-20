@@ -9,6 +9,8 @@ namespace ZfMetal\Datagrid\Factory;
  */
 class FormFilterFactory {
 
+    const  FORM_FILTER_NAME = 'ZfMetal_Grid_Form_Filter_';
+    
     protected $gridId;
 
     function __construct($gridId) {
@@ -16,7 +18,7 @@ class FormFilterFactory {
     }
 
     public function create($form, $page, $data) {
-        $formName = 'cdiGridFormFilters_' . $this->gridId;
+        $formName = self::FORM_FILTER_NAME . $this->gridId;
         $form->setName($formName);
         $form->setAttribute('method', 'get');
 
@@ -58,6 +60,16 @@ class FormFilterFactory {
             }
 
             if (preg_match("/number/i", $element->getAttribute("type"))) {
+                $name = $element->getName();
+                $newElement = new \Zend\Form\Element\Text($name);
+                $newElement->setLabel($name);
+                $newElement->setAttribute('class', 'form-control');
+                $form->remove($element->getName());
+                $form->add($newElement);
+            }
+            
+            
+            if (preg_match("/email/i", $element->getAttribute("type"))) {
                 $name = $element->getName();
                 $newElement = new \Zend\Form\Element\Text($name);
                 $newElement->setLabel($name);

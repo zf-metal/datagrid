@@ -36,11 +36,6 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
      */
     protected $qb;
 
-    /**
-     * 
-     * @var \ZfMetal\Datagrid\Filters
-     */
-    protected $filters;
 
     /**
      * Description
@@ -48,14 +43,7 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
      * @var type
      */
     protected $paginator;
-    //TOREVIEW
 
-    /**
-     * Order
-     * 
-     * @var \ZfMetal\Datagrid\Sort
-     */
-    protected $sort;
 
     /**
      * Doctrine Source Construct
@@ -137,14 +125,13 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
         //1-ApplyFilters
         $this->applyFilters();
 
-        //2-ApplyOrder
+        //2-ApplySearch
+        $this->applySearch();
+
+        //3-ApplyOrder
         $this->applySort();
-        
-        
-        //echo $this->getQb()->getDQL();
 
-        //3-Paginator
-
+        //4-Paginator
         $this->paginator = new DoctrinePaginatorAdapter(new DoctrinePaginator($this->getQb()));
 
         return $this->paginator;
@@ -164,37 +151,29 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
         }
     }
 
+    public function applySearch() {
+        $doctrineFilter = new \ZfMetal\Datagrid\Source\Doctrine\Filter($this->getQb(), \ZfMetal\Datagrid\Source\Doctrine\Filter::LOGICAL_OPERATOR_OR);
+        if (is_a($this->getSearch(), "\ZfMetal\Datagrid\Search")) {
+            foreach ($this->getSearch() as $key => $filter) {
+                $doctrineFilter->applyFilter($filter, $key);
+            }
+        }
+    }
+
     public function applySort() {
         if (isset($this->sort) && $this->sort instanceof \ZfMetal\Datagrid\Sort) {
             $ra = $this->getQb()->getRootAliases();
             $ro = $ra[0] . ".";
-            
-            if($this->sort->getColumn()->getType() == 'relational'){
-                $this->getQb()->leftJoin($ro.$this->sort->getColumn()->getName(), 't');
-                $this->getQb()->orderBy('t.'.$this->sort->getColumn()->getOrderProperty() , $this->sort->getDirection());
-            }else{
+
+            if ($this->sort->getColumn()->getType() == 'relational') {
+                $this->getQb()->leftJoin($ro . $this->sort->getColumn()->getName(), 't');
+                $this->getQb()->orderBy('t.' . $this->sort->getColumn()->getOrderProperty(), $this->sort->getDirection());
+            } else {
                 $this->getQb()->orderBy($ro . $this->sort->getBy(), $this->sort->getDirection());
             }
-            
-            
-            
         }
     }
 
-    function getFilters() {
-        return $this->filters;
-    }
-
-    public function setFilters(\ZfMetal\Datagrid\Filters $filters) {
-        $this->filters = $filters;
-    }
-
-    function getSort() {
-        return $this->sort;
-    }
-
-    function setSort(\ZfMetal\Datagrid\Sort $sort) {
-        $this->sort = $sort;
-    }
+  
 
 }

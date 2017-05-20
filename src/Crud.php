@@ -17,8 +17,8 @@ class Crud {
     const msjEditOk = "Record edit OK";
     const msjEditFail = "Record edit FAIL";
     //Inputs
-    const inputId = "crudId";
-    const inputAction = "crudAction";
+    const inputId = "zfmetal_crud_id";
+    const inputAction = "zfmetal_crud_action";
 
     protected $crudForm;
     protected $source;

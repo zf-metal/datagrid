@@ -12,10 +12,10 @@ class CrudColumn extends ExtraColumn {
     const type = "crud";
 
     protected $side;
-    protected $add = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary glyphicon glyphicon-plus", "value" => "", "action" => "onclick='cdiAddRecord()'"];
-    protected $edit = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary glyphicon glyphicon-edit", "value" => "", "action" => "onclick='cdiEditRecord({{id}})'"];
-    protected $del = ["enable" => true, "htmltag" => "a", "class" => "btn btn-danger glyphicon glyphicon-trash", "value" => "", "action" => "onclick='cdiDeleteRecord({{id}})'"];
-    protected $view = ["enable" => true, "htmltag" => "a", "class" => "btn btn-success glyphicon glyphicon-list-alt", "value" => "", "action" => "onclick='cdiViewRecord({{id}})'"];
+    protected $add = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary glyphicon glyphicon-plus", "value" => ""];
+    protected $edit = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary glyphicon glyphicon-edit", "value" => ""];
+    protected $del = ["enable" => true, "htmltag" => "a", "class" => "btn btn-danger glyphicon glyphicon-trash", "value" => ""];
+    protected $view = ["enable" => true, "htmltag" => "a", "class" => "btn btn-success glyphicon glyphicon-list-alt", "value" => ""];
     protected $manager = ["enable" => false, "htmltag" => "a", "class" => "btn btn-success glyphicon glyphicon-asterisk", "value" => "", "action" => ""];
     protected $filterActive = true;
     protected $filter;
@@ -23,10 +23,10 @@ class CrudColumn extends ExtraColumn {
     protected $displayName = null;
     
     protected function processDefaultAction() {
-        $this->add["action"] = (empty($this->add["action"]))?"onclick='cdiAddRecord_" . $this->gridId . "()'":$this->add["action"];
-        $this->edit["action"] = (empty($this->edit["action"]))?"onclick='cdiEditRecord_" . $this->gridId . "({{id}})'":$this->edit["action"];
-        $this->del["action"] = (empty($this->del["action"]))?"onclick='cdiDeleteRecord_" . $this->gridId . "({{id}})'":$this->del["action"];
-        $this->view["action"] = (empty($this->view["action"]))?"onclick='cdiViewRecord_" . $this->gridId . "({{id}})'":$this->view["action"];
+        $this->add["action"] = (empty($this->add["action"]))?"onclick='".\ZfMetal\Datagrid\C::F_ADD . $this->gridId . "()'":$this->add["action"];
+        $this->edit["action"] = (empty($this->edit["action"]))?"onclick='".\ZfMetal\Datagrid\C::F_EDIT . $this->gridId . "({{id}})'":$this->edit["action"];
+        $this->del["action"] = (empty($this->del["action"]))?"onclick='".\ZfMetal\Datagrid\C::F_DELETE . $this->gridId . "({{id}})'":$this->del["action"];
+        $this->view["action"] = (empty($this->view["action"]))?"onclick='".\ZfMetal\Datagrid\C::F_VIEW . $this->gridId . "({{id}})'":$this->view["action"];
 
     }
 

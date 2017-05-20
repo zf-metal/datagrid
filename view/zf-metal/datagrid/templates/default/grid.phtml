@@ -7,6 +7,7 @@
 
     <?php if ($this->grid->getOptions()->getMultiSearchConfig()->getEnable()): ?>     
         <?php echo $this->partial($this->partialSearch, array("grid" => $this->grid)); ?>
+    <br><br><div class="clearfix"></div>
     <?php endif; ?>
 
     <table class="table table-bordered  <?php echo $this->grid->getTableClass(); ?>">

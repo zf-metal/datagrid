@@ -6,7 +6,7 @@
 
     <?php
     $form = $this->grid->getFormFilters();
-    $form->setAttribute("action", "javascript:cdiFilter_" . $this->grid->getId() . "('" . $form->getName() . "')");
+    $form->setAttribute("action", "javascript:".\ZfMetal\Datagrid\C::F_FILTER . $this->grid->getId() . "('" . $form->getName() . "')");
     ?>
     <?php
     echo $this->renderForm($form, "grid-filter", \ZfMetal\Commons\Consts::COLUMNS_THREE);

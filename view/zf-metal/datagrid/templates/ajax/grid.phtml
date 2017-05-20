@@ -6,6 +6,7 @@
 
     <?php if ($this->grid->getOptions()->getMultiSearchConfig()->getEnable()): ?>     
         <?php echo $this->partial($this->partialSearch, array("grid" => $this->grid)); ?>
+        <br><br><div class="clearfix"></div>
     <?php endif; ?>
 
 
@@ -23,12 +24,12 @@
                                 <!--SORT-->
                                 <?php if ($this->grid->getSort() && $this->grid->getSort()->getBy() == $column->getName()): ?>
                                     <?php if ($this->grid->getSort()->getDirection() == "DESC"): ?>
-                                        <i class="glyphicon glyphicon-sort-by-attributes-alt" onclick="cdiOrder_<?php echo $this->grid->getId(); ?>('<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "ASC") + $this->routeParams), true); ?>')"></i>
+                                        <i class="glyphicon glyphicon-sort-by-attributes-alt" onclick="<?php echo \ZfMetal\Datagrid\C::F_SORT .$this->grid->getId(); ?>('<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "ASC") + $this->routeParams), true); ?>')"></i>
                                     <?php elseif ($this->grid->getSort()->getDirection() == "ASC"): ?>
-                                        <i class="glyphicon glyphicon-sort-by-attributes" onclick="cdiOrder_<?php echo $this->grid->getId(); ?>('<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "DESC") + $this->routeParams), true); ?>')"></i>
+                                        <i class="glyphicon glyphicon-sort-by-attributes" onclick="<?php echo \ZfMetal\Datagrid\C::F_SORT .$this->grid->getId(); ?>('<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "DESC") + $this->routeParams), true); ?>')"></i>
                                     <?php endif; ?>
                                 <?php else: ?>
-                                    <i class="glyphicon glyphicon-sort" onclick="cdiOrder_<?php echo $this->grid->getId(); ?>('<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "DESC") + $this->routeParams), true); ?>')"></i>
+                                    <i class="glyphicon glyphicon-sort" onclick="<?php echo \ZfMetal\Datagrid\C::F_SORT .$this->grid->getId(); ?>('<?php echo $this->url($this->route, array(), array('query' => array('sortBy' => $column->getName(), "sortDirection" => "DESC") + $this->routeParams), true); ?>')"></i>
                                 <?php endif; ?>
 
                             <?php endif; ?>

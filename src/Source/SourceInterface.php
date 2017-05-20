@@ -4,7 +4,6 @@ namespace ZfMetal\Datagrid\Source;
 
 interface SourceInterface {
 
-
     /**
      * @return mixed
      */
@@ -22,16 +21,18 @@ interface SourceInterface {
 
     /**
      * Execute the query and set the paginator
-     * - with sort statements
-     * - with filters statements.
      */
     public function execute();
 
+    /**
+     * @param \ZfMetal\Datagrid\Search
+     */
+    public function setSearch(\ZfMetal\Datagrid\Search $search);
 
     /**
-     * @param Filter $filters
+     * @param \ZfMetal\Datagrid\Filters
      */
-    public function addFilter(\ZfMetal\Datagrid\Filter\Filter $filter);
+    public function setFilters(\ZfMetal\Datagrid\Filters $filters);
 }
 
 ?>

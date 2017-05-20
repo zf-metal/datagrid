@@ -3,7 +3,7 @@
 
     <?php
     $form = $this->grid->getCrudForm();
-    $form->setAttribute("action", "javascript:cdiForm_" . $this->grid->getId() . "('" . $form->getName() . "')");
+    $form->setAttribute("action", "javascript:".\ZfMetal\Datagrid\C::F_FORM . $this->grid->getId() . "('" . $form->getName() . "')");
     $formConfig = $this->grid->getOptions()->getFormConfig();
     ?>
     
@@ -12,7 +12,7 @@
     ?>
     <div class="clearfix"></div>
     <div class="pull-right">
-        <a class="btn btn-default" onclick="cdiListRecords_<?php echo $this->grid->getId(); ?>()" >Cancel</a>
+        <a class="btn btn-default" onclick="<?php echo \ZfMetal\Datagrid\C::F_LIST.$this->grid->getId(); ?>()" >Cancel</a>
     </div>
 </div>
 

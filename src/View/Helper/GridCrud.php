@@ -13,51 +13,45 @@ class GridCrud extends AbstractHelper {
 
     public function __invoke($gridId) {
 
-
         $view = '  <script>';
 
-        $view .= 'function cdiDeleteRecord_' . $gridId . '(objectId){
-        if(confirm("¿Esta seguro que desea eliminar el registro?")){
-            cdiPost_' . $gridId . '({crudAction: "delete", crudId: objectId});
-      
-        }
-    }';
+        $view .= 'function ' . \ZfMetal\Datagrid\C::F_DELETE . $gridId . '(objectId){
+            if(confirm("¿Esta seguro que desea eliminar el registro?")){'
+                .\ZfMetal\Datagrid\C::F_POST . $gridId . '({'. \ZfMetal\Datagrid\Crud::inputAction.': "delete", '. \ZfMetal\Datagrid\Crud::inputId.': objectId});
+            }
+        }';
 
-        $view .= 'function cdiEditRecord_' . $gridId . '(objectId){
-            cdiPost_' . $gridId . '({crudAction: "edit", crudId: objectId});
-    }';
+        $view .= 'function ' . \ZfMetal\Datagrid\C::F_EDIT . $gridId . '(objectId){'
+            .\ZfMetal\Datagrid\C::F_POST . $gridId . '({'. \ZfMetal\Datagrid\Crud::inputAction.': "edit", '. \ZfMetal\Datagrid\Crud::inputId.': objectId});}';
 
-        $view .= 'function cdiViewRecord_' . $gridId . '(objectId){
-            cdiPost_' . $gridId . '({crudAction: "view", crudId: objectId});
-    }';
+        $view .= 'function ' . \ZfMetal\Datagrid\C::F_VIEW . $gridId . '(objectId){'
+            .\ZfMetal\Datagrid\C::F_POST . $gridId . '({'. \ZfMetal\Datagrid\Crud::inputAction.': "view", '. \ZfMetal\Datagrid\Crud::inputId.': objectId});}';
 
 
-        $view .= 'function cdiAddRecord_' . $gridId . '(){
-            cdiPost_' . $gridId . '({crudAction: "add"});
-    }';
+        $view .= 'function ' . \ZfMetal\Datagrid\C::F_ADD . $gridId . '(){'
+            .\ZfMetal\Datagrid\C::F_POST . $gridId . '({'. \ZfMetal\Datagrid\Crud::inputAction.': "add"});}';
 
-
-
-        $view .= 'function cdiPost_' . $gridId . '(params) {
+        
+        $view .= 'function ' . \ZfMetal\Datagrid\C::F_POST . $gridId . '(params) {
             var goto = window.location.href;  
-    var form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", goto);
+            var form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", goto);
 
-    for(var key in params) {
-        if(params.hasOwnProperty(key)) {
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", key);
-            hiddenField.setAttribute("value", params[key]);
+            for(var key in params) {
+                if(params.hasOwnProperty(key)) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", params[key]);
 
-            form.appendChild(hiddenField);
-         }
-    }
+                    form.appendChild(hiddenField);
+                 }
+            }
 
-    document.body.appendChild(form);
-    form.submit();
-}';
+            document.body.appendChild(form);
+            form.submit();
+        }';
 
         $view .= '</script>';
 

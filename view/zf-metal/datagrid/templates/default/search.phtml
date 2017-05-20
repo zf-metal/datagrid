@@ -1,1 +1,21 @@
-Search
+<?php 
+/* @var $searchForm \ZfMetal\Datagrid\Form\MultiSearch */
+/* @var $grid \ZfMetal\Datagrid\Grid */
+$searchForm = $grid->getFormSearch();
+?>
+
+<?php 
+/* @var $element \Zend\Form\Element\Text */
+$element = $searchForm->get($grid->getMultiSearhKey()); 
+$element->setAttribute('class', 'form-control');
+$element->setAttribute('onkeypress', 'if(event.keyCode==13) {javascript:form.submit();}');
+$element->setAttribute('placeholder', 'Search');
+?>
+
+<div class="pull-right">
+<?php echo $this->form()->openTag($searchForm); ?>
+
+ <?php echo $this->formInput($element); ?>
+
+<?php echo $this->form()->closeTag($searchForm); ?>
+</div>

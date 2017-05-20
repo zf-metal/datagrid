@@ -16,7 +16,7 @@ abstract class AbstractSource extends EventProvider implements SourceInterface {
      */
     protected $data;
 
-       /**
+    /**
      * Order
      * 
      * @var \ZfMetal\Datagrid\Sort
@@ -24,9 +24,16 @@ abstract class AbstractSource extends EventProvider implements SourceInterface {
     protected $sort;
 
     /**
-     * @var ZfMetal\Datagrid\Filter\Filters
+     * 
+     * @var \ZfMetal\Datagrid\Filters
      */
     protected $filters;
+
+    /**
+     * 
+     * @var \ZfMetal\Datagrid\Search
+     */
+    protected $search;
 
     /**
      * The data result.
@@ -34,7 +41,7 @@ abstract class AbstractSource extends EventProvider implements SourceInterface {
      * @var \Zend\Paginator\Adapter\AdapterInterface
      */
     protected $paginatorAdapter;
-    
+
     /**
      * Description
      * 
@@ -49,7 +56,6 @@ abstract class AbstractSource extends EventProvider implements SourceInterface {
     function setData($data) {
         $this->data = $data;
     }
-
 
     public function getPaginatorAdapter() {
         return $this->paginatorAdapter;
@@ -67,6 +73,21 @@ abstract class AbstractSource extends EventProvider implements SourceInterface {
         $this->columns = $columns;
     }
 
+    function getSearch() {
+        return $this->search;
+    }
+
+    function setSearch(\ZfMetal\Datagrid\Search $search) {
+        $this->search = $search;
+    }
+
+    function getFilters() {
+        return $this->filters;
+    }
+
+    public function setFilters(\ZfMetal\Datagrid\Filters $filters) {
+        $this->filters = $filters;
+    }
 
     function getSort() {
         return $this->sort;
@@ -76,27 +97,6 @@ abstract class AbstractSource extends EventProvider implements SourceInterface {
         $this->sort = $sort;
     }
 
-        
-    public function addFilter(\ZfMetal\Datagrid\Filter\Filter $filter) {
-        $this->getFilters()->addFilter($filter);
-    }
-
-    /**
-     * Get Filters
-     *
-     * @return \ZfMetal\Datagrid\Filters
-     */
-    function getFilters() {
-        if (isset($this->filters)) {
-            $this->setFilters(new \ZfMetal\Datagrid\Filter\Filters());
-        }
-        return $this->filters;
-    }
-
-    function setFilters(\ZfMetal\Datagrid\Filters $filters) {
-        $this->filters = $filters;
-    }
-    
     function getLog() {
         return $this->log;
     }
@@ -104,8 +104,6 @@ abstract class AbstractSource extends EventProvider implements SourceInterface {
     function setLog(\Zend\Log\Logger $log) {
         $this->log = $log;
     }
-
-
 
 }
 

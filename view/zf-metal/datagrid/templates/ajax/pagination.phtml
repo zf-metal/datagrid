@@ -15,30 +15,30 @@
 
                     <!-- First page link -->
                     <li<?php echo (isset($this->previous)) ? '' : ' class="paginate_button disabled"'; ?>>
-                        <a onclick="cdiPagination_<?php echo $this->gridId; ?>('<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->first) + $this->routeParams), true); ?>')" >&lt;&lt; First</a>
+                        <a onclick="<?php echo \ZfMetal\Datagrid\C::F_PAGINATION.$this->gridId; ?>('<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->first) + $this->routeParams), true); ?>')" >&lt;&lt; First</a>
 
                     </li>
 
                     <!-- Previous page link -->
                     <li<?php echo (isset($this->previous)) ? '' : ' class="paginate_button disabled"'; ?>>
-                        <a onclick="cdiPagination_<?php echo $this->gridId; ?>('<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->previous) + $this->routeParams), true); ?>')" >&lt;&lt; Previous</a>
+                        <a onclick="<?php echo \ZfMetal\Datagrid\C::F_PAGINATION.$this->gridId; ?>('<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->previous) + $this->routeParams), true); ?>')" >&lt;&lt; Previous</a>
                     </li>
 
                     <!-- Numbered page links -->
                     <?php foreach ($this->pagesInRange as $page): ?>
                         <li<?php echo ($page == $this->current) ? ' class="active"' : ''; ?>>
-                            <a onclick="cdiPagination_<?php echo $this->gridId; ?>('<?php echo $this->url($this->route, array(), array('query' => array('page' => $page) + $this->routeParams), true); ?>')" ><?php echo $page; ?></a>
+                            <a onclick="<?php echo \ZfMetal\Datagrid\C::F_PAGINATION.$this->gridId; ?>('<?php echo $this->url($this->route, array(), array('query' => array('page' => $page) + $this->routeParams), true); ?>')" ><?php echo $page; ?></a>
                         </li>
                     <?php endforeach; ?>
 
                     <!-- Next page link -->
                     <li<?php echo (isset($this->next)) ? '' : ' class="paginate_button disabled"'; ?>>
-                        <a onclick="cdiPagination_<?php echo $this->gridId; ?>('<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->next) + $this->routeParams), true); ?>')" >Next &gt;&gt;</a>
+                        <a onclick="<?php echo \ZfMetal\Datagrid\C::F_PAGINATION.$this->gridId; ?>('<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->next) + $this->routeParams), true); ?>')" >Next &gt;&gt;</a>
                     </li>
 
                     <!-- Last page link -->
                     <li<?php echo (isset($this->next)) ? '' : ' class="paginate_button disabled"'; ?>>
-                        <a onclick="cdiPagination_<?php echo $this->gridId; ?>('<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->last) + $this->routeParams), true); ?>')" >Last &gt;&gt;</a>
+                        <a onclick="<?php echo \ZfMetal\Datagrid\C::F_PAGINATION.$this->gridId; ?>('<?php echo $this->url($this->route, array(), array('query' => array('page' => $this->last) + $this->routeParams), true); ?>')" >Last &gt;&gt;</a>
 
                     </li>
 

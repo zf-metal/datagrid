@@ -4,13 +4,15 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <?php echo $this->translate('Record Detail'); ?>
+                <?php echo $this->translate('View'); ?>
                 
-                <i class="btn btn-default btn-xs pull-right" onclick="cdiListRecords_<?php echo $this->grid->getId(); ?>()" >
+                <i class="btn btn-default btn-xs pull-right" onclick="<?php echo \ZfMetal\Datagrid\C::F_LIST.$this->grid->getId(); ?>()" >
                     <?php echo $this->translate('Listar'); ?>
                 </i> 
                 <?php if ($this->grid->getOptions()->getCrudConfig()->getEdit()->getEnable()): ?>
-                    <i class='btn btn-danger btn-xs pull-right' onclick='cdiEditRecord_<?php echo $this->grid->getId(); ?>(<?php echo $record->getId(); ?>)'><?php echo $this->translate('Editar'); ?></i>
+                    <i class='btn btn-danger btn-xs pull-right' onclick='<?php echo \ZfMetal\Datagrid\C::F_EDIT.$this->grid->getId(); ?>(<?php echo $record->getId(); ?>)'>
+                        <?php echo $this->translate('Editar'); ?>
+                    </i>
                 <?php endif; ?>
 
             </h4>
