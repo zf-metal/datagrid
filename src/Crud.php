@@ -40,7 +40,12 @@ class Crud {
             $this->action = $this->data[self::inputAction];
         }
     }
-    function getRecord() {
+    
+    function getAction() {
+        return $this->action;
+    }
+
+        function getRecord() {
         return $this->record;
     }
 
