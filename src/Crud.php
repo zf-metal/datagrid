@@ -9,13 +9,10 @@ namespace ZfMetal\Datagrid;
  */
 class Crud {
 
-    //MSJS
-    const msjDeleteOk = "Record deleted OK";
-    const msjDeleteFail = "Record deleted FAIL";
-    const msjSaveOk = "Record save OK";
-    const msjSaveFail = "Record save FAIL";
-    const msjEditOk = "Record edit OK";
-    const msjEditFail = "Record edit FAIL";
+    const MSJ_SUCCESS = 1;
+    const MSJ_ERROR = 2;
+    const MSJ_WARNING = 3;
+    const MSJ_INFO = 4;
     //Inputs
     const inputId = "zfmetal_crud_id";
     const inputAction = "zfmetal_crud_action";
@@ -29,7 +26,19 @@ class Crud {
     protected $msj;
     protected $record;
 
-    function __construct($source, $data = null) {
+    /**
+     *
+     * @var \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger
+     */
+    protected $flashMessenger;
+
+    /**
+     *
+     * @var \ZfMetal\Datagrid\Options\FlashMessagesConfig
+     */
+    protected $flashMessengesConfig;
+
+    function __construct($source, $data = null, \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger $flashMessenger, \ZfMetal\Datagrid\Options\FlashMessagesConfig $flashMessagesConfig) {
         $this->source = $source;
         $this->data = $data;
 
@@ -39,13 +48,16 @@ class Crud {
         if (key_exists(self::inputAction, $this->data)) {
             $this->action = $this->data[self::inputAction];
         }
+
+        $this->flashMessenger = $flashMessenger;
+        $this->flashMessengesConfig = $flashMessagesConfig;
     }
-    
+
     function getAction() {
         return $this->action;
     }
 
-        function getRecord() {
+    function getRecord() {
         return $this->record;
     }
 
@@ -60,12 +72,11 @@ class Crud {
     function getRequest() {
         return $this->request;
     }
-    
+
     function getMsj() {
         return $this->msj;
     }
 
-    
     public function getCrudForm() {
         if (!isset($this->crudForm)) {
             $this->crudForm = $this->getSource()->getCrudForm($this->id);
@@ -74,7 +85,7 @@ class Crud {
     }
 
     public function crudActions() {
-    
+
         switch ($this->action) {
             case 'delete':
                 $this->delete();
@@ -100,16 +111,6 @@ class Crud {
         return $this->instance;
     }
 
-    protected function delete() {
-        $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
-
-        if ($this->getSource()->delRecord($this->id)) {
-            $this->msj = self::msjDeleteOk;
-        } else {
-            $this->msj = self::msjDeleteFail;
-        }
-    }
-
     protected function view() {
         $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_VIEW;
         $this->record = $this->getSource()->viewRecord($this->id);
@@ -125,18 +126,7 @@ class Crud {
             )
         ));
 
-        $this->instance= \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
-    }
-
-    protected function addSubmit() {
-        $this->add();
-        if ($this->getSource()->saveRecord($this->data)) {
-            $this->msj = self::msjSaveOk;
-            $this->instance= \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
-        } else {
-            $this->msj = self::msjSaveFail;
-            $this->instance= \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
-        }
+        $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
     }
 
     protected function edit() {
@@ -159,16 +149,66 @@ class Crud {
         $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
     }
 
+    protected function pushMsj($type, $msj) {
+        if ($this->getFlashMessengesConfig()->getEnable()) {
+            if ($type == self::MSJ_SUCCESS) {
+                $this->getFlashMessenger()->addSuccessMessage($msj);
+                $this->msj["success"] = $msj;
+            }
+            if ($type == self::MSJ_ERROR) {
+                $this->getFlashMessenger()->addErrorMessage($msj);
+                $this->msj["error"] = $msj;
+            }
+            if ($type == self::MSJ_WARNING) {
+                $this->getFlashMessenger()->addWarningMessage($msj);
+                $this->msj["warning"] = $msj;
+            }
+            if ($type == self::MSJ_INFO) {
+                $this->getFlashMessenger()->addInfoMessage($msj);
+                $this->msj["info"] = $msj;
+            }
+        }
+    }
+
+    protected function delete() {
+        $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
+
+        if ($this->getSource()->delRecord($this->id)) {
+            $this->pushMsj(self::MSJ_INFO, $this->getFlashMessengesConfig()->getDeleteOk());
+        } else {
+            $this->pushMsj(self::MSJ_INFO, $this->getFlashMessengesConfig()->getDeleteFail());
+        }
+    }
+
+    protected function addSubmit() {
+        $this->add();
+        if ($this->getSource()->saveRecord($this->data)) {
+            $this->pushMsj(self::MSJ_SUCCESS, $this->getFlashMessengesConfig()->getAddOk());
+            $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
+        } else {
+            $this->pushMsj(self::MSJ_ERROR, $this->getFlashMessengesConfig()->getAddFail());
+            $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
+        }
+    }
+
     protected function editSubmit() {
         $this->edit();
 
         if ($this->getSource()->updateRecord($this->id, $this->data)) {
-            $this->msj = self::msjEditOk;
-            $this->instance= \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
+            $this->pushMsj(self::MSJ_SUCCESS, $this->getFlashMessengesConfig()->getEditOk());
+            $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
         } else {
-            $this->msj = self::msjEditFail;
+            $this->pushMsj(self::MSJ_ERROR, $this->getFlashMessengesConfig()->getEditFail());
             $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
         }
+    }
+
+    function getFlashMessenger() {
+        return $this->flashMessenger;
+    }
+
+    function getFlashMessengesConfig() {
+        return $this->flashMessengesConfig;
     }
 
 }

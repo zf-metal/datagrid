@@ -26,11 +26,14 @@ class GridFactory implements FactoryInterface {
         /* @var $mvcevent \Zend\Mvc\MvcEvent */
         $mvcevent = $application->getMvcEvent();
 
-
         $this->gridOptions = $gridOptions;
+        
+          /* @var $flashMessenger \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger */
+        $flashMessenger = $container->get('ControllerPluginManager')->get('flashmessenger');
+
 
         //NEW GRID
-        $this->grid = new Grid($mvcevent, $gridOptions);
+        $this->grid = new Grid($mvcevent, $gridOptions, $flashMessenger);
 
         //SET SOURCE BY REQUEST NAME
         ($requestedName == "zf-metal-datagrid-doctrine" || (isset($this->gridOptions->getSourceConfig()["type"]) && $this->gridOptions->getSourceConfig()["type"] == "doctrine") ) ? $this->buildDoctrineSource() : null;

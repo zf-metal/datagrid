@@ -30,6 +30,12 @@ class Grid {
     protected $source;
 
     /**
+     *
+     * @var \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger
+     */
+    protected $flashMessenger;
+
+    /**
      * HTTP REQUEST FROM APPLICATION-MVCEVENT
      *
      * @var \Zend\Mvc\MvcEvent
@@ -189,13 +195,15 @@ class Grid {
      * 
      * @param \Zend\Mvc\MvcEvent $mvcevent
      */
-    public function __construct(\Zend\Mvc\MvcEvent $mvcevent, \ZfMetal\Datagrid\Options\GridOptionsInterface $options) {
+    public function __construct(\Zend\Mvc\MvcEvent $mvcevent, \ZfMetal\Datagrid\Options\GridOptionsInterface $options, \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger $flashMessenger) {
 
         $this->setMvcevent($mvcevent);
 
         $this->setOptions($options);
 
         $this->setTemplate($options->getTemplateDefault());
+
+        $this->flashMessenger = $flashMessenger;
     }
 
     public function prepare() {
@@ -258,6 +266,10 @@ class Grid {
 
     function setSort(\ZfMetal\Datagrid\Sort $sort) {
         $this->sort = $sort;
+    }
+
+    function getFlashMessenger() {
+        return $this->flashMessenger;
     }
 
     #CONFIG
@@ -390,9 +402,13 @@ class Grid {
 
     function getCrud() {
         if (!isset($this->crud)) {
-            $this->crud = new \ZfMetal\Datagrid\Crud($this->source, $this->getPost());
+            $this->crud = $this->buildCrud();
         }
         return $this->crud;
+    }
+
+    function buildCrud() {
+        return new \ZfMetal\Datagrid\Crud($this->source, $this->getPost(), $this->getFlashMessenger(), $this->getOptions()->getFlashMessagesConfig());
     }
 
     function setCrud($crud) {

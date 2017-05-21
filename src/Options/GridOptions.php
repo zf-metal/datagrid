@@ -19,21 +19,20 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
      * @var string
      */
     protected $title = "";
-    
-       /**
+
+    /**
      * Title when add
      * 
      * @var string
      */
     protected $titleAdd = "";
-    
-       /**
+
+    /**
      * Title when edit
      * 
      * @var string
      */
     protected $titleEdit = "";
-    
 
     /**
      * @var array
@@ -58,6 +57,12 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
      * @var array
      */
     protected $crudConfig = array();
+
+    /**
+     * 
+     * @var array
+     */
+    protected $flashMessagesConfig = array();
 
     /**
      * Form config
@@ -215,7 +220,7 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         $this->title = $title;
         return $this;
     }
-    
+
     function getTitleAdd() {
         return $this->titleAdd;
     }
@@ -234,8 +239,17 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         return $this;
     }
 
+    function getFlashMessagesConfig() {
+        return $this->flashMessagesConfig;
+    }
 
-
+    function setFlashMessagesConfig($flashMessagesConfig) {
+        if (is_a($flashMessagesConfig, \ZfMetal\Datagrid\Options\FlashMessagesConfig::class)) {
+            $this->flashMessagesConfig = $flashMessagesConfig;
+            return;
+        }
+        $this->flashMessagesConfig = new \ZfMetal\Datagrid\Options\FlashMessagesConfig($flashMessagesConfig);
+    }
 
 
 }
