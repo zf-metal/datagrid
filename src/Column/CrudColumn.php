@@ -10,7 +10,8 @@ namespace ZfMetal\Datagrid\Column;
 class CrudColumn extends ExtraColumn {
 
     const type = "crud";
-    protected $name ="ZfMetalCrudColumn";
+
+    protected $name = "ZfMetalCrudColumn";
     protected $side;
     protected $add = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary glyphicon glyphicon-plus", "value" => ""];
     protected $edit = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary glyphicon glyphicon-edit", "value" => ""];
@@ -34,12 +35,14 @@ class CrudColumn extends ExtraColumn {
         $this->view["action"] = (empty($this->view["action"])) ? "onclick='" . \ZfMetal\Datagrid\C::F_VIEW . $this->gridId . "({{id}})'" : $this->view["action"];
     }
 
-    function __construct($name,$side, $gridCrudConfig, $gridId) {
+    function __construct($name, $side, \ZfMetal\Datagrid\Options\CrudConfig $gridCrudConfig, $gridId) {
         $this->setDisplayName($gridCrudConfig->getDisplayName());
-        if($name){
+        if ($name) {
             $this->name = $name;
         }
-        
+        $this->tdClass = $gridCrudConfig->getTdClass();
+        $this->thClass = $gridCrudConfig->getThClass();
+
         $crudConfig["add"] = $gridCrudConfig->getAdd()->toArray();
         $crudConfig["edit"] = $gridCrudConfig->getEdit()->toArray();
         $crudConfig["del"] = $gridCrudConfig->getDel()->toArray();
@@ -187,7 +190,7 @@ class CrudColumn extends ExtraColumn {
     }
 
     function getDisplayName() {
-        if(!$this->displayName){
+        if (!$this->displayName) {
             return $this->getAddAction();
         }
         return $this->displayName;

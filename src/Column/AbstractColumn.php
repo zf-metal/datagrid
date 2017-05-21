@@ -58,6 +58,13 @@ abstract class AbstractColumn implements ColumnInterface {
     protected $tdClass;
 
     /**
+     * Class to apply in th on column
+     * 
+     * @var string
+     */
+    protected $thClass;
+
+    /**
      * ADD HTML TO BEGIN OF THE COLUMN
      * 
      * @var string
@@ -131,6 +138,17 @@ abstract class AbstractColumn implements ColumnInterface {
     function setHtmlEnd($htmlEnd) {
         $this->htmlEnd = $htmlEnd;
     }
+    
+    function getThClass() {
+        return $this->thClass;
+    }
+
+    function setThClass($thClass) {
+        $this->thClass = $thClass;
+        return $this;
+    }
+
+
 
 }
 

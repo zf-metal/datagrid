@@ -17,7 +17,7 @@
             <tr>
                 <?php foreach ($this->grid->getColumns() as $column): ?>
                     <?php if (!$column->getHidden()): ?>
-                        <th>
+                        <th class="<?php echo $column->getThClass(); ?>" >
 
                             <?php echo $this->translate((string) $column); ?>
 
