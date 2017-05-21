@@ -278,6 +278,13 @@ class Grid {
         return $this->getOptions()->getColumnsConfig();
     }
 
+    function getColumnConfig($columnName) {
+        if (key_exists($columnName, $this->getOptions()->getColumnsConfig())) {
+            return $this->getOptions()->getColumnsConfig()[$columnName];
+        }
+        return [];
+    }
+
     function setColumnsConfig(Array $columnsConfig) {
         $this->getOptions()->setColumnsConfig($columnsConfig);
     }
@@ -338,12 +345,7 @@ class Grid {
     }
 
     protected function createColumn($name) {
-        if (key_exists($name, $this->getColumnsConfig())) {
-            $columnConfig = $this->getColumnsConfig()[$name];
-        } else {
-            $columnConfig = array();
-        }
-        $this->columns[$name] = $this->getColumnFactory()->create($name, $columnConfig);
+        $this->columns[$name] = $this->getColumnFactory()->create($name, $this->getColumnConfig($name));
     }
 
     function getColumnFactory() {
@@ -520,7 +522,7 @@ class Grid {
 
     function getFormFilterFactory() {
         if (!isset($this->formFilterFactory)) {
-            $this->setFormFilterFactory(new Factory\FormFilterFactory($this->getId(),$this->getOptions()->getMultiFilterConfig()));
+            $this->setFormFilterFactory(new Factory\FormFilterFactory($this->getId(), $this->getOptions()->getMultiFilterConfig()));
         }
         return $this->formFilterFactory;
     }
@@ -585,11 +587,7 @@ class Grid {
 
     public function addExtraColumn($name, $originalValue, $side = "left", $filter = false) {
 
-        if (key_exists($name, $this->getColumnsConfig())) {
-            $columnConfig = $this->getColumnsConfig()[$name];
-        } else {
-            $columnConfig = array();
-        }
+        $columnConfig = $this->getColumnConfig($name);
         $columnConfig["type"] = "extra";
         $extraColumn = $this->getColumnFactory()->create($name, $columnConfig);
 
@@ -759,12 +757,12 @@ class Grid {
     public function get_f_filter() {
         return \ZfMetal\Datagrid\C::F_FILTER . $this->getId();
     }
-    
-    public function get_title_form(){
-        if($this->getCrud()->getAction() == "add" || $this->getCrud()->getAction() == "addSubmit"){
+
+    public function get_title_form() {
+        if ($this->getCrud()->getAction() == "add" || $this->getCrud()->getAction() == "addSubmit") {
             return $this->getOptions()->getTitleAdd();
         }
-        if($this->getCrud()->getAction() == "edit" || $this->getCrud()->getAction() == "editSubmit"){
+        if ($this->getCrud()->getAction() == "edit" || $this->getCrud()->getAction() == "editSubmit") {
             return $this->getOptions()->getTitleEdit();
         }
     }

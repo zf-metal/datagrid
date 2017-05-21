@@ -21,6 +21,18 @@ class CrudConfig extends AbstractOptions {
     protected $name = "ZfMetalCrudColumn";
 
     /**
+     * 
+     * @var string
+     */
+    protected $tdClass;
+
+    /**
+     * 
+     * @var string
+     */
+    protected $thClass;
+
+    /**
      * left | right
      * 
      * @var boolean
@@ -158,13 +170,31 @@ class CrudConfig extends AbstractOptions {
         $this->displayName = $displayName;
         return $this;
     }
-    
+
     function getName() {
         return $this->name;
     }
 
     function setName($name) {
         $this->name = $name;
+        return $this;
+    }
+    
+    function getTdClass() {
+        return $this->tdClass;
+    }
+
+    function getThClass() {
+        return $this->thClass;
+    }
+
+    function setTdClass($tdClass) {
+        $this->tdClass = $tdClass;
+        return $this;
+    }
+
+    function setThClass($thClass) {
+        $this->thClass = $thClass;
         return $this;
     }
 
