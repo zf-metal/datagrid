@@ -520,7 +520,7 @@ class Grid {
 
     function getFormFilterFactory() {
         if (!isset($this->formFilterFactory)) {
-            $this->setFormFilterFactory(new Factory\FormFilterFactory($this->getId()));
+            $this->setFormFilterFactory(new Factory\FormFilterFactory($this->getId(),$this->getOptions()->getMultiFilterConfig()));
         }
         return $this->formFilterFactory;
     }
