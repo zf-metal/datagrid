@@ -759,5 +759,14 @@ class Grid {
     public function get_f_filter() {
         return \ZfMetal\Datagrid\C::F_FILTER . $this->getId();
     }
+    
+    public function get_title_form(){
+        if($this->getCrud()->getAction() == "add" || $this->getCrud()->getAction() == "addSubmit"){
+            return $this->getOptions()->getTitleAdd();
+        }
+        if($this->getCrud()->getAction() == "edit" || $this->getCrud()->getAction() == "editSubmit"){
+            return $this->getOptions()->getTitleEdit();
+        }
+    }
 
 }
