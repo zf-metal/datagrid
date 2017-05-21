@@ -5,7 +5,6 @@ namespace ZfMetal\Datagrid\Options;
 use Zend\Stdlib\AbstractOptions;
 
 class CrudConfig extends AbstractOptions {
-    
 
     /**
      * Enable/Disable Crud
@@ -13,16 +12,21 @@ class CrudConfig extends AbstractOptions {
      * @var boolean
      */
     protected $enable = false;
-    
-    
+
+    /**
+     * name of crud column
+     * 
+     * @var string
+     */
+    protected $name = "ZfMetalCrudColumn";
+
     /**
      * left | right
      * 
      * @var boolean
      */
     protected $side = "left";
-    
-    
+
     /**
      * displayName
      * 
@@ -53,8 +57,8 @@ class CrudConfig extends AbstractOptions {
      * @var \ZfMetal\Datagrid\Options\CrudItemConfig
      */
     protected $view;
-    
-      /**
+
+    /**
      * 
      * @var \ZfMetal\Datagrid\Options\CrudItemConfig
      */
@@ -84,12 +88,11 @@ class CrudConfig extends AbstractOptions {
     function getView() {
         return $this->view;
     }
-    
+
     function getManager() {
         return $this->manager;
     }
 
-        
     function setAdd($add) {
         if (is_a($add, \ZfMetal\Datagrid\Options\CrudItemConfig::class)) {
             $this->add = $add;
@@ -125,8 +128,8 @@ class CrudConfig extends AbstractOptions {
         $this->view = new \ZfMetal\Datagrid\Options\CrudItemConfig($view);
         return $this;
     }
-    
-      function setManager($manager) {
+
+    function setManager($manager) {
         if (is_a($manager, \ZfMetal\Datagrid\Options\CrudItemConfig::class)) {
             $this->manager = $manager;
             return $this;
@@ -134,15 +137,13 @@ class CrudConfig extends AbstractOptions {
         $this->manager = new \ZfMetal\Datagrid\Options\CrudItemConfig($manager);
         return $this;
     }
-    
-    
-    
+
     function getSide() {
         return $this->side;
     }
 
     function setSide($side) {
-        if($side != "left" && $side != "right"){
+        if ($side != "left" && $side != "right") {
             throw new \Exception("Crud Columns Side must be left or right.");
         }
         $this->side = $side;
@@ -155,6 +156,15 @@ class CrudConfig extends AbstractOptions {
 
     function setDisplayName($displayName) {
         $this->displayName = $displayName;
+        return $this;
+    }
+    
+    function getName() {
+        return $this->name;
+    }
+
+    function setName($name) {
+        $this->name = $name;
         return $this;
     }
 

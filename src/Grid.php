@@ -361,7 +361,7 @@ class Grid {
 
     protected function crudConfigure() {
         if ($this->getOptions()->getCrudConfig()->getEnable() === true) {
-            $this->addCrudColumn("", $this->getOptions()->getCrudConfig()->getSide(), $this->getOptions()->getCrudConfig());
+            $this->addCrudColumn($this->getOptions()->getCrudConfig()->getName(), $this->getOptions()->getCrudConfig()->getSide(), $this->getOptions()->getCrudConfig());
         }
     }
 
@@ -397,7 +397,7 @@ class Grid {
         $this->crud = $crud;
     }
 
-    public function addCrudColumn($name = "", $side = "left", $crudConfig = []) {
+    public function addCrudColumn($name = null, $side = "left", $crudConfig = []) {
         $this->crudColumn = new CrudColumn($name, $side, $crudConfig, $this->getId());
         $this->crudColumn->setFilterActive(false);
         if ($side == "left") {

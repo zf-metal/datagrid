@@ -10,7 +10,7 @@ namespace ZfMetal\Datagrid\Column;
 class CrudColumn extends ExtraColumn {
 
     const type = "crud";
-
+    protected $name ="ZfMetalCrudColumn";
     protected $side;
     protected $add = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary glyphicon glyphicon-plus", "value" => ""];
     protected $edit = ["enable" => true, "htmltag" => "a", "class" => "btn btn-primary glyphicon glyphicon-edit", "value" => ""];
@@ -34,8 +34,11 @@ class CrudColumn extends ExtraColumn {
         $this->view["action"] = (empty($this->view["action"])) ? "onclick='" . \ZfMetal\Datagrid\C::F_VIEW . $this->gridId . "({{id}})'" : $this->view["action"];
     }
 
-    function __construct($name, $side, $gridCrudConfig, $gridId) {
+    function __construct($name,$side, $gridCrudConfig, $gridId) {
         $this->setDisplayName($gridCrudConfig->getDisplayName());
+        if($name){
+            $this->name = $name;
+        }
         
         $crudConfig["add"] = $gridCrudConfig->getAdd()->toArray();
         $crudConfig["edit"] = $gridCrudConfig->getEdit()->toArray();
@@ -44,7 +47,6 @@ class CrudColumn extends ExtraColumn {
         $crudConfig["manager"] = $gridCrudConfig->getManager()->toArray();
 
         $this->gridId = $gridId;
-        $this->name = $name;
         $this->setSide($side);
 
         (isset($crudConfig["add"])) ? $this->add = array_merge($this->add, $crudConfig["add"]) : null;

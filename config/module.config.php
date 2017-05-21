@@ -33,6 +33,7 @@ return array(
             "enable" => false,
             'side' => "left",
             'displayName' => null,
+            'name' => 'ZfMetalCrudColumn',
             "add" => [
                 "enable" => true,
                 "class" => " glyphicon glyphicon-plus cursor-pointer",

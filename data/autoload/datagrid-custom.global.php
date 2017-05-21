@@ -32,6 +32,9 @@ $config = [
             ],
             "crudConfig" => [
                 "enable" => true,
+                'side' => "right",
+                'displayName' => null,
+                'name' => 'ZfMetalCrudColumn',
                 "add" => [
                     "enable" => true,
                     "class" => "btn btn-primary fa fa-plus",
