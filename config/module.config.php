@@ -11,6 +11,10 @@
  */
 return array(
     'zf-metal-datagrid.options' => array(
+        'grid_id' => 'test',
+        'title' => '',
+        'title_add' => '',
+        'title_edit' => '',
         'records_per_page' => 10,
         'template_default' => 'default',
         'multi_filter_config' => [

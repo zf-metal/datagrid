@@ -19,6 +19,21 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
      * @var string
      */
     protected $title = "";
+    
+       /**
+     * Title when add
+     * 
+     * @var string
+     */
+    protected $titleAdd = "";
+    
+       /**
+     * Title when edit
+     * 
+     * @var string
+     */
+    protected $titleEdit = "";
+    
 
     /**
      * @var array
@@ -200,5 +215,27 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         $this->title = $title;
         return $this;
     }
+    
+    function getTitleAdd() {
+        return $this->titleAdd;
+    }
+
+    function getTitleEdit() {
+        return $this->titleEdit;
+    }
+
+    function setTitleAdd($titleAdd) {
+        $this->titleAdd = $titleAdd;
+        return $this;
+    }
+
+    function setTitleEdit($titleEdit) {
+        $this->titleEdit = $titleEdit;
+        return $this;
+    }
+
+
+
+
 
 }
