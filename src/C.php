@@ -3,7 +3,8 @@
 namespace ZfMetal\Datagrid;
 
 class C {
-
+    
+    const F_DELETE_CONFIRM = "ZfMetal_Grid_Delete_Confirm";
     const F_DELETE = "ZfMetal_Grid_Delete_";
     const F_EDIT = "ZfMetal_Grid_Edit_";
     const F_LIST = "ZfMetal_Grid_List_";

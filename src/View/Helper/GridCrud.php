@@ -17,21 +17,22 @@ class GridCrud extends AbstractHelper {
 
         $view .= 'function ' . \ZfMetal\Datagrid\C::F_DELETE . $gridId . '(objectId){
             if(confirm("¿Esta seguro que desea eliminar el registro?")){'
-                .\ZfMetal\Datagrid\C::F_POST . $gridId . '({'. \ZfMetal\Datagrid\Crud::inputAction.': "delete", '. \ZfMetal\Datagrid\Crud::inputId.': objectId});
+                . \ZfMetal\Datagrid\C::F_POST . $gridId . '({' . \ZfMetal\Datagrid\Crud::inputAction . ': "delete", ' . \ZfMetal\Datagrid\Crud::inputId . ': objectId});
             }
         }';
 
+
         $view .= 'function ' . \ZfMetal\Datagrid\C::F_EDIT . $gridId . '(objectId){'
-            .\ZfMetal\Datagrid\C::F_POST . $gridId . '({'. \ZfMetal\Datagrid\Crud::inputAction.': "edit", '. \ZfMetal\Datagrid\Crud::inputId.': objectId});}';
+                . \ZfMetal\Datagrid\C::F_POST . $gridId . '({' . \ZfMetal\Datagrid\Crud::inputAction . ': "edit", ' . \ZfMetal\Datagrid\Crud::inputId . ': objectId});}';
 
         $view .= 'function ' . \ZfMetal\Datagrid\C::F_VIEW . $gridId . '(objectId){'
-            .\ZfMetal\Datagrid\C::F_POST . $gridId . '({'. \ZfMetal\Datagrid\Crud::inputAction.': "view", '. \ZfMetal\Datagrid\Crud::inputId.': objectId});}';
+                . \ZfMetal\Datagrid\C::F_POST . $gridId . '({' . \ZfMetal\Datagrid\Crud::inputAction . ': "view", ' . \ZfMetal\Datagrid\Crud::inputId . ': objectId});}';
 
 
         $view .= 'function ' . \ZfMetal\Datagrid\C::F_ADD . $gridId . '(){'
-            .\ZfMetal\Datagrid\C::F_POST . $gridId . '({'. \ZfMetal\Datagrid\Crud::inputAction.': "add"});}';
+                . \ZfMetal\Datagrid\C::F_POST . $gridId . '({' . \ZfMetal\Datagrid\Crud::inputAction . ': "add"});}';
 
-        
+
         $view .= 'function ' . \ZfMetal\Datagrid\C::F_POST . $gridId . '(params) {
             var goto = window.location.href;  
             var form = document.createElement("form");
