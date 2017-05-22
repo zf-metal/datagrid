@@ -4,16 +4,16 @@
 
     <?php
     $form = $this->grid->getCrudForm();
-    $form->setAttribute("action", "javascript:".\ZfMetal\Datagrid\C::F_FORM . $this->grid->getId() . "('" . $form->getName() . "')");
+    $form->setAttribute("action", "javascript:" . \ZfMetal\Datagrid\C::F_FORM . $this->grid->getId() . "('" . $form->getName() . "')");
     $formConfig = $this->grid->getOptions()->getFormConfig();
     ?>
-    
+
     <?php
-    echo $this->renderForm($form, $formConfig->getStyle(), $formConfig->getColumns(),$formConfig->getHorizontalGroups(),$formConfig->getVerticalGroups());
+    echo $this->renderForm($form, $formConfig->getStyle(), $formConfig->getColumns(), $formConfig->getGroups());
     ?>
     <div class="clearfix"></div>
     <div class="pull-right">
-        <a class="btn btn-default" onclick="<?php echo \ZfMetal\Datagrid\C::F_LIST.$this->grid->getId(); ?>()" >Cancel</a>
+        <a class="btn btn-default" onclick="<?php echo \ZfMetal\Datagrid\C::F_LIST . $this->grid->getId(); ?>()" >Cancel</a>
     </div>
 </div>
 
