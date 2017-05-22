@@ -106,6 +106,13 @@ class Grid {
     protected $columns = array();
 
     /**
+     * Columns Priority
+     * 
+     * @var array
+     */
+    protected $columnsPriority = array();
+
+    /**
      * A extra columns collection
      * 
      * @var array
@@ -226,6 +233,9 @@ class Grid {
 
         //Extract and generate source columns
         $this->buildColumns();
+
+        //Extract and generate source columns
+        $this->orderColumnsByPriority();
 
         //Filters
         $this->generateFormFilters();
@@ -348,6 +358,11 @@ class Grid {
     #<-SOURCE
     #COLUMNS
 
+    protected function orderColumnsByPriority() {
+        asort($this->columnsPriority);
+        $this->columns = array_merge($this->columnsPriority, $this->columns);
+    }
+
     protected function buildColumns() {
         $sourceColumnsName = $this->getSource()->pullColumns();
 
@@ -358,6 +373,7 @@ class Grid {
 
     protected function createColumn($name) {
         $this->columns[$name] = $this->getColumnFactory()->create($name, $this->getColumnConfig($name));
+        $this->columnsPriority[$name] = $this->columns[$name]->getPriority();
     }
 
     function getColumnFactory() {

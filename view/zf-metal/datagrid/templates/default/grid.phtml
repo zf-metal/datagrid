@@ -5,12 +5,12 @@
         <?php if ($this->grid->getOptions()->getMultiSearchConfig()->getEnable()): ?>     
             <?php echo $this->partial($this->partialSearch, array("grid" => $this->grid)); ?>
         <?php endif; ?>     
-        
+
         <?php if ($this->grid->getOptions()->getMultiFilterConfig()->getEnable()): ?>
             <?php echo $this->partial($this->partialFilter, array("grid" => $this->grid)); ?>
         <?php endif; ?>
     </div>
-    
+
     <table class="table table-bordered  <?php echo $this->grid->getTableClass(); ?>">
         <!--HEADER-->
         <thead>
@@ -68,5 +68,7 @@
 
 
     <?php echo $this->GridCrud($this->grid->getId()); ?>
+    <!--MODAL-->
+    <?php echo $this->partial($this->partialModal, array("grid" => $this->grid)); ?>
 
 </div>

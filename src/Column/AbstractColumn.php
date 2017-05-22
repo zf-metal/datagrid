@@ -33,6 +33,13 @@ abstract class AbstractColumn implements ColumnInterface {
     protected $displayName;
 
     /**
+     * Order Columns by Priority
+     * 
+     * @var integer
+     */
+    protected $priority = 100;
+
+    /**
      * Valid type of columns
      * 
      * @var array
@@ -138,13 +145,22 @@ abstract class AbstractColumn implements ColumnInterface {
     function setHtmlEnd($htmlEnd) {
         $this->htmlEnd = $htmlEnd;
     }
-    
+
     function getThClass() {
         return $this->thClass;
     }
 
     function setThClass($thClass) {
         $this->thClass = $thClass;
+        return $this;
+    }
+    
+    function getPriority() {
+        return $this->priority;
+    }
+
+    function setPriority($priority) {
+        $this->priority = $priority;
         return $this;
     }
 

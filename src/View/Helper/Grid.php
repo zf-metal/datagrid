@@ -20,6 +20,7 @@ class Grid extends AbstractHelper {
         $partialPagination = self::TEMPLATE_PATH . $this->template . "/pagination";
         $partialFilter = self::TEMPLATE_PATH . $this->template . "/filter";
         $partialSearch = self::TEMPLATE_PATH . $this->template . "/search";
+        $partialModal = self::TEMPLATE_PATH . $this->template . "/modal";
 
         $routeParams = $grid->getQueryArray();
         if (!$routeParams) {
@@ -32,6 +33,7 @@ class Grid extends AbstractHelper {
                     "partialPagination" => $partialPagination,
                     "partialFilter" => $partialFilter,
                     "partialSearch" => $partialSearch,
+                    "partialModal" => $partialModal,
                     'routeParams' => $routeParams,
                     'route' => $route));
     }

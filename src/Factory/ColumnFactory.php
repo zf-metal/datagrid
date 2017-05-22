@@ -24,18 +24,18 @@ class ColumnFactory {
      * @var array
      */
     protected $config = array();
-    
-      /**
+
+    /**
      * 
      * @var \ZfMetal\Datagrid\Grid
      */
     protected $grid = null;
 
-        public function create($name, Array $config) {
+    public function create($name, Array $config) {
         $this->column = null;
         $this->config = $config;
         $type = (isset($config['type'])) ? $config['type'] : "string";
-        
+
 
         switch ($type) {
             case "string":
@@ -47,10 +47,10 @@ class ColumnFactory {
             case "datetime":
                 $this->createDateTimeColumn($name);
                 break;
-             case "date":
+            case "date":
                 $this->createDateTimeColumn($name);
                 break;
-              case "time":
+            case "time":
                 $this->createDateTimeColumn($name);
                 break;
             case "extra":
@@ -59,10 +59,10 @@ class ColumnFactory {
             case "custom":
                 $this->createCustomColumn($name);
                 break;
-             case "file":
+            case "file":
                 $this->createFileColumn($name);
                 break;
-             case "relational":
+            case "relational":
                 $this->createRelationalColumn($name);
                 break;
             default:
@@ -92,6 +92,14 @@ class ColumnFactory {
         if (isset($this->config["tdClass"])) {
             $this->column->setTdClass($this->config["tdClass"]);
         }
+
+        if (isset($this->config["thClass"])) {
+            $this->column->setThClass($this->config["thClass"]);
+        }
+
+        if (isset($this->config["priority"])) {
+            $this->column->setPriority($this->config["priority"]);
+        }
     }
 
     /**
@@ -105,8 +113,8 @@ class ColumnFactory {
         $this->baseConfig();
         return $this->column;
     }
-    
-        /**
+
+    /**
      * Create a String Column
      *
      * @param string $name name of the column
@@ -115,20 +123,19 @@ class ColumnFactory {
     protected function createRelationalColumn($name) {
         $this->column = new Column\RelationalColumn($name);
         $this->baseConfig();
-        
-        
+
+
         if (isset($this->config["orderProperty"])) {
             $this->column->setOrderProperty($this->config["orderProperty"]);
         }
-        
-         if (isset($this->config["multiSearchProperty"])) {
+
+        if (isset($this->config["multiSearchProperty"])) {
             $this->column->setMultiSearchProperty($this->config["multiSearchProperty"]);
         }
-        
-        
+
+
         return $this->column;
     }
-
 
     /**
      * Create a Boolean Column
@@ -149,8 +156,8 @@ class ColumnFactory {
 
         return $this->column;
     }
-    
-     /**
+
+    /**
      * Create a Boolean Column
      *
      * @param string $name name of the column
@@ -169,14 +176,13 @@ class ColumnFactory {
         if (isset($this->config["height"])) {
             $this->column->setHeight($this->config["height"]);
         }
-        
-         if (isset($this->config["showFile"])) {
+
+        if (isset($this->config["showFile"])) {
             $this->column->setShowFile($this->config["showFile"]);
         }
 
         return $this->column;
     }
-    
 
     /**
      * Create a DateTime Column
@@ -206,8 +212,8 @@ class ColumnFactory {
         $this->baseConfig();
         return $this->column;
     }
-    
-        /**
+
+    /**
      * Create a Custom Column
      *
      * @param string $name name of the column
