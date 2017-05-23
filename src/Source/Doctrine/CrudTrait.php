@@ -117,7 +117,7 @@ trait CrudTrait {
             $record = $this->getEm()->getRepository($this->entityName)->find($id);
             $this->getEm()->remove($record);
             $this->getEm()->flush();
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             return false;
         }
         return true;

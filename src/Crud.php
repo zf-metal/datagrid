@@ -176,7 +176,7 @@ class Crud {
         if ($this->getSource()->delRecord($this->id)) {
             $this->pushMsj(self::MSJ_INFO, $this->getFlashMessengesConfig()->getDeleteOk());
         } else {
-            $this->pushMsj(self::MSJ_INFO, $this->getFlashMessengesConfig()->getDeleteFail());
+            $this->pushMsj(self::MSJ_ERROR, $this->getFlashMessengesConfig()->getDeleteFail());
         }
     }
 
