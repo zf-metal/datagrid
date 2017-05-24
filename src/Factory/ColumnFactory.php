@@ -41,6 +41,12 @@ class ColumnFactory {
             case "string":
                 $this->createStringColumn($name);
                 break;
+            case "text":
+                $this->createTextColumn($name);
+                break;
+            case "link":
+                $this->createLinkColumn($name);
+                break;
             case "boolean":
                 $this->createBooleanColumn($name);
                 break;
@@ -77,7 +83,7 @@ class ColumnFactory {
      * Configure basic properties
      *
      * @param string $name name of the column
-     * @return \ZfMetal\Datagrid\Column\StringColumn
+     * @return \ZfMetal\Datagrid\Column\InterfaceColumn
      */
     protected function baseConfig() {
 
@@ -115,10 +121,47 @@ class ColumnFactory {
     }
 
     /**
-     * Create a String Column
+     * Create a Text Column
      *
      * @param string $name name of the column
-     * @return \ZfMetal\Datagrid\Column\StringColumn
+     * @return \ZfMetal\Datagrid\Column\TextColumn
+     */
+    protected function createTextColumn($name) {
+        $this->column = new Column\TextColumn($name);
+        $this->baseConfig();
+
+        if (isset($this->config["length"])) {
+            $this->column->setLength($this->config["length"]);
+        }
+
+        return $this->column;
+    }
+
+    /**
+     * Create a Link Column
+     *
+     * @param string $name name of the column
+     * @return \ZfMetal\Datagrid\Column\LinkColumn
+     */
+    protected function createLinkColumn($name) {
+        $this->column = new Column\LinkColumn($name);
+        $this->baseConfig();
+
+        if (isset($this->config["displayValue"])) {
+            $this->column->setDisplayValue($this->config["displayValue"]);
+        }
+        if (isset($this->config["classA"])) {
+            $this->column->setClassA($this->config["classA"]);
+        }
+
+        return $this->column;
+    }
+
+    /**
+     * Create a Relational Column
+     *
+     * @param string $name name of the column
+     * @return \ZfMetal\Datagrid\Column\RelationalColumn
      */
     protected function createRelationalColumn($name) {
         $this->column = new Column\RelationalColumn($name);
@@ -158,10 +201,10 @@ class ColumnFactory {
     }
 
     /**
-     * Create a Boolean Column
+     * Create a File Column
      *
      * @param string $name name of the column
-     * @return \ZfMetal\Datagrid\Column\BooleanColumn
+     * @return \ZfMetal\Datagrid\Column\FileColumn
      */
     protected function createFileColumn($name) {
         $this->column = new Column\FileColumn($name);

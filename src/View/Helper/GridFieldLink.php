@@ -10,7 +10,6 @@ use ZfMetal\Datagrid\Column\ColumnInterface;
  */
 class GridFieldLink extends AbstractHelper {
 
-
     /**
      * Invoke helper
      *
@@ -35,8 +34,11 @@ class GridFieldLink extends AbstractHelper {
      * @return string
      */
     public function render(ColumnInterface $column, array $data) {
-
-        return '<a target="_blank" href="'.$data[$column->getName()].'">LINK</a>';
+        if ($column->getDisplayValue()) {
+            return '<a class="' . $column->getClassA() . '" target="_blank" href="' . $data[$column->getName()] . '">' . $column->getDisplayValue() . '</a>';
+        } else {
+            return '<a class="' . $column->getClassA() . '" target="_blank" href="' . $data[$column->getName()] . '">' . $data[$column->getName()] . '</a>';
+        }
     }
 
 }

@@ -10,7 +10,7 @@ use ZfMetal\Datagrid\Column\ColumnInterface;
  */
 class GridField extends AbstractHelper {
 
-    const DEFAULT_HELPER = 'GridFieldText';
+    const DEFAULT_HELPER = 'GridFieldString';
 
     /**
      * Instance map to view helper
@@ -25,7 +25,6 @@ class GridField extends AbstractHelper {
         'link' => 'GridFieldLink',
         'extra' => 'GridFieldExtra',
         'crud' => 'GridFieldCrud',
-        'longText' => 'GridFieldLongText',
         'custom' => 'GridFieldCustom',
         'file' => 'GridFieldFile',
     );
