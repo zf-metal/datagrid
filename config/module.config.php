@@ -75,10 +75,12 @@ return array(
         'factories' => [
             \ZfMetal\Datagrid\Controller\Plugin\GridBuilder::class => \ZfMetal\Datagrid\Factory\Controller\Plugin\GridBuilderFactory::class,
             \ZfMetal\Datagrid\Controller\Plugin\ManagerBuilder::class => \ZfMetal\Datagrid\Factory\Controller\Plugin\ManagerBuilderFactory::class,
+            \ZfMetal\Datagrid\Controller\Plugin\ExportToExcel::class => \ZfMetal\Datagrid\Factory\Controller\Plugin\ExportToExcelFactory::class,
         ],
         'aliases' => [
             'gridBuilder' => \ZfMetal\Datagrid\Controller\Plugin\GridBuilder::class,
             'managerBuilder' => \ZfMetal\Datagrid\Controller\Plugin\ManagerBuilder::class,
+            'exportToExcel' => \ZfMetal\Datagrid\Controller\Plugin\ExportToExcel::class,
         ]
     ],
     'controllers' => [
@@ -156,7 +158,7 @@ return array(
             'ManagerRender' => 'ZfMetal\Datagrid\View\Helper\Manager',
             //MODAL
             'GridCrudModal' => 'ZfMetal\Datagrid\View\Helper\GridCrudModal',
-          //  'GridCrudAjaxModal' => 'ZfMetal\Datagrid\View\Helper\GridCrudAjaxModal',
+        //  'GridCrudAjaxModal' => 'ZfMetal\Datagrid\View\Helper\GridCrudAjaxModal',
         )
     ),
     'view_manager' => array(
