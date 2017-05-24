@@ -34,11 +34,12 @@ class GridFieldText extends AbstractHelper {
      * @return string
      */
     public function render(ColumnInterface $column, array $data) {
-        if(!$data[$column->getName()]){
+        $value = $data[$column->getName()];
+        if(!$value){
         return "";    
         }
         
-        if ($column->getLength()) {
+        if ($column->getLength() && strlen($value) > $column->getLength()) {
             return substr(nl2br($data[$column->getName()]), 0, $column->getLength()) . "...";
         } else {
             return nl2br($data[$column->getName()]);
