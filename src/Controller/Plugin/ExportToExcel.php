@@ -132,7 +132,8 @@ class ExportToExcel extends AbstractPlugin {
             $writer->writeSheetRow('Sheet1', $row);
         }
 
-        return $writer->writeToFile('/tmp/test.xlsx');
+        $writer->writeToFile('/tmp/test.xlsx');
+        return '/tmp/test.xlsx';
     }
 
     private function getHeader() {
@@ -142,7 +143,7 @@ class ExportToExcel extends AbstractPlugin {
             if ($column->getHidden()) {
                 continue;
             }
-            $header[$column->getDisplayName()] = $column->getType();
+            $header[$column->getDisplayName()] = $column->getType()=='relational'?'string':$column->getType();
         }
         return $header;
     }
