@@ -12,8 +12,29 @@ class ExportToExcel extends AbstractPlugin {
      * @var array
      */
     private $config;
+
+    /**
+     *
+     * @var array
+     */
     private $columnsName = array();
+
+    /**
+     *
+     * @var array
+     */
     private $columnsConfig = array();
+
+    /**
+     *
+     * @var \Doctrine\ORM\QueryBuilder 
+     */
+    private $queryBuilder;
+
+    /**
+     *
+     * @var array
+     */
     private $columns = array();
 
     /**
@@ -38,6 +59,14 @@ class ExportToExcel extends AbstractPlugin {
         return $this->columnsConfig;
     }
 
+    function getQueryBuilder() {
+        return $this->queryBuilder;
+    }
+
+    function getColumnsName() {
+        return $this->columnsName;
+    }
+
     function getColumns() {
         return $this->columns;
     }
@@ -47,8 +76,10 @@ class ExportToExcel extends AbstractPlugin {
 
         if (!$queryBuilder) {
             /** @var $queryBuilder \Doctrine\ORM\QueryBuilder  */
-            $queryBuilder = $this->getQueryBuilder($entity);
+            $queryBuilder = $this->buildQueryBuilder($entity);
         }
+
+        $this->queryBuilder = $queryBuilder;
 
         if ($configKey) {
             if (!key_exists($configKey, $this->getConfig())) {
@@ -61,12 +92,12 @@ class ExportToExcel extends AbstractPlugin {
 
         $this->generateColumns();
 
-        $records = $queryBuilder
-                ->getQuery()
-                ->getResult();
+        $result = $this->export();
+
+        return $result;
     }
 
-    private function getQueryBuilder($entity) {
+    private function buildQueryBuilder($entity) {
         return $this->getEm()->createQueryBuilder()->select('u')->from($entity, 'u');
     }
 
@@ -83,7 +114,7 @@ class ExportToExcel extends AbstractPlugin {
         }
     }
 
-    public function generateColumns() {
+    private function generateColumns() {
 
         $factoryColumns = new \ZfMetal\Datagrid\Factory\ColumnFactory();
 
@@ -92,26 +123,47 @@ class ExportToExcel extends AbstractPlugin {
         }
     }
 
-    public function export() {
-
-        $header = array(
-            'created' => 'date',
-            'product_id' => 'integer',
-            'quantity' => '#,##0',
-            'amount' => 'price',
-            'description' => 'string',
-            'tax' => '[$$-1009]#,##0.00;[RED]-[$$-1009]#,##0.00',
-        );
-        $data = array(
-            array('2015-01-01', 873, 1, '44.00', 'misc', '=D2*0.05'),
-            array('2015-01-12', 324, 2, '88.00', 'none', '=D3*0.05'),
-        );
-
-        $writer = new XLSXWriter();
+    private function export() {
+        $header = $this->getHeader();
+        $data = $this->getData();
+        $writer = new \XLSXWriter();
         $writer->writeSheetHeader('Sheet1', $header);
-        foreach ($data as $row)
+        foreach ($data as $row) {
             $writer->writeSheetRow('Sheet1', $row);
-        $writer->writeToFile('example.xlsx');
+        }
+
+        return $writer->writeToFile('/tmp/test.xlsx');
+    }
+
+    private function getHeader() {
+        $header = array();
+
+        foreach ($this->columns as $column) {
+            if ($column->getHidden()) {
+                continue;
+            }
+            $header[$column->getDisplayName()] = $column->getType();
+        }
+        return $header;
+    }
+
+    private function getData() {
+        $columnRender = new \ZfMetal\Datagrid\Render\ExportColumn();
+        $registers = $this->getQueryBuilder()->getQuery()->getResult();
+
+        $data = array();
+        foreach ($registers as $register) {
+            $entityInfo = array();
+            foreach ($this->columns as $column) {
+                if ($column->getHidden()) {
+                    continue;
+                }
+                $entityInfo[] = $columnRender->render($register, $column, isset($this->columnsConfig[$column->getName()]) ? $this->columnsConfig[$column->getName()] : array());
+            }
+            $data[] = $entityInfo;
+        }
+
+        return $data;
     }
 
 }
