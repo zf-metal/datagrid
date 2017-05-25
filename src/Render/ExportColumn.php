@@ -14,7 +14,7 @@ class ExportColumn {
         $result = '';
         switch ($type) {
             case 'string':
-            case 'string':
+            case 'text':
             case 'integer':
                 $result = $this->getString($entity, $column->getName());
                 break;
