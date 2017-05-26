@@ -87,7 +87,7 @@ class Crud {
     public function crudActions() {
 
         switch ($this->action) {
-             case 'exportToExcel':
+            case 'exportToExcel':
                 $this->exportToExcel();
                 break;
             case 'delete':
@@ -114,18 +114,14 @@ class Crud {
         return $this->instance;
     }
 
-    
-      protected function exportToExcel() {
+    protected function exportToExcel() {
         $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_EXPORT_TO_EXCEL;
-        $this->getSource()->exportToExcel($this->getGridOptions()->getExportConfig()->getExportToExcelKey());
     }
-    
-    
+
     protected function view() {
         $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_VIEW;
         $this->record = $this->getSource()->viewRecord($this->id);
     }
-    
 
     protected function add() {
 
@@ -221,11 +217,9 @@ class Crud {
     function getFlashMessengesConfig() {
         return $this->getGridOptions()->getFlashMessagesConfig();
     }
-    
+
     function getGridOptions() {
         return $this->gridOptions;
     }
-
-
 
 }

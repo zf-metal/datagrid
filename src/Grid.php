@@ -228,8 +228,6 @@ class Grid {
         //CRUD - (Actualmente Define la instancia)
         $this->processCrudActions();
 
-        //EXPORT 
-        $this->processExport();
 
         //CRUD CONFIGURE
         $this->crudConfigure();
@@ -254,6 +252,12 @@ class Grid {
 
         //Order (SORT)
         $this->prepareSort();
+        
+        //Prepare Source
+        $this->getSource()->prepare();
+
+        //EXPORT
+        $this->processExports();
 
         //Paginator
         $this->preparePaginator();
@@ -269,12 +273,6 @@ class Grid {
         //$this->processOrderColumn();
         $this->ready = true;
         return $this;
-    }
-
-    function processExport() {
-        if($this->instance == self::INSTANCE_EXPORT_TO_EXCEL && $this->getOptions()->getExportConfig()->getExportToExcelEnable()){
-            $this->getServiceExportToExcel()->run($em, $entity, $queryBuilder, $configKey);
-        }
     }
 
     function getMvcevent() {
@@ -419,7 +417,15 @@ class Grid {
         }
     }
 
+    protected function processExports() {
+        if ($this->getInstance() == self::INSTANCE_EXPORT_TO_EXCEL) {
+            $this->getSource()->exportToExcel($this->getOptions()->getExportConfig()->getExportToExcelKey());
+        }
+    }
+
     protected function preparePaginator() {
+
+        
         $this->paginatorAdapter = $this->getSource()->execute();
         $this->paginator = new Paginator($this->paginatorAdapter);
         $this->paginator->setDefaultItemCountPerPage($this->getOptions()->getRecordsPerPage());

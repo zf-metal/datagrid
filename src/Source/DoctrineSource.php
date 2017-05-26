@@ -72,13 +72,7 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
         $this->serviceExportToExcel = $serviceExportToExcel;
         return $this;
     }
-    
-    function exportToExcel($configKey) {
-        $this->getServiceExportToExcel()->run($this->getEm(), $this->getEntityName(), $this->getQb(), $configKey);
-    }
 
-        
-    
     public function getEm() {
         if (!isset($this->em)) {
             throw new \ZfMetal\Datagrid\Exception\EntityManagerNoSetException();
@@ -138,9 +132,7 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
         $this->entityKey = $entityKey;
     }
 
-    public function execute() {
-
-
+    public function prepare() {
         //1-ApplyFilters
         $this->applyFilters();
 
@@ -149,11 +141,18 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
 
         //3-ApplyOrder
         $this->applySort();
+    }
+
+    public function execute() {
 
         //4-Paginator
         $this->paginator = new DoctrinePaginatorAdapter(new DoctrinePaginator($this->getQb()));
 
         return $this->paginator;
+    }
+
+    function exportToExcel($configKey) {
+        $this->getServiceExportToExcel()->run($this->getEm(), $this->getEntityName(), $this->getQb(), $configKey);
     }
 
     public function pullColumns() {

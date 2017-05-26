@@ -113,8 +113,6 @@ class ExportToExcel {
         $result = $this->export();
 
         $this->dispatchResponse($result);
-
-        //return $result;
     }
 
     private function buildQueryBuilder($entity) {
