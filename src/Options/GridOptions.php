@@ -89,6 +89,13 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
      * @var array 
      */
     protected $multiFilterConfig;
+    
+    
+     /**
+     * 
+     * @var array 
+     */
+    protected $exportConfig;
 
     /**
      *
@@ -250,6 +257,21 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         }
         $this->flashMessagesConfig = new \ZfMetal\Datagrid\Options\FlashMessagesConfig($flashMessagesConfig);
     }
+    
+    /**
+     * 
+     * @return \ZfMetal\Datagrid\Options\ExportConfig
+     */
+    function getExportConfig() {
+        return $this->exportConfig;
+    }
+
+    function setExportConfig($exportConfig) {
+        $this->exportConfig = new \ZfMetal\Datagrid\Options\ExportConfig($exportConfig);
+        return $this;
+    }
+
+
 
 
 }

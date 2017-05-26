@@ -14,6 +14,12 @@ class GridCrud extends AbstractHelper {
     public function __invoke($gridId) {
 
         $view = '  <script>';
+        
+        
+         $view .= 'function ' . \ZfMetal\Datagrid\C::F_EXPORT_TO_EXCEL . $gridId . '(){'
+                . \ZfMetal\Datagrid\C::F_POST . $gridId . '({' . \ZfMetal\Datagrid\Crud::inputAction . ': "exportToExcel"});
+
+        }';
 
         $view .= 'function ' . \ZfMetal\Datagrid\C::F_DELETE . $gridId . '(objectId){
             if(confirm("¿Esta seguro que desea eliminar el registro?")){'

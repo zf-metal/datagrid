@@ -9,6 +9,10 @@
         <?php if ($this->grid->getOptions()->getMultiFilterConfig()->getEnable()): ?>
             <?php echo $this->partial($this->partialFilter, array("grid" => $this->grid)); ?>
         <?php endif; ?>
+         <?php if ($this->grid->getOptions()->getExportConfig()->getExportToExcelEnable()): ?>
+        <button class="btn btn-primary" onclick="<?php echo $this->grid->get_f_export_to_excel(); ?>()">Excel</button>
+        <?php endif; ?>
+        
     </div>
 
     <table class="table table-bordered  <?php echo $this->grid->getTableClass(); ?>">

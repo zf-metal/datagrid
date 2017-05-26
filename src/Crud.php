@@ -34,11 +34,11 @@ class Crud {
 
     /**
      *
-     * @var \ZfMetal\Datagrid\Options\FlashMessagesConfig
+     * @var \ZfMetal\Datagrid\Options\GridOptions
      */
-    protected $flashMessengesConfig;
+    protected $gridOptions;
 
-    function __construct($source, $data = null, \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger $flashMessenger, \ZfMetal\Datagrid\Options\FlashMessagesConfig $flashMessagesConfig) {
+    function __construct($source, $data = null, \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger $flashMessenger, \ZfMetal\Datagrid\Options\GridOptions $gridOptions) {
         $this->source = $source;
         $this->data = $data;
 
@@ -50,7 +50,7 @@ class Crud {
         }
 
         $this->flashMessenger = $flashMessenger;
-        $this->flashMessengesConfig = $flashMessagesConfig;
+        $this->gridOptions = $gridOptions;
     }
 
     function getAction() {
@@ -87,6 +87,9 @@ class Crud {
     public function crudActions() {
 
         switch ($this->action) {
+             case 'exportToExcel':
+                $this->exportToExcel();
+                break;
             case 'delete':
                 $this->delete();
                 break;
@@ -111,10 +114,18 @@ class Crud {
         return $this->instance;
     }
 
+    
+      protected function exportToExcel() {
+        $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_EXPORT_TO_EXCEL;
+        $this->getSource()->exportToExcel($this->getGridOptions()->getExportConfig()->getExportToExcelKey());
+    }
+    
+    
     protected function view() {
         $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_VIEW;
         $this->record = $this->getSource()->viewRecord($this->id);
     }
+    
 
     protected function add() {
 
@@ -208,7 +219,13 @@ class Crud {
     }
 
     function getFlashMessengesConfig() {
-        return $this->flashMessengesConfig;
+        return $this->getGridOptions()->getFlashMessagesConfig();
     }
+    
+    function getGridOptions() {
+        return $this->gridOptions;
+    }
+
+
 
 }

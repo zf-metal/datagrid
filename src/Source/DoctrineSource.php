@@ -44,6 +44,12 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
     protected $paginator;
 
     /**
+     *
+     * @var \ZfMetal\Datagrid\Service\ExportToExcel 
+     */
+    protected $serviceExportToExcel;
+
+    /**
      * Doctrine Source Construct
      *
      * @param \Doctrine\ORM\EntityManager $em 
@@ -58,6 +64,21 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
         }
     }
 
+    function getServiceExportToExcel() {
+        return $this->serviceExportToExcel;
+    }
+
+    function setServiceExportToExcel(\ZfMetal\Datagrid\Service\ExportToExcel $serviceExportToExcel) {
+        $this->serviceExportToExcel = $serviceExportToExcel;
+        return $this;
+    }
+    
+    function exportToExcel($configKey) {
+        $this->getServiceExportToExcel()->run($this->getEm(), $this->getEntityName(), $this->getQb(), $configKey);
+    }
+
+        
+    
     public function getEm() {
         if (!isset($this->em)) {
             throw new \ZfMetal\Datagrid\Exception\EntityManagerNoSetException();
@@ -150,9 +171,8 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
     }
 
     public function applySearch() {
-          $doctrineSearch = new \ZfMetal\Datagrid\Source\Doctrine\Search($this->getQb());
-          $doctrineSearch->applySearch($this->getSearch());
-          
+        $doctrineSearch = new \ZfMetal\Datagrid\Source\Doctrine\Search($this->getQb());
+        $doctrineSearch->applySearch($this->getSearch());
     }
 
     public function applySort() {

@@ -17,8 +17,9 @@ class Grid {
     const INSTANCE_GRID = "grid";
     const INSTANCE_VIEW = "view";
     const INSTANCE_FORM = "form";
+    const INSTANCE_EXPORT_TO_EXCEL = "exportToExcel";
     const INSTANCES = [
-        self::INSTANCE_GRID, self::INSTANCE_VIEW, self::INSTANCE_FORM
+        self::INSTANCE_GRID, self::INSTANCE_VIEW, self::INSTANCE_FORM, self::INSTANCE_EXPORT_TO_EXCEL
     ];
     const MULTI_SEARH_ID = "_multisearch";
 
@@ -194,6 +195,8 @@ class Grid {
      */
     protected $formSearch;
 
+
+
     #TOREVIEW
     protected $tableClass;
 
@@ -219,8 +222,14 @@ class Grid {
             throw new \ZfMetal\Datagrid\Exception\SourceException();
         }
 
-        //CRUD - to review 
+
+
+
+        //CRUD - (Actualmente Define la instancia)
         $this->processCrudActions();
+
+        //EXPORT 
+        $this->processExport();
 
         //CRUD CONFIGURE
         $this->crudConfigure();
@@ -262,6 +271,12 @@ class Grid {
         return $this;
     }
 
+    function processExport() {
+        if($this->instance == self::INSTANCE_EXPORT_TO_EXCEL && $this->getOptions()->getExportConfig()->getExportToExcelEnable()){
+            $this->getServiceExportToExcel()->run($em, $entity, $queryBuilder, $configKey);
+        }
+    }
+
     function getMvcevent() {
         return $this->mvcevent;
     }
@@ -280,6 +295,15 @@ class Grid {
 
     function getFlashMessenger() {
         return $this->flashMessenger;
+    }
+
+    function getServiceExportToExcel() {
+        return $this->serviceExportToExcel;
+    }
+
+    function setServiceExportToExcel(\ZfMetal\Datagrid\Service\ExportToExcel $serviceExportToExcel) {
+        $this->serviceExportToExcel = $serviceExportToExcel;
+        return $this;
     }
 
     #CONFIG
@@ -424,7 +448,7 @@ class Grid {
     }
 
     function buildCrud() {
-        return new \ZfMetal\Datagrid\Crud($this->source, $this->getPost(), $this->getFlashMessenger(), $this->getOptions()->getFlashMessagesConfig());
+        return new \ZfMetal\Datagrid\Crud($this->source, $this->getPost(), $this->getFlashMessenger(), $this->getOptions());
     }
 
     function setCrud($crud) {
@@ -788,6 +812,10 @@ class Grid {
 
     public function get_f_filter() {
         return \ZfMetal\Datagrid\C::F_FILTER . $this->getId();
+    }
+
+    public function get_f_export_to_excel() {
+        return \ZfMetal\Datagrid\C::F_EXPORT_TO_EXCEL . $this->getId();
     }
 
     public function get_title_form() {

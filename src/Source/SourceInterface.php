@@ -33,6 +33,11 @@ interface SourceInterface {
      * @param \ZfMetal\Datagrid\Filters
      */
     public function setFilters(\ZfMetal\Datagrid\Filters $filters);
+
+    /**
+     * Execute an export to excel
+     */
+    public function exportToExcel($configKey);
 }
 
 ?>
