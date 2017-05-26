@@ -14,7 +14,13 @@ class Grid extends AbstractHelper {
     public function __invoke(\ZfMetal\Datagrid\Grid $grid) {
 
         $this->template = $grid->getTemplate();
+        
         $this->instance = $grid->getInstance();
+        
+        //TO REVIEW
+        if($this->instance == \ZfMetal\Datagrid\Grid::INSTANCE_EXPORT_TO_EXCEL ){
+            return null;
+        }
 
         $partial = self::TEMPLATE_PATH . $this->template . "/" . $this->instance;
         $partialPagination = self::TEMPLATE_PATH . $this->template . "/pagination";

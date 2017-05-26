@@ -14,7 +14,7 @@ class ExportToExcelFactory implements FactoryInterface {
         /* @var $application \Zend\Mvc\Application */
         $application = $container->get('application');
 
-        return new \ZfMetal\Datagrid\Service\ExportToExcel(isset($config['zf-metal-commons.exports']) ? $config['zf-metal-commons.exports'] : array(), $application);
+        return new \ZfMetal\Datagrid\Service\ExportToExcel(isset($config['zf-metal-datagrid.exports']) ? $config['zf-metal-datagrid.exports'] : array(), $application);
     }
 
 }

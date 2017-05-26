@@ -17,8 +17,9 @@ class Grid {
     const INSTANCE_GRID = "grid";
     const INSTANCE_VIEW = "view";
     const INSTANCE_FORM = "form";
+    const INSTANCE_EXPORT_TO_EXCEL = "exportToExcel";
     const INSTANCES = [
-        self::INSTANCE_GRID, self::INSTANCE_VIEW, self::INSTANCE_FORM
+        self::INSTANCE_GRID, self::INSTANCE_VIEW, self::INSTANCE_FORM, self::INSTANCE_EXPORT_TO_EXCEL
     ];
     const MULTI_SEARH_ID = "_multisearch";
 
@@ -194,6 +195,8 @@ class Grid {
      */
     protected $formSearch;
 
+
+
     #TOREVIEW
     protected $tableClass;
 
@@ -219,8 +222,12 @@ class Grid {
             throw new \ZfMetal\Datagrid\Exception\SourceException();
         }
 
-        //CRUD - to review 
+
+
+
+        //CRUD - (Actualmente Define la instancia)
         $this->processCrudActions();
+
 
         //CRUD CONFIGURE
         $this->crudConfigure();
@@ -245,6 +252,12 @@ class Grid {
 
         //Order (SORT)
         $this->prepareSort();
+        
+        //Prepare Source
+        $this->getSource()->prepare();
+
+        //EXPORT
+        $this->processExports();
 
         //Paginator
         $this->preparePaginator();
@@ -280,6 +293,15 @@ class Grid {
 
     function getFlashMessenger() {
         return $this->flashMessenger;
+    }
+
+    function getServiceExportToExcel() {
+        return $this->serviceExportToExcel;
+    }
+
+    function setServiceExportToExcel(\ZfMetal\Datagrid\Service\ExportToExcel $serviceExportToExcel) {
+        $this->serviceExportToExcel = $serviceExportToExcel;
+        return $this;
     }
 
     #CONFIG
@@ -395,7 +417,15 @@ class Grid {
         }
     }
 
+    protected function processExports() {
+        if ($this->getInstance() == self::INSTANCE_EXPORT_TO_EXCEL) {
+            $this->getSource()->exportToExcel($this->getOptions()->getExportConfig()->getExportToExcelKey());
+        }
+    }
+
     protected function preparePaginator() {
+
+        
         $this->paginatorAdapter = $this->getSource()->execute();
         $this->paginator = new Paginator($this->paginatorAdapter);
         $this->paginator->setDefaultItemCountPerPage($this->getOptions()->getRecordsPerPage());
@@ -424,7 +454,7 @@ class Grid {
     }
 
     function buildCrud() {
-        return new \ZfMetal\Datagrid\Crud($this->source, $this->getPost(), $this->getFlashMessenger(), $this->getOptions()->getFlashMessagesConfig());
+        return new \ZfMetal\Datagrid\Crud($this->source, $this->getPost(), $this->getFlashMessenger(), $this->getOptions());
     }
 
     function setCrud($crud) {
@@ -788,6 +818,10 @@ class Grid {
 
     public function get_f_filter() {
         return \ZfMetal\Datagrid\C::F_FILTER . $this->getId();
+    }
+
+    public function get_f_export_to_excel() {
+        return \ZfMetal\Datagrid\C::F_EXPORT_TO_EXCEL . $this->getId();
     }
 
     public function get_title_form() {

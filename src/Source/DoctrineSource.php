@@ -44,6 +44,12 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
     protected $paginator;
 
     /**
+     *
+     * @var \ZfMetal\Datagrid\Service\ExportToExcel 
+     */
+    protected $serviceExportToExcel;
+
+    /**
      * Doctrine Source Construct
      *
      * @param \Doctrine\ORM\EntityManager $em 
@@ -56,6 +62,15 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
         if (isset($qb)) {
             $this->setQb($qb);
         }
+    }
+
+    function getServiceExportToExcel() {
+        return $this->serviceExportToExcel;
+    }
+
+    function setServiceExportToExcel(\ZfMetal\Datagrid\Service\ExportToExcel $serviceExportToExcel) {
+        $this->serviceExportToExcel = $serviceExportToExcel;
+        return $this;
     }
 
     public function getEm() {
@@ -117,9 +132,7 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
         $this->entityKey = $entityKey;
     }
 
-    public function execute() {
-
-
+    public function prepare() {
         //1-ApplyFilters
         $this->applyFilters();
 
@@ -128,11 +141,18 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
 
         //3-ApplyOrder
         $this->applySort();
+    }
+
+    public function execute() {
 
         //4-Paginator
         $this->paginator = new DoctrinePaginatorAdapter(new DoctrinePaginator($this->getQb()));
 
         return $this->paginator;
+    }
+
+    function exportToExcel($configKey) {
+        $this->getServiceExportToExcel()->run($this->getEm(), $this->getEntityName(), $this->getQb(), $configKey);
     }
 
     public function pullColumns() {
@@ -150,9 +170,8 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
     }
 
     public function applySearch() {
-          $doctrineSearch = new \ZfMetal\Datagrid\Source\Doctrine\Search($this->getQb());
-          $doctrineSearch->applySearch($this->getSearch());
-          
+        $doctrineSearch = new \ZfMetal\Datagrid\Source\Doctrine\Search($this->getQb());
+        $doctrineSearch->applySearch($this->getSearch());
     }
 
     public function applySort() {

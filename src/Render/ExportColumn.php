@@ -24,7 +24,7 @@ class ExportColumn {
                 $result = $this->getDate($entity, $column->getName(), $config['format']);
                 break;
             case 'relational':
-                $result = $this->getRelational($entity, $column->getName(), isset($config['field'])?$config['field']:'');
+                $result = $this->getRelational($entity, $column->getName(), isset($config['field']) ? $config['field'] : '');
                 break;
         }
         return $result;
@@ -37,7 +37,11 @@ class ExportColumn {
 
     private function getDate($entity, $name, $format = 'Y-m-d') {
         $getMethod = $this->buildGedMethod($name);
-        return (string) $entity->$getMethod()->format($format);
+        $date = $entity->$getMethod();
+        if (is_a($date, "DateTime")) {
+            return (string) $date->format($format);
+        }
+        return "";
     }
 
     private function getRelational($entity, $name, $field) {

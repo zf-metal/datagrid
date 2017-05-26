@@ -11,6 +11,9 @@ $config = [
             'title_edit' => '',
             'records_per_page' => 10,
             'template_default' => 'default',
+            'export_config' => [
+                'export_to_excel_enable' => false,
+            ],
             'multi_filter_config' => [
                 "enable" => true,
                 "properties_disabled" => []

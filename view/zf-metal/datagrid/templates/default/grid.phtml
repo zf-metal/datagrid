@@ -2,13 +2,25 @@
 <div id="<?php echo $this->grid->getId(); ?>" >
 
     <div class="row">
+
+        <?php if ($this->grid->getOptions()->getExportConfig()->getExportToExcelEnable()): ?>
+            <div class="pull-right">
+                <button class="btn btn-primary btn-sm" onclick="<?php echo $this->grid->get_f_export_to_excel(); ?>()">Excel</button>
+            </div>
+        <?php endif; ?>
+
         <?php if ($this->grid->getOptions()->getMultiSearchConfig()->getEnable()): ?>     
             <?php echo $this->partial($this->partialSearch, array("grid" => $this->grid)); ?>
         <?php endif; ?>     
 
+
+
         <?php if ($this->grid->getOptions()->getMultiFilterConfig()->getEnable()): ?>
             <?php echo $this->partial($this->partialFilter, array("grid" => $this->grid)); ?>
         <?php endif; ?>
+
+
+
     </div>
 
     <table class="table table-bordered  <?php echo $this->grid->getTableClass(); ?>">

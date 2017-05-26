@@ -20,6 +20,11 @@ interface SourceInterface {
     public function pullColumns();
 
     /**
+     * Prepare the query (Filters and Order)
+     */
+    public function prepare();
+
+    /**
      * Execute the query and set the paginator
      */
     public function execute();
@@ -33,6 +38,11 @@ interface SourceInterface {
      * @param \ZfMetal\Datagrid\Filters
      */
     public function setFilters(\ZfMetal\Datagrid\Filters $filters);
+
+    /**
+     * Execute an export to excel
+     */
+    public function exportToExcel($configKey);
 }
 
 ?>

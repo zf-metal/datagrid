@@ -61,7 +61,7 @@ class ExportToExcel {
         return $this->config;
     }
 
-    function getEm(): \Doctrine\ORM\EntityManager {
+    function getEm() {
         return $this->em;
     }
 
@@ -113,8 +113,6 @@ class ExportToExcel {
         $result = $this->export();
 
         $this->dispatchResponse($result);
-
-        //return $result;
     }
 
     private function buildQueryBuilder($entity) {
@@ -203,7 +201,8 @@ class ExportToExcel {
 
     private function dispatchResponse($file) {
         $plugin = $this;
-        $this->getApplication()->getEventManager()->attach($this->getApplication()->getMvcEvent()::EVENT_FINISH, function($e) use ($plugin, $file) {
+        $mvcevent = $this->getApplication()->getMvcEvent();
+        $this->getApplication()->getEventManager()->attach($mvcevent::EVENT_FINISH, function($e) use ($plugin, $file) {
             $response = $e->getResponse();
             $response->getHeaders()->addHeaders(array(
                 'Content-Type' => 'application/octet-stream',
