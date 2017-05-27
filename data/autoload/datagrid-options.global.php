@@ -9,6 +9,22 @@ return array(
         'title_edit' => '',
         'records_per_page' => 10,
         'template_default' => 'default',
+        'export_config' => [
+            'export_to_excel' => [
+                'enable' => false,
+                'key' => '',
+                'btn_class' => 'btn btn-default',
+                'btn_value' => 'excel',
+                'btn_tag' => 'button',
+            ],
+            'export_to_csv' => [
+                'enable' => false,
+                'key' => '',
+                'btn_class' => 'btn btn-default',
+                'btn_value' => 'excel',
+                'btn_tag' => 'button',
+            ],
+        ],
         'multi_filter_config' => [
             "enable" => true,
             "properties_disabled" => []
