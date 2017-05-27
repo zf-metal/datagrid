@@ -69,7 +69,7 @@ class GridFactory implements FactoryInterface {
         $source->setEm($em);
 
         //EXPORTS
-        if ($this->gridOptions->getExportConfig()->getExportToExcelEnable()) {
+        if ($this->gridOptions->getExportConfig()->getExportToExcel()->getEnable()) {
             $serviceExportToExcel = $this->container->get('zf-metal-datagrid.export_to_excel');
             $source->setServiceExportToExcel($serviceExportToExcel);
         }

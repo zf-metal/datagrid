@@ -3,17 +3,11 @@
 
     <div class="row">
 
-        <?php if ($this->grid->getOptions()->getExportConfig()->getExportToExcelEnable()): ?>
-            <div class="pull-right">
-                <button class="btn btn-primary btn-sm" onclick="<?php echo $this->grid->get_f_export_to_excel(); ?>()">Excel</button>
-            </div>
-        <?php endif; ?>
+        <?php echo $this->partial($this->partialExports, array("grid" => $this->grid)); ?>
 
         <?php if ($this->grid->getOptions()->getMultiSearchConfig()->getEnable()): ?>     
             <?php echo $this->partial($this->partialSearch, array("grid" => $this->grid)); ?>
         <?php endif; ?>     
-
-
 
         <?php if ($this->grid->getOptions()->getMultiFilterConfig()->getEnable()): ?>
             <?php echo $this->partial($this->partialFilter, array("grid" => $this->grid)); ?>

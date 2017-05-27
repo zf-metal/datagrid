@@ -1,0 +1,21 @@
+<?php $exportToExcel = $this->grid->getOptions()->getExportConfig()->getExportToExcel(); ?>
+
+<?php if ($exportToExcel->getEnable()): ?>
+    <div class="pull-right">
+        <<?php echo $exportToExcel->getBtnTag(); ?> class="<?php echo $exportToExcel->getBtnClass(); ?>" onclick="<?php echo $this->grid->get_f_export_to_excel(); ?>()">
+            <?php echo $exportToExcel->getBtnValue(); ?>
+        </<?php echo $exportToExcel->getBtnTag(); ?>>
+    </div>
+<?php endif; ?>
+
+
+
+<?php $exportToCsv = $this->grid->getOptions()->getExportConfig()->getExportToCsv(); ?>
+
+<?php if ($exportToCsv->getEnable()): ?>
+    <div class="pull-right">
+        <<?php echo $exportToCsv->getBtnTag(); ?> class="<?php echo $exportToCsv->getBtnClass(); ?>" onclick="<?php echo $this->grid->get_f_export_to_csv(); ?>()">
+            <?php echo $exportToCsv->getBtnValue(); ?>
+        </<?php echo $exportToCsv->getBtnTag(); ?>>
+    </div>
+<?php endif; ?>

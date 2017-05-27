@@ -7,36 +7,31 @@ use Zend\Stdlib\AbstractOptions;
 class ExportConfig extends AbstractOptions {
 
     /**
-     * Enable | Disable multisearch
-     * 
-     * @var boolean
+     * @var array
      */
-    protected $exportToExcelEnable = false;
+    protected $exportToExcel = array();
 
     /**
-     * 
      * @var boolean
      */
-    protected $exportToExcelKey;
+    protected $exportToCsv = array();
 
-    function getExportToExcelEnable() {
-        return $this->exportToExcelEnable;
+    function getExportToExcel() {
+        return $this->exportToExcel;
     }
 
-    function setExportToExcelEnable($exportToExcelEnable) {
-        $this->exportToExcelEnable = $exportToExcelEnable;
-        return $this;
-    }
-    
-    function getExportToExcelKey() {
-        return $this->exportToExcelKey;
+    function getExportToCsv() {
+        return $this->exportToCsv;
     }
 
-    function setExportToExcelKey($exportToExcelKey) {
-        $this->exportToExcelKey = $exportToExcelKey;
+    function setExportToExcel($exportToExcel) {
+        $this->exportToExcel = new \ZfMetal\Datagrid\Options\ExportItemConfig($exportToExcel);
         return $this;
     }
 
-
+    function setExportToCsv($exportToCsv) {
+        $this->exportToCsv = new \ZfMetal\Datagrid\Options\ExportItemConfig($exportToCsv);
+        return $this;
+    }
 
 }

@@ -252,7 +252,7 @@ class Grid {
 
         //Order (SORT)
         $this->prepareSort();
-        
+
         //Prepare Source
         $this->getSource()->prepare();
 
@@ -419,13 +419,11 @@ class Grid {
 
     protected function processExports() {
         if ($this->getInstance() == self::INSTANCE_EXPORT_TO_EXCEL) {
-            $this->getSource()->exportToExcel($this->getOptions()->getExportConfig()->getExportToExcelKey());
+            $this->getSource()->exportToExcel($this->getOptions()->getExportConfig()->getExportToExcel()->getKey());
         }
     }
 
     protected function preparePaginator() {
-
-        
         $this->paginatorAdapter = $this->getSource()->execute();
         $this->paginator = new Paginator($this->paginatorAdapter);
         $this->paginator->setDefaultItemCountPerPage($this->getOptions()->getRecordsPerPage());
@@ -822,6 +820,10 @@ class Grid {
 
     public function get_f_export_to_excel() {
         return \ZfMetal\Datagrid\C::F_EXPORT_TO_EXCEL . $this->getId();
+    }
+
+    public function get_f_export_to_csv() {
+        return \ZfMetal\Datagrid\C::F_EXPORT_TO_CSV . $this->getId();
     }
 
     public function get_title_form() {

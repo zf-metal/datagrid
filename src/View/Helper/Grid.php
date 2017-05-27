@@ -14,11 +14,11 @@ class Grid extends AbstractHelper {
     public function __invoke(\ZfMetal\Datagrid\Grid $grid) {
 
         $this->template = $grid->getTemplate();
-        
+
         $this->instance = $grid->getInstance();
-        
+
         //TO REVIEW
-        if($this->instance == \ZfMetal\Datagrid\Grid::INSTANCE_EXPORT_TO_EXCEL ){
+        if ($this->instance == \ZfMetal\Datagrid\Grid::INSTANCE_EXPORT_TO_EXCEL) {
             return null;
         }
 
@@ -26,6 +26,7 @@ class Grid extends AbstractHelper {
         $partialPagination = self::TEMPLATE_PATH . $this->template . "/pagination";
         $partialFilter = self::TEMPLATE_PATH . $this->template . "/filter";
         $partialSearch = self::TEMPLATE_PATH . $this->template . "/search";
+        $partialExports = self::TEMPLATE_PATH . $this->template . "/exports";
         $partialModal = self::TEMPLATE_PATH . $this->template . "/modal";
 
         $routeParams = $grid->getQueryArray();
@@ -39,6 +40,7 @@ class Grid extends AbstractHelper {
                     "partialPagination" => $partialPagination,
                     "partialFilter" => $partialFilter,
                     "partialSearch" => $partialSearch,
+                    "partialExports" => $partialExports,
                     "partialModal" => $partialModal,
                     'routeParams' => $routeParams,
                     'route' => $route));
