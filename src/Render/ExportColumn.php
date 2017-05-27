@@ -48,7 +48,13 @@ class ExportColumn {
         $getMethod = $this->buildGedMethod($name);
         if ($field) {
             $getField = $this->buildGedMethod($field);
-            return $entity->$getMethod()->$getField();
+            $relationalObject = $entity->$getMethod();
+            if($relationalObject and method_exists($relationalObject, $getField)){
+                 return $relationalObject->$getField();  
+            }else{
+                return "";
+            }
+         
         }
         return (string) $entity->$getMethod();
     }
