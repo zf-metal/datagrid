@@ -27,28 +27,9 @@ class GridBuilder {
         //Filter by Parent
         if ($mainEntityField && $mainEntity) {
 
-            //Get Source Config
-            $sourceConfig = $grid->getOptions()->getSourceConfig();
-
-            //Get EntityManager
-            $em = $this->container->get($sourceConfig["doctrineOptions"]["entityManager"]);
-
-            //Get EntityName
-            $entityName = $sourceConfig["doctrineOptions"]["entityName"];
-            if (!$entityName) {
-                throw new \Exception("EntityName is not defined. Check CustomKey");
-            }
-
-            //Generate Query
-            $query = $em->createQueryBuilder()
-                    ->select('u')
-                    ->from($entityName, 'u')
-                    ->where("u." . $mainEntityField . " = :mainEntity")
+            //Edit Source QB
+            $grid->getSource()->getQb()->where("u." . $mainEntityField . " = :mainEntity")
                     ->setParameter("mainEntity", $mainEntity);
-
-            //Set Source to Grid
-            $source = new \ZfMetal\Datagrid\Source\DoctrineSource($em, $entityName, $query);
-            $grid->setSource($source);
 
 
             // Elimina el cliente del Formulario

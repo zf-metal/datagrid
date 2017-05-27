@@ -15,11 +15,9 @@ class GridFactory implements FactoryInterface {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = NULL) {
         $this->container = $container;
 
-
         // Foward $options. Util Keys: customOptionsKey | customOptions
         $gridOptions = $container->build('zf-metal-datagrid.options', $options);
-
-
+        
         /* @var $application \Zend\Mvc\Application */
         $application = $container->get('application');
 
@@ -34,9 +32,6 @@ class GridFactory implements FactoryInterface {
 
         //NEW GRID
         $this->grid = new Grid($mvcevent, $gridOptions, $flashMessenger);
-
-
-
 
         //SET SOURCE BY REQUEST NAME
         ($requestedName == "zf-metal-datagrid-doctrine" || (isset($this->gridOptions->getSourceConfig()["type"]) && $this->gridOptions->getSourceConfig()["type"] == "doctrine") ) ? $this->buildDoctrineSource() : null;
@@ -69,6 +64,7 @@ class GridFactory implements FactoryInterface {
         $source->setEm($em);
 
         //EXPORTS
+       
         if ($this->gridOptions->getExportConfig()->getExportToExcel()->getEnable()) {
             $serviceExportToExcel = $this->container->get('zf-metal-datagrid.export_to_excel');
             $source->setServiceExportToExcel($serviceExportToExcel);

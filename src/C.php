@@ -16,6 +16,7 @@ class C {
     const F_FORM = "ZfMetal_Grid_Form_";
     const F_SORT = "ZfMetal_Grid_Sort_";
     const F_POST = "ZfMetal_Grid_Post_";
+    const F_POST_AJAX = "ZfMetal_Grid_Post_Ajax_";
     //Export
     const F_EXPORT_TO_EXCEL = "ZfMetal_Grid_Export_To_Excel_";
     const F_EXPORT_TO_CSV = "ZfMetal_Grid_Export_To_Csv_";
