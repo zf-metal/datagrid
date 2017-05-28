@@ -32,13 +32,13 @@ class GridBuilder {
                     ->setParameter("mainEntity", $mainEntity);
 
 
-            // Elimina el cliente del Formulario
+            // Elimina el mainfield del Formulario
             $grid->getCrudForm()->remove($mainEntityField);
 
-            // Elimina el cliente del Filtro
+            // Elimina el mainfield del Filtro
             $grid->getForm()->remove($mainEntityField);
 
-            // Elimina la columna cliente del datagrid
+            // Elimina la maincolumn del datagrid
             $grid->setColumnsConfig(array_merge_recursive($grid->getColumnsConfig(), [$mainEntityField => ['hidden' => true]]));
 
             //Attach event to form

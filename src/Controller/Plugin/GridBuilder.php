@@ -7,12 +7,12 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 class GridBuilder extends AbstractPlugin {
 
     /**
-     * @var \Interop\Container\ContainerInterface
+     * @var \ZfMetal\Datagrid\Builder\GridBuilder
      */
-    protected $container;
+    protected $gridBuilder;
 
-    function __construct(\Interop\Container\ContainerInterface $container) {
-        $this->container = $container;
+    function __construct(\ZfMetal\Datagrid\Builder\GridBuilder $gridBuilder) {
+        $this->gridBuilder = $gridBuilder;
     }
 
     /**
@@ -23,70 +23,17 @@ class GridBuilder extends AbstractPlugin {
      * @param integer $parentEntityId
      * @return \ZfMetal\Datagrid\Grid
      */
-    public function __invoke($customKey, $relatedEntityField = null, $relatedEntity = null) {
+    public function __invoke($customKey, $mainEntityField = null, $mainEntity = null) {
 
-
-        /* @var $grid \ZfMetal\Datagrid\Grid */
-        $grid = $this->container->build("zf-metal-datagrid", ["customKey" => $customKey]);
-
-        //Filter by Parent
-        if ($relatedEntityField && $relatedEntity) {
-
-            //Get Source Config
-            $sourceConfig = $grid->getOptions()->getSourceConfig();
-
-            //Get EntityManager
-            if (key_exists("doctrineOptions", $sourceConfig) AND key_exists("entityManager", $sourceConfig["doctrineOptions"])) {
-                $entityManager = $sourceConfig["doctrineOptions"]["entityManager"];
-            } else {
-                $entityManager = "doctrine.entitymanager.orm_default";
-            }
-
-            //Get EntityName
-            if (key_exists("doctrineOptions", $sourceConfig) AND key_exists("entityName", $sourceConfig["doctrineOptions"])) {
-                $entityName = $sourceConfig["doctrineOptions"]["entityName"];
-            }else{
-                throw new \Exception("EntityName is not defined. Check CustomKey");
-            }
-
-
-            $em = $this->container->get($entityManager);
-
-            //Generate Query
-            $query = $em->createQueryBuilder()
-                    ->select('u')
-                    ->from($entityName, 'u')
-                    ->where("u." . $relatedEntityField . " = :relatedEntity")
-                    ->setParameter("relatedEntity", $relatedEntity);
-
-            //Set Source to Grid
-            $source = new \ZfMetal\Datagrid\Source\DoctrineSource($em, $entityName, $query);
-            $grid->setSource($source);
-
-
-            // Elimina el cliente del Formulario
-            $grid->getCrudForm()->remove($relatedEntityField);
-
-            // Elimina el cliente del Filtro
-            $grid->getForm()->remove($relatedEntityField);
-
-            // Elimina la columna cliente del datagrid
-            $grid->setColumnsConfig(array_merge_recursive($grid->getColumnsConfig(), [$relatedEntityField => ['hidden' => true]]));
-
-            //Attach event to form
-            $grid->getSource()->getEventManager()->attach('saveRecord_before', function($e) use ($relatedEntityField, $relatedEntity) {
-                $record = $e->getParam('record');
-                $setter = $this->getSetterByName($relatedEntityField);
-                $record->$setter($relatedEntity);
-            });
-        }
-
-        //Return Grid
-        return $grid;
+        return $this->getGridBuilder()->build($customKey, $mainEntityField, $mainEntity);
+    }
+    
+    function getGridBuilder() {
+        return $this->gridBuilder;
     }
 
-    protected function getSetterByName($name) {
-        return "set" . ucfirst($name);
-    }
+
+
+
 
 }

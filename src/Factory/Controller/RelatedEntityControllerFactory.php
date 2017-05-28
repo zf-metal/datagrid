@@ -34,7 +34,7 @@ class RelatedEntityControllerFactory implements FactoryInterface {
         }
 
         //6. Build Grid
-        $gridBuilder = new \ZfMetal\Datagrid\Builder\GridBuilder($container);
+        $gridBuilder = $container->get("zf-metal-datagrid-grid-builder");
         $grid = $gridBuilder->build($customKey, $mainEntityField, $mainEntity);
         $grid->setTemplate("ajax");
 
