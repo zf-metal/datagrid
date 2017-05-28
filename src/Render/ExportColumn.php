@@ -18,6 +18,9 @@ class ExportColumn {
             case 'integer':
                 $result = $this->getString($entity, $column->getName());
                 break;
+            case 'boolean':
+                $result = $this->getBoolean($entity, $column->getName(), $config['valueWhenTrue'], $config['valueWhenFalse']);
+                break;
             case 'date':
             case 'time':
             case 'datetime':
@@ -35,6 +38,17 @@ class ExportColumn {
         return (string) $entity->$getMethod();
     }
 
+    private function getBoolean($entity, $name, $valueWhenTrue, $valueWhenFalse) {
+        $getMethod = $this->buildGedMethod($name);
+        $result = $entity->$getMethod();
+        if ($result == false) {
+            return $valueWhenFalse;
+        } else {
+            return $valueWhenTrue;
+        }
+        return "";
+    }
+
     private function getDate($entity, $name, $format = 'Y-m-d') {
         $getMethod = $this->buildGedMethod($name);
         $date = $entity->$getMethod();
@@ -49,12 +63,11 @@ class ExportColumn {
         if ($field) {
             $getField = $this->buildGedMethod($field);
             $relationalObject = $entity->$getMethod();
-            if($relationalObject and method_exists($relationalObject, $getField)){
-                 return $relationalObject->$getField();  
-            }else{
+            if ($relationalObject and method_exists($relationalObject, $getField)) {
+                return $relationalObject->$getField();
+            } else {
                 return "";
             }
-         
         }
         return (string) $entity->$getMethod();
     }
