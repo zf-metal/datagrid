@@ -133,6 +133,11 @@ class ColumnFactory {
         if (isset($this->config["length"])) {
             $this->column->setLength($this->config["length"]);
         }
+        
+          if (isset($this->config["tooltip"])) {
+  
+            $this->column->setTooltip($this->config["tooltip"]);
+        }
 
         return $this->column;
     }

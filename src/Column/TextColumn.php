@@ -18,6 +18,13 @@ class TextColumn extends AbstractColumn {
      */
     protected $length = null;
     
+    /**
+     * Enable Tooltip
+     * 
+     * @var boolean
+     */
+    protected $tooltip = false;
+    
     function getLength() {
         return $this->length;
     }
@@ -26,6 +33,16 @@ class TextColumn extends AbstractColumn {
         $this->length = $length;
         return $this;
     }
+
+    function getTooltip() {
+        return $this->tooltip;
+    }
+
+    function setTooltip($tooltip) {
+        $this->tooltip = $tooltip;
+        return $this;
+    }
+
 
 
 }
