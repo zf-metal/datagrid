@@ -637,6 +637,9 @@ class Grid {
                     }
     //Process Data ExtraColumns
                     foreach ($this->extraColumns as $ExtraColumn) {
+                        if($ExtraColumn->getType() == 'custom'){
+                            continue;
+                        }
                         $item[$ExtraColumn->getName()] = $ExtraColumn->processData($item);
                     }
                     $this->row[] = $item;

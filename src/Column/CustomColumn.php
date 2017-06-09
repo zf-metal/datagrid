@@ -41,10 +41,6 @@ class CustomColumn extends AbstractColumn {
             throw new \Exception("The side must be 'left' or 'right'");
         }
     }
-
-    public function processData($item){
-        return null;
-    }
 }
 
 ?>
