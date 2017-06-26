@@ -4,6 +4,7 @@
 
     <?php
     $form = $this->grid->getCrudForm();
+    $form->setAttribute('onsubmit', "submit.disabled=true; return true;");
     $form->setAttribute("action", "javascript:" . \ZfMetal\Datagrid\C::F_FORM . $this->grid->getId() . "('" . $form->getName() . "')");
     $formConfig = $this->grid->getOptions()->getFormConfig();
     ?>

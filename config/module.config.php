@@ -174,7 +174,7 @@ return array(
             'ManagerRender' => 'ZfMetal\Datagrid\View\Helper\Manager',
             //MODAL
             'GridCrudModal' => 'ZfMetal\Datagrid\View\Helper\GridCrudModal',
-        //  'GridCrudAjaxModal' => 'ZfMetal\Datagrid\View\Helper\GridCrudAjaxModal',
+            'GridCrudAjaxModal' => 'ZfMetal\Datagrid\View\Helper\GridCrudAjaxModal',
         )
     ),
     'view_manager' => array(

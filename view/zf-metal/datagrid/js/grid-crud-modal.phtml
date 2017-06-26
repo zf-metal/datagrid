@@ -1,0 +1,77 @@
+<div id="zf-metal-grid-delete-modal-<?= $gridId ?>" class="modal" role="dialog" tabindex="-1"  style="display: none;"> 
+    <div  class="modal-dialog" role="document"> 
+        <div class="modal-content alert alert-danger"> 
+            <div id="zf-metal-grid-delete-modal-content-<?= $gridId ?>" class="modal-body">
+            </div> 
+        </div> 
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    //Export To Excel
+    function <?= \ZfMetal\Datagrid\C::F_EXPORT_TO_EXCEL . $gridId ?>() {
+<?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "exportToExcel"});
+    }
+
+
+
+    //Delete
+    function <?= \ZfMetal\Datagrid\C::F_DELETE . $gridId ?>(objectId) {
+        $("#zf-metal-grid-delete-modal-content-<?= $gridId ?>").html("");
+
+        var content = '<h4>Se require confirmación</h4>' +
+                '<p>¿Esta seguro de eliminar el registro?</p>' +
+                '<p>' +
+                '<button type="button" onclick="<?= \ZfMetal\Datagrid\C::F_DELETE_CONFIRM . $gridId ?>('+objectId+')" class="btn btn-danger" >Eliminar</button>' +
+                ' <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" aria-hidden="true">Cancelar</button>' +
+                '</p>';
+
+        $("#zf-metal-grid-delete-modal-content-<?= $gridId ?>").html(content);
+        $("#zf-metal-grid-delete-modal-<?= $gridId ?>").modal("show");
+
+    }
+    //DELETE CONFIRM
+    function <?= \ZfMetal\Datagrid\C::F_DELETE_CONFIRM . $gridId ?>(objectId) {
+<?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "delete", <?= \ZfMetal\Datagrid\Crud::inputId ?>: objectId});
+        $("#zf-metal-grid-delete-modal-<?= $gridId ?>").modal("hidde");
+    }
+
+    //EDIT
+    function <?= \ZfMetal\Datagrid\C::F_EDIT . $gridId ?>(objectId) {
+<?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "edit", <?= \ZfMetal\Datagrid\Crud::inputId ?>: objectId});
+    }
+
+    //VIEW
+    function <?= \ZfMetal\Datagrid\C::F_VIEW . $gridId ?>(objectId) {
+<?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "view", <?= \ZfMetal\Datagrid\Crud::inputId ?>: objectId});
+    }
+
+    //ADD
+    function <?= \ZfMetal\Datagrid\C::F_ADD . $gridId ?>() {
+<?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "add"});
+    }
+
+    //POST
+    function <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>(params) {
+        var goto = window.location.href;
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", goto);
+        for (var key in params) {
+            if (params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+</script>
+
+

@@ -1,0 +1,108 @@
+<script type="text/javascript">
+
+    //DELETE
+    function <?= \ZfMetal\Datagrid\C::F_DELETE . $gridId ?>(objectId) {
+        if (confirm("¿Esta seguro que desea eliminar el registro?")) {
+            $("#<?= $gridId ?>").html("Procesando...");
+<?= \ZfMetal\Datagrid\C::F_POST_AJAX . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "delete", <?= \ZfMetal\Datagrid\Crud::inputId ?>: objectId});
+        }
+    }
+
+    //EXPORT TO EXCEL
+    function <?= \ZfMetal\Datagrid\C::F_EXPORT_TO_EXCEL . $gridId ?>() {
+<?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "exportToExcel"});
+    }
+
+    //EDIT
+    function <?= \ZfMetal\Datagrid\C::F_EDIT . $gridId ?>(objectId) {
+<?= \ZfMetal\Datagrid\C::F_POST_AJAX . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "edit", <?= \ZfMetal\Datagrid\Crud::inputId ?>: objectId});
+    }
+
+    //VIEW
+    function <?= \ZfMetal\Datagrid\C::F_VIEW . $gridId ?>(objectId) {
+<?= \ZfMetal\Datagrid\C::F_POST_AJAX . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "view", <?= \ZfMetal\Datagrid\Crud::inputId ?>: objectId});
+    }
+
+    //ADD
+    function <?= \ZfMetal\Datagrid\C::F_ADD . $gridId ?>() {
+<?= \ZfMetal\Datagrid\C::F_POST_AJAX . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "add"});
+    }
+
+    //LIST
+    function <?= \ZfMetal\Datagrid\C::F_LIST . $gridId ?>() {
+<?= \ZfMetal\Datagrid\C::F_POST_AJAX . $gridId ?>();
+    }
+
+    //PAGINATION
+    function <?= \ZfMetal\Datagrid\C::F_PAGINATION . $gridId ?>(url) {
+        $.get(url).done(function (data) {
+            $("#<?= $gridId ?>").html(data);
+        });
+    }
+
+    //FILTER
+    function <?= \ZfMetal\Datagrid\C::F_FILTER . $gridId ?>() {
+        $.get("<?= $url ?>", $("#<?= \ZfMetal\Datagrid\Factory\FormFilterFactory::FORM_FILTER_NAME . $gridId ?>").serialize()).done(function (data) {
+            $("#<?= $gridId ?>").html(data);
+        });
+    }
+
+    //SEARCH
+    function <?= \ZfMetal\Datagrid\C::F_SEARCH . $gridId ?>() {
+        $.get("<?= $url ?>", $("#<?= \ZfMetal\Datagrid\Form\MultiSearch::FORM_SEARCH_NAME . $gridId ?>").serialize()).done(function (data) {
+            $("#<?= $gridId ?>").html(data);
+        });
+    }
+
+
+    //SORT
+    function <?= \ZfMetal\Datagrid\C::F_SORT . $gridId ?>(url) {
+        $.get(url).done(function (data) {
+            $("#<?= $gridId ?>").html(data);
+        });
+    }
+
+    //F_FORM
+    function <?= \ZfMetal\Datagrid\C::F_FORM . $gridId ?>(fname) {
+        var data = $("#" + fname).serialize();
+        //Procesando
+        $.post("<?= $url ?>", data).done(function (response) {
+            $("#<?= $gridId ?>").html(response);
+        });
+    }
+
+
+    //POST AJAX
+    function <?= \ZfMetal\Datagrid\C::F_POST_AJAX . $gridId ?>(params) {
+        var url = "<?= $url ?>";
+        //Procesando
+        $.post(url, params).done(function (data) {
+            $("#<?= $gridId ?>").html(data);
+        });
+    }
+
+    //POST
+    function <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>(params) {
+        var goto = "<?= $url ?>";
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", goto);
+
+        for (var key in params) {
+            if (params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+</script>
+
+

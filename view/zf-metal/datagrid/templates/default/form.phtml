@@ -3,6 +3,7 @@
 
     <?php
     $form = $this->grid->getCrudForm();
+    $form->setAttribute('onsubmit',"submit.disabled=true; return true;");
     $formConfig = $this->grid->getOptions()->getFormConfig();
     ?>
 
@@ -16,3 +17,9 @@
     </div>
 </div>
 
+<script>
+document.getElementByName("submit").addEventListener("click", function(event){
+    event.preventDefault();
+});
+
+</script>
