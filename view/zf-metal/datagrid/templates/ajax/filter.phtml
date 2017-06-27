@@ -21,7 +21,7 @@
             $('[name="' + element + '"]').val(value);
         }
 
-        function resetFormFilter_<?php echo $form->getName(); ?>(sub = false) {
+        function <?php echo \ZfMetal\Datagrid\C::F_FILTER_CLEAN.$form->getName(); ?>(sub = false) {
             $(':input', '#<?php echo $form->getName(); ?>')
                     .not(':button, :submit, :reset, :hidden')
                     .val('')

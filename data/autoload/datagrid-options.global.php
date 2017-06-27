@@ -36,6 +36,21 @@ return array(
         "formConfig" => [
             'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
             'style' => \ZfMetal\Commons\Consts::STYLE_MENU_VERTICAL,
+            'submit' => [
+                'enable' => true,
+                'value' => 'Submit',
+                'class' => 'btn btn-primary'
+            ],
+            'cancel' => [
+                'enable' => true,
+                'value' => 'Cancel',
+                'class' => 'btn btn-default'
+            ],
+            'clean' => [
+                'enable' => false,
+                'value' => 'Clean',
+                'class' => 'btn btn-warning'
+            ],
         ],
         "crudConfig" => [
             "enable" => true,

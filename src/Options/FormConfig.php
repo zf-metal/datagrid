@@ -27,6 +27,27 @@ class FormConfig extends AbstractOptions {
      */
     protected $groups = array();
 
+    /**
+     * Button submit
+     * 
+     * @var array
+     */
+    protected $submit;
+
+    /**
+     * Button submit
+     * 
+     * @var array
+     */
+    protected $cancel;
+
+    /**
+     * Button submit
+     * 
+     * @var array
+     */
+    protected $clean;
+
     function getColumns() {
         return $this->columns;
     }
@@ -49,6 +70,45 @@ class FormConfig extends AbstractOptions {
 
     function setGroups($groups) {
         $this->groups = $groups;
+        return $this;
+    }
+
+    /**
+     * 
+     * @return \ZfMetal\Datagrid\Options\ButtonFormConfig
+     */
+    function getSubmit() {
+        return $this->submit;
+    }
+
+    /**
+     * 
+     * @return \ZfMetal\Datagrid\Options\ButtonFormConfig
+     */
+    function getCancel() {
+        return $this->cancel;
+    }
+
+    /**
+     * 
+     * @return \ZfMetal\Datagrid\Options\ButtonFormConfig
+     */
+    function getClean() {
+        return $this->clean;
+    }
+
+    function setSubmit(array $submit) {
+        $this->submit = new \ZfMetal\Datagrid\Options\ButtonFormConfig($submit);
+        return $this;
+    }
+
+    function setCancel(array $cancel) {
+        $this->cancel = new \ZfMetal\Datagrid\Options\ButtonFormConfig($cancel);
+        return $this;
+    }
+
+    function setClean(array $clean) {
+        $this->clean = new \ZfMetal\Datagrid\Options\ButtonFormConfig($clean);
         return $this;
     }
 

@@ -77,9 +77,73 @@ class Crud {
         return $this->msj;
     }
 
+    protected function comfigForm() {
+        //Set Post Method
+        $this->crudForm->setAttribute('method', 'post');
+
+        //Set Post Method
+        $this->crudForm->setAttribute('id', 'form_' . $this->gridOptions->getGridId());
+
+        $this->configFormSubmit();
+        $this->configFormCancel();
+        $this->configFormClean();
+  
+    }
+
+    protected function configFormSubmit() {
+        //Config Submit
+        if ($this->gridOptions->getFormConfig()->getSubmit()->getEnable()) {
+            $this->crudForm->add(array(
+                'name' => 'submit',
+                'type' => 'Zend\Form\Element\Submit',
+                'attributes' => array(
+                    'value' => $this->gridOptions->getFormConfig()->getSubmit()->getValue(),
+                    'class' => $this->gridOptions->getFormConfig()->getSubmit()->getClass(),
+                )
+                    ), array(
+                'priority' => $this->gridOptions->getFormConfig()->getSubmit()->getPriority(),
+            ));
+        }
+    }
+
+    protected function configFormCancel() {
+        //Config Clean
+        if ($this->gridOptions->getFormConfig()->getCancel()->getEnable()) {
+            $this->crudForm->add(array(
+                'name' => 'cancel',
+                'type' => 'Zend\Form\Element\Button',
+                'attributes' => array(
+                    'value' => $this->gridOptions->getFormConfig()->getCancel()->getValue(),
+                    'class' => $this->gridOptions->getFormConfig()->getCancel()->getClass(),
+                    'onclick' => \ZfMetal\Datagrid\C::F_LIST . $this->gridOptions->getGridId() . '()',
+                )
+                    ), array(
+                'priority' => $this->gridOptions->getFormConfig()->getCancel()->getPriority(),
+            ));
+        }
+    }
+
+    protected function configFormClean() {
+        //Config Cancel
+        if ($this->gridOptions->getFormConfig()->getClean()->getEnable()) {
+            $this->crudForm->add(array(
+                'name' => 'clean',
+                'type' => 'Zend\Form\Element\Button',
+                'attributes' => array(
+                    'value' => $this->gridOptions->getFormConfig()->getClean()->getValue(),
+                    'class' => $this->gridOptions->getFormConfig()->getClean()->getClass(),
+                    'onclick' => \ZfMetal\Datagrid\C::F_CLEAN . $this->gridOptions->getGridId() . '()',
+                )
+                    ), array(
+                'priority' => $this->gridOptions->getFormConfig()->getClean()->getPriority(),
+            ));
+        }
+    }
+
     public function getCrudForm() {
         if (!isset($this->crudForm)) {
             $this->crudForm = $this->getSource()->getCrudForm($this->id);
+            $this->comfigForm();
         }
         return $this->crudForm;
     }

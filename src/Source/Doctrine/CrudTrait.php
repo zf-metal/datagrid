@@ -85,15 +85,7 @@ trait CrudTrait {
             }
 
             $this->crudForm->setObject($record);
-            $this->crudForm->setAttribute('method', 'post');
-            $this->crudForm->add(array(
-                'name' => 'submit',
-                'type' => 'Zend\Form\Element\Submit',
-                'attributes' => array(
-                    'value' => 'submit',
-                    'class' => 'btn btn-success'
-                )
-            ));
+
 
             $this->crudForm->bind($record);
         }

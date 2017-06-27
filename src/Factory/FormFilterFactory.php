@@ -143,7 +143,7 @@ class FormFilterFactory {
             'attributes' => array(
                 'value' => 'Reset',
                 'class' => 'btn btn-default',
-                'onclick' => 'resetFormFilter_' . $formName . '(false)'
+                'onclick' => \ZfMetal\Datagrid\C::F_FILTER_CLEAN . $formName . '(false)'
             )
         ));
 
@@ -156,7 +156,7 @@ class FormFilterFactory {
             'attributes' => array(
                 'value' => 'Reset & Submit',
                 'class' => 'btn btn-default',
-                'onclick' => 'resetFormFilter_' . $formName . '(true)'
+                'onclick' => \ZfMetal\Datagrid\C::F_FILTER_CLEAN . $formName . '(true)'
             )
         ));
 

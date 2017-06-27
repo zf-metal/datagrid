@@ -186,6 +186,10 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         $this->crudConfig = new \ZfMetal\Datagrid\Options\CrudConfig($crudConfig);
     }
 
+    /**
+     * 
+     * @return \ZfMetal\Datagrid\Options\FormConfig
+     */
     function getFormConfig() {
         return $this->formConfig;
     }

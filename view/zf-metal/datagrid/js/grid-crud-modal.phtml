@@ -23,7 +23,7 @@
         var content = '<h4>Se require confirmación</h4>' +
                 '<p>¿Esta seguro de eliminar el registro?</p>' +
                 '<p>' +
-                '<button type="button" onclick="<?= \ZfMetal\Datagrid\C::F_DELETE_CONFIRM . $gridId ?>('+objectId+')" class="btn btn-danger" >Eliminar</button>' +
+                '<button type="button" onclick="<?= \ZfMetal\Datagrid\C::F_DELETE_CONFIRM . $gridId ?>(' + objectId + ')" class="btn btn-danger" >Eliminar</button>' +
                 ' <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" aria-hidden="true">Cancelar</button>' +
                 '</p>';
 
@@ -50,6 +50,22 @@
     //ADD
     function <?= \ZfMetal\Datagrid\C::F_ADD . $gridId ?>() {
 <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "add"});
+    }
+
+    //LIST
+    function <?= \ZfMetal\Datagrid\C::F_LIST . $gridId ?>() {
+<?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>();
+    }
+
+
+    //CLEAN
+    function <?= \ZfMetal\Datagrid\C::F_CLEAN . $gridId ?>() {
+        $(':input', '#form_<?= $gridId ?>')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+
     }
 
     //POST

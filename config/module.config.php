@@ -44,6 +44,24 @@ return array(
         "formConfig" => [
             'columns' => \ZfMetal\Commons\Consts::COLUMNS_ONE,
             'style' => \ZfMetal\Commons\Consts::STYLE_MENU_VERTICAL,
+            'submit' => [
+                'enable' => true,
+                'value' => 'Submit',
+                'class' => 'btn btn-primary',
+                'priority' => 10,
+            ],
+            'cancel' => [
+                'enable' => true,
+                'value' => 'Cancel',
+                'class' => 'btn btn-default',
+                'priority' => 20,
+            ],
+            'clean' => [
+                'enable' => false,
+                'value' => 'Clean',
+                'class' => 'btn btn-warning',
+                'priority' => 30,
+            ],
         ],
         "flashMessagesConfig" => [
             'enable' => true,

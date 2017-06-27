@@ -27,6 +27,23 @@
 <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "add"});
     }
 
+    //LIST
+    function <?= \ZfMetal\Datagrid\C::F_LIST . $gridId ?>() {
+<?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>();
+    }
+
+
+    //CLEAN
+    function <?= \ZfMetal\Datagrid\C::F_CLEAN . $gridId ?>() {
+        $(':input', '#form_<?= $gridId ?>')
+                .not(':button, :submit, :reset, :hidden')
+                .val('')
+                .removeAttr('checked')
+                .removeAttr('selected');
+
+    }
+
+
     //POST
     function <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>(params) {
         var goto = window.location.href;
