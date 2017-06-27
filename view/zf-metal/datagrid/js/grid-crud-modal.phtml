@@ -20,8 +20,7 @@
     function <?= \ZfMetal\Datagrid\C::F_DELETE . $gridId ?>(objectId) {
         $("#zf-metal-grid-delete-modal-content-<?= $gridId ?>").html("");
 
-        var content = '<h4>Se require confirmación</h4>' +
-                '<p>¿Esta seguro de eliminar el registro?</p>' +
+        var content = '<h4 class="deleteModalCustom">¿Esta seguro de eliminar el registro?</h4>' +
                 '<p>' +
                 '<button type="button" onclick="<?= \ZfMetal\Datagrid\C::F_DELETE_CONFIRM . $gridId ?>(' + objectId + ')" class="btn btn-danger" >Eliminar</button>' +
                 ' <button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close" aria-hidden="true">Cancelar</button>' +
@@ -58,16 +57,15 @@
     }
 
 
-    //CLEAN
+     //CLEAN
     function <?= \ZfMetal\Datagrid\C::F_CLEAN . $gridId ?>() {
-        $(':input', '#form_<?= $gridId ?>')
+        $(':input', '#<?= \ZfMetal\Datagrid\C::FORM_PREFIX.$gridId ?>')
                 .not(':button, :submit, :reset, :hidden')
                 .val('')
                 .removeAttr('checked')
                 .removeAttr('selected');
 
     }
-
     //POST
     function <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>(params) {
         var goto = window.location.href;

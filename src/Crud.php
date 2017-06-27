@@ -81,13 +81,16 @@ class Crud {
         //Set Post Method
         $this->crudForm->setAttribute('method', 'post');
 
-        //Set Post Method
-        $this->crudForm->setAttribute('id', 'form_' . $this->gridOptions->getGridId());
+        //Set form Name
+        $this->crudForm->setName(\ZfMetal\Datagrid\C::FORM_PREFIX . $this->gridOptions->getGridId());
+
+        //Set id 
+        $this->crudForm->setAttribute('id', \ZfMetal\Datagrid\C::FORM_PREFIX . $this->gridOptions->getGridId());
+
 
         $this->configFormSubmit();
         $this->configFormCancel();
         $this->configFormClean();
-  
     }
 
     protected function configFormSubmit() {

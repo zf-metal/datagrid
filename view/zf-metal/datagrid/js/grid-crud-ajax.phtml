@@ -64,7 +64,7 @@
 
     //CLEAN
     function <?= \ZfMetal\Datagrid\C::F_CLEAN . $gridId ?>() {
-        $(':input', '#form_<?= $gridId ?>')
+        $(':input', '#<?= \ZfMetal\Datagrid\C::FORM_PREFIX.$gridId ?>')
                 .not(':button, :submit, :reset, :hidden')
                 .val('')
                 .removeAttr('checked')
@@ -74,7 +74,7 @@
 
     //F_FORM
     function <?= \ZfMetal\Datagrid\C::F_FORM . $gridId ?>(fname) {
-        var data = $("#" + fname).serialize();
+        var data = $('[name="' + fname + '"]').serialize();
         //Procesando
         $.post("<?= $url ?>", data).done(function (response) {
             $("#<?= $gridId ?>").html(response);
