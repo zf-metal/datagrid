@@ -255,23 +255,58 @@ class Crud {
     }
 
     protected function addSubmit() {
-        $this->add();
+
         if ($this->getSource()->saveRecord($this->data)) {
             $this->pushMsj(self::MSJ_SUCCESS, $this->getFlashMessengesConfig()->getAddOk());
-            $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
+
+            //Verifico las opciones para definir la instancia
+            switch ($this->gridOptions->getCrudConfig()->getOnAdd()) {
+                case \ZfMetal\Datagrid\Options\CrudConfig::ON_ADD_EDIT:
+                    $this->id = $this->getSource()->getLastSaveRecord()->getId();
+                    $this->edit();
+                    $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
+                    break;
+                case \ZfMetal\Datagrid\Options\CrudConfig::ON_ADD_GRID:
+                    $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
+                    break;
+                case \ZfMetal\Datagrid\Options\CrudConfig::ON_ADD_VIEW:
+                    $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_VIEW;
+                    $this->record = $this->getSource()->getLastSaveRecord();
+                    break;
+                default:
+                    $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
+                    break;
+            }
         } else {
+            $this->add();
             $this->pushMsj(self::MSJ_ERROR, $this->getFlashMessengesConfig()->getAddFail());
             $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
         }
     }
 
     protected function editSubmit() {
-        $this->edit();
 
         if ($this->getSource()->updateRecord($this->id, $this->data)) {
             $this->pushMsj(self::MSJ_SUCCESS, $this->getFlashMessengesConfig()->getEditOk());
-            $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
+            //Verifico las opciones para definir la instancia
+            switch ($this->gridOptions->getCrudConfig()->getOnEdit()) {
+                case \ZfMetal\Datagrid\Options\CrudConfig::ON_EDIT_EDIT:
+                    $this->edit();
+                    $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
+                    break;
+                case \ZfMetal\Datagrid\Options\CrudConfig::ON_EDIT_GRID:
+                    $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
+                    break;
+                case \ZfMetal\Datagrid\Options\CrudConfig::ON_EDIT_VIEW:
+                    $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_VIEW;
+                    $this->record = $this->getSource()->getLastSaveRecord();
+                    break;
+                default:
+                    $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
+                    break;
+            }
         } else {
+            $this->edit();
             $this->pushMsj(self::MSJ_ERROR, $this->getFlashMessengesConfig()->getEditFail());
             $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_FORM;
         }

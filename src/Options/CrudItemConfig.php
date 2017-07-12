@@ -32,6 +32,13 @@ class CrudItemConfig extends AbstractOptions {
      */
     protected $action = null;
     
+     
+     /**
+     * 
+     * @var string
+     */
+    protected $permission = null;
+    
      /**
      * 
      * @var string
@@ -82,6 +89,16 @@ class CrudItemConfig extends AbstractOptions {
         $this->htmltag = $htmltag;
         return $this;
     }
+
+    function getPermission() {
+        return $this->permission;
+    }
+
+    function setPermission($permission) {
+        $this->permission = $permission;
+        return $this;
+    }
+
 
 
     

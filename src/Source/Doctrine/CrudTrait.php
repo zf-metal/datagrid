@@ -31,6 +31,7 @@ trait CrudTrait {
      * @var type
      */
     protected $crudForm;
+    protected $lastSaveRecord;
 
     /**
      *
@@ -133,6 +134,7 @@ trait CrudTrait {
             try {
                 $this->getEm()->persist($record);
                 $this->getEm()->flush();
+                $this->lastSaveRecord = $record;
             } catch (Exception $ex) {
                 return false;
             }
@@ -156,10 +158,15 @@ trait CrudTrait {
             $this->getEm()->flush();
             $argv["record"] = $record;
             $this->getEventManager()->trigger(__FUNCTION__ . '_post', $this, $argv);
+            $this->lastSaveRecord = $record;
             return true;
         } else {
             return false;
         }
+    }
+
+    function getLastSaveRecord() {
+        return $this->lastSaveRecord;
     }
 
 }

@@ -6,12 +6,32 @@ use Zend\Stdlib\AbstractOptions;
 
 class CrudConfig extends AbstractOptions {
 
+    const ON_ADD_EDIT = 'edit';
+    const ON_ADD_GRID = 'grid';
+    const ON_ADD_VIEW = 'view';
+    
+    const ON_EDIT_EDIT = 'edit';
+    const ON_EDIT_GRID = 'grid';
+    const ON_EDIT_VIEW = 'view';
+
     /**
      * Enable/Disable Crud
      * 
      * @var boolean
      */
     protected $enable = false;
+
+    /**
+     * 
+     * @var string
+     */
+    protected $onAdd = self::ON_ADD_GRID;
+
+    /**
+     * 
+     * @var string
+     */
+    protected $onEdit = self::ON_EDIT_GRID;
 
     /**
      * name of crud column
@@ -179,7 +199,7 @@ class CrudConfig extends AbstractOptions {
         $this->name = $name;
         return $this;
     }
-    
+
     function getTdClass() {
         return $this->tdClass;
     }
@@ -195,6 +215,24 @@ class CrudConfig extends AbstractOptions {
 
     function setThClass($thClass) {
         $this->thClass = $thClass;
+        return $this;
+    }
+    
+    function getOnAdd() {
+        return $this->onAdd;
+    }
+
+    function getOnEdit() {
+        return $this->onEdit;
+    }
+
+    function setOnAdd($onAdd) {
+        $this->onAdd = $onAdd;
+        return $this;
+    }
+
+    function setOnEdit($onEdit) {
+        $this->onEdit = $onEdit;
         return $this;
     }
 

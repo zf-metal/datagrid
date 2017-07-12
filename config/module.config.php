@@ -76,6 +76,8 @@ return array(
             "enable" => false,
             'side' => "left",
             'displayName' => null,
+            'onAdd' => \ZfMetal\Datagrid\Options\CrudConfig::ON_ADD_GRID,
+            'onEdit' => \ZfMetal\Datagrid\Options\CrudConfig::ON_EDIT_GRID,
             'name' => 'ZfMetalCrudColumn',
             "add" => [
                 "enable" => true,
