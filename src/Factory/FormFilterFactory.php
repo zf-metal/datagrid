@@ -48,6 +48,10 @@ class FormFilterFactory {
                     $form->add($newElement);
                 }
 
+                if (preg_match("/password/i", $element->getAttribute("type"))) {
+                    $form->remove($element->getName());
+                }
+
                 if (preg_match("/text/i", $element->getAttribute("type"))) {
                     $element->setAttribute('class', 'form-control');
                 }
