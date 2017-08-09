@@ -33,7 +33,7 @@ class GridBuilder {
 
 
             // Elimina el mainfield del Formulario cuando se dispara el evento buildCrudForm
-            $this->grid->getSource()->getEventManager()->attach('buildCrudForm', function($e) use($mainEntityField) {
+            $grid->getSource()->getEventManager()->attach('buildCrudForm', function($e) use($mainEntityField) {
                 $form = $e->getParam('form');
                 $form->remove($mainEntityField);
             });
