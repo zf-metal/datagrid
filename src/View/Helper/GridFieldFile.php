@@ -36,7 +36,7 @@ class GridFieldFile extends AbstractHelper {
     public function render(ColumnInterface $column, array $data) {
         if ($column->getShowFile()) {
             $fp = $column->getWebpath()."/".$data[$column->getName()];
-            if (preg_match("/jpg|png|gif/i", $data[$column->getName()])) {
+            if (preg_match("/jpg|jpeg|png|gif/i", $data[$column->getName()])) {
                 
                 
                 $return = "<img src='" . $fp. "'";

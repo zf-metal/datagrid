@@ -191,7 +191,12 @@ class CrudColumn extends ExtraColumn {
 
     function getDisplayName() {
         if (!$this->displayName) {
-            return $this->getAddAction();
+            if($this->getAddAction()){
+                return $this->getAddAction();
+            }else{
+                return '';
+            }
+
         }
         return $this->displayName;
     }
