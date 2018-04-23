@@ -7,11 +7,12 @@ use ZfMetal\Datagrid\Column\ExtraColumn;
 use ZfMetal\Datagrid\Column\CrudColumn;
 
 /**
-* Main Class for GRID
-*
-* @author cincarnato
-*/
-class Grid {
+ * Main Class for GRID
+ *
+ * @author cincarnato
+ */
+class Grid
+{
 
 //Instance to Render
     const INSTANCE_GRID = "grid";
@@ -19,193 +20,193 @@ class Grid {
     const INSTANCE_FORM = "form";
     const INSTANCE_EXPORT_TO_EXCEL = "exportToExcel";
     const INSTANCES = [
-    self::INSTANCE_GRID, self::INSTANCE_VIEW, self::INSTANCE_FORM, self::INSTANCE_EXPORT_TO_EXCEL
+        self::INSTANCE_GRID, self::INSTANCE_VIEW, self::INSTANCE_FORM, self::INSTANCE_EXPORT_TO_EXCEL
     ];
     const MULTI_SEARH_ID = "_multisearch";
 
     /**
-    * Data source of grid
-    *
-    * @var \ZfMetal\Datagrid\Source\SourceInterface
-    */
+     * Data source of grid
+     *
+     * @var \ZfMetal\Datagrid\Source\SourceInterface
+     */
     protected $source;
 
     /**
-    *
-    * @var \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger
-    */
+     *
+     * @var \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger
+     */
     protected $flashMessenger;
 
     /**
-    * HTTP REQUEST FROM APPLICATION-MVCEVENT
-    *
-    * @var \Zend\Mvc\MvcEvent
-    */
+     * HTTP REQUEST FROM APPLICATION-MVCEVENT
+     *
+     * @var \Zend\Mvc\MvcEvent
+     */
     protected $mvcevent;
 
     /**
-    * HTTP REQUEST FROM APPLICATION-MVCEVENT
-    *
-    * @var \Zend\Http\Request
-    */
+     * HTTP REQUEST FROM APPLICATION-MVCEVENT
+     *
+     * @var \Zend\Http\Request
+     */
     protected $request;
 
     /**
-    * RouteMatch FROM APPLICATION-MVCEVENT
-    *
-    * @var \Zend\Router\RouteMatch
-    */
+     * RouteMatch FROM APPLICATION-MVCEVENT
+     *
+     * @var \Zend\Router\RouteMatch
+     */
     protected $routeMatch;
 
     /**
-    * Number of Page (paginator)
-    *
-    * @var integer
-    */
+     * Number of Page (paginator)
+     *
+     * @var integer
+     */
     protected $page;
 
     /**
-    * Grid's Paginator
-    *
-    * @var \Zend\Paginator\Paginator
-    */
+     * Grid's Paginator
+     *
+     * @var \Zend\Paginator\Paginator
+     */
     protected $paginator;
 
     /**
-    * Basic and unprocessed records of the grid
-    *
-    * @var Array
-    */
+     * Basic and unprocessed records of the grid
+     *
+     * @var Array
+     */
     protected $data;
 
     /**
-    * 
-    *
-    * @var Array
-    */
+     *
+     *
+     * @var Array
+     */
     protected $row;
 
     /**
-    * A factory for columns
-    *
-    * @var \ZfMetal\Datagrid\Factory\ColumnFactory
-    */
+     * A factory for columns
+     *
+     * @var \ZfMetal\Datagrid\Factory\ColumnFactory
+     */
     protected $columnFactory;
 
     /**
-    * A factory for formFilter
-    *
-    * @var \ZfMetal\Datagrid\Factory\FormFilterFactory
-    */
+     * A factory for formFilter
+     *
+     * @var \ZfMetal\Datagrid\Factory\FormFilterFactory
+     */
     protected $formFilterFactory;
 
     /**
-    * A columns collection
-    * 
-    * @var array
-    */
+     * A columns collection
+     *
+     * @var array
+     */
     protected $columns = array();
 
     /**
-    * Columns Priority
-    * 
-    * @var array
-    */
+     * Columns Priority
+     *
+     * @var array
+     */
     protected $columnsPriority = array();
 
     /**
-    * A extra columns collection
-    * 
-    * @var array
-    */
+     * A extra columns collection
+     *
+     * @var array
+     */
     protected $extraColumns = array();
 
     /**
-    * Crud column
-    * 
-    * @var \ZfMetal\Datagrid\Column\CrudColumn
-    */
+     * Crud column
+     *
+     * @var \ZfMetal\Datagrid\Column\CrudColumn
+     */
     protected $crudColumn = array();
 
     /**
-    * Filter by multiple field with and
-    * 
-    * @var \ZfMetal\Datagrid\Filters
-    */
+     * Filter by multiple field with and
+     *
+     * @var \ZfMetal\Datagrid\Filters
+     */
     protected $filters;
 
     /**
-    * Find by multiple field with or
-    * 
-    * @var \ZfMetal\Datagrid\Search
-    */
+     * Find by multiple field with or
+     *
+     * @var \ZfMetal\Datagrid\Search
+     */
     protected $search;
 
     /**
-    * Define instance to render
-    * 
-    * @var type
-    */
+     * Define instance to render
+     *
+     * @var type
+     */
     protected $instance = self::INSTANCE_GRID;
 
     /**
-    * CRUD
-    * 
-    * @var \ZfMetal\Datagrid\Crud
-    */
+     * CRUD
+     *
+     * @var \ZfMetal\Datagrid\Crud
+     */
     protected $crud;
 
     /**
-    * Grid Options
-    *
-    * @var \ZfMetal\Datagrid\Options\GridOptions
-    */
+     * Grid Options
+     *
+     * @var \ZfMetal\Datagrid\Options\GridOptions
+     */
     protected $options;
 
     /**
-    * Template a renderzar.
-    * 
-    * @var string
-    */
+     * Template a renderzar.
+     *
+     * @var string
+     */
     protected $template = "default";
 
     /**
-    * Defined if the Grid has been prepared
-    * 
-    * @var type
-    */
+     * Defined if the Grid has been prepared
+     *
+     * @var type
+     */
     protected $ready = false;
 
     /**
-    * Order
-    * 
-    * @var \ZfMetal\Datagrid\Sort
-    */
+     * Order
+     *
+     * @var \ZfMetal\Datagrid\Sort
+     */
     protected $sort;
 
     /**
-    *
-    * @var type 
-    */
+     *
+     * @var type
+     */
     protected $formFilters;
 
     /**
-    *
-    * @var \ZfMetal\Datagrid\Form\MultiSearch 
-    */
+     *
+     * @var \ZfMetal\Datagrid\Form\MultiSearch
+     */
     protected $formSearch;
-
 
 
     #TOREVIEW
     protected $tableClass;
 
     /**
-    * Construct
-    * 
-    * @param \Zend\Mvc\MvcEvent $mvcevent
-    */
-    public function __construct(\Zend\Mvc\MvcEvent $mvcevent, \ZfMetal\Datagrid\Options\GridOptionsInterface $options, \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger $flashMessenger) {
+     * Construct
+     *
+     * @param \Zend\Mvc\MvcEvent $mvcevent
+     */
+    public function __construct(\Zend\Mvc\MvcEvent $mvcevent, \ZfMetal\Datagrid\Options\GridOptionsInterface $options, \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger $flashMessenger)
+    {
 
         $this->setMvcevent($mvcevent);
 
@@ -216,90 +217,96 @@ class Grid {
         $this->flashMessenger = $flashMessenger;
     }
 
-    public function prepare() {
+    public function prepare()
+    {
 
         if (!isset($this->source)) {
             throw new \ZfMetal\Datagrid\Exception\SourceException();
         }
 
 
-
-
-    //CRUD - (Actualmente Define la instancia)
+        //CRUD - (Actualmente Define la instancia)
         $this->processCrudActions();
 
 
-    //CRUD CONFIGURE
+        //CRUD CONFIGURE
         $this->crudConfigure();
 
-    //IF THE INSTANCE IS NOT GRID, RETURN NOW
+        //IF THE INSTANCE IS NOT GRID, RETURN NOW
         if ($this->getInstance() !== self::INSTANCE_GRID) {
             $this->ready = true;
-    //  return $this;
+            //  return $this;
         }
 
-    //Extract and generate source columns
+        //Extract and generate source columns
         $this->buildColumns();
 
-    //Extract and generate source columns
+        //Extract and generate source columns
         $this->orderColumnsByPriority();
 
-    //Filters
+        //Filters
         $this->generateFormFilters();
         $this->buildFilters();
         $this->getSource()->setFilters($this->getFilters());
         $this->getSource()->setSearch($this->getSearch());
 
-    //Order (SORT)
+        //Order (SORT)
         $this->prepareSort();
 
-    //Prepare Source
+        //Prepare Source
         $this->getSource()->prepare();
 
-    //EXPORT
+        //EXPORT
         $this->processExports();
 
-    //Paginator
+        //Paginator
         $this->preparePaginator();
 
-    //Data
+        //Data
         $this->data = $this->paginator->getCurrentItems();
         $this->processData();
 
-    //Extra Columns (todo)
+        //Extra Columns (todo)
         $this->mergeExtraColumn();
 
-    //Order Columns..Need review to enable
-    //$this->processOrderColumn();
+        //Order Columns..Need review to enable
+        //$this->processOrderColumn();
         $this->ready = true;
         return $this;
     }
 
-    function getMvcevent() {
+    function getMvcevent()
+    {
         return $this->mvcevent;
     }
 
-    function setMvcevent(\Zend\Mvc\MvcEvent $mvcevent) {
+    function setMvcevent(\Zend\Mvc\MvcEvent $mvcevent)
+    {
         $this->mvcevent = $mvcevent;
     }
 
-    function getSort() {
+    function getSort()
+    {
         return $this->sort;
     }
 
-    function setSort(\ZfMetal\Datagrid\Sort $sort) {
+    function setSort(\ZfMetal\Datagrid\Sort $sort)
+    {
         $this->sort = $sort;
     }
 
-    function getFlashMessenger() {
+    function getFlashMessenger()
+    {
         return $this->flashMessenger;
     }
 
-    function getServiceExportToExcel() {
+    function getServiceExportToExcel()
+    {
         return $this->serviceExportToExcel;
     }
 
-    function setServiceExportToExcel(\ZfMetal\Datagrid\Service\ExportToExcel $serviceExportToExcel) {
+    function setServiceExportToExcel(\ZfMetal\Datagrid\Service\ExportToExcel $serviceExportToExcel)
+    {
         $this->serviceExportToExcel = $serviceExportToExcel;
         return $this;
     }
@@ -307,49 +314,59 @@ class Grid {
     #CONFIG
 
     /**
-    * 
-    * @return \ZfMetal\Datagrid\Options\GridOptions
-    */
-    public function getOptions() {
+     *
+     * @return \ZfMetal\Datagrid\Options\GridOptions
+     */
+    public function getOptions()
+    {
         return $this->options;
     }
 
-    public function setOptions(\ZfMetal\Datagrid\Options\GridOptionsInterface $options) {
+    public function setOptions(\ZfMetal\Datagrid\Options\GridOptionsInterface $options)
+    {
         $this->options = $options;
     }
 
-    function getColumnsConfig() {
+    function getColumnsConfig()
+    {
         return $this->getOptions()->getColumnsConfig();
     }
 
-    function getColumnConfig($columnName) {
+    function getColumnConfig($columnName)
+    {
         if (key_exists($columnName, $this->getOptions()->getColumnsConfig())) {
             return $this->getOptions()->getColumnsConfig()[$columnName];
         }
         return [];
     }
 
-    function setColumnsConfig(Array $columnsConfig) {
+    function setColumnsConfig(Array $columnsConfig)
+    {
         $this->getOptions()->setColumnsConfig($columnsConfig);
     }
 
-    function mergeColumnsConfig(Array $columnsConfig) {
+    function mergeColumnsConfig(Array $columnsConfig)
+    {
         $this->getOptions()->mergeColumnsConfig($columnsConfig);
     }
 
-    function getCrudConfig() {
+    function getCrudConfig()
+    {
         return $this->getOptions()->getCrudConfig();
     }
 
-    function setCrudConfig(Array $crudConfig) {
+    function setCrudConfig(Array $crudConfig)
+    {
         $this->getOptions()->setCrudConfig($crudConfig);
     }
 
-    public function getRecordPerPage() {
+    public function getRecordPerPage()
+    {
         return $this->recordPerPage;
     }
 
-    public function setRecordsPerPage($recordsPerPage) {
+    public function setRecordsPerPage($recordsPerPage)
+    {
         $this->getOptions()->setRecordsPerPage($recordsPerPage);
     }
 
@@ -357,21 +374,23 @@ class Grid {
     #SOURCE
 
     /**
-    * Get Source of grid
-    *
-    * @return \ZfMetal\Datagrid\Source\SourceInterface
-    */
-    function getSource() {
+     * Get Source of grid
+     *
+     * @return \ZfMetal\Datagrid\Source\SourceInterface
+     */
+    function getSource()
+    {
         return $this->source;
     }
 
     /**
-    * Set Source of grid
-    *
-    * @param \ZfMetal\Datagrid\Source\SourceInterface $source Source of grid
-    * @return \ZfMetal\Datagrid\Source\SourceInterface
-    */
-    function setSource(\ZfMetal\Datagrid\Source\SourceInterface $source) {
+     * Set Source of grid
+     *
+     * @param \ZfMetal\Datagrid\Source\SourceInterface $source Source of grid
+     * @return \ZfMetal\Datagrid\Source\SourceInterface
+     */
+    function setSource(\ZfMetal\Datagrid\Source\SourceInterface $source)
+    {
         $this->source = $source;
 
         return $this->source;
@@ -380,12 +399,14 @@ class Grid {
     #<-SOURCE
     #COLUMNS
 
-    protected function orderColumnsByPriority() {
+    protected function orderColumnsByPriority()
+    {
         asort($this->columnsPriority);
         $this->columns = array_merge($this->columnsPriority, $this->columns);
     }
 
-    protected function buildColumns() {
+    protected function buildColumns()
+    {
         $sourceColumnsName = $this->getSource()->pullColumns();
 
         foreach ($sourceColumnsName as $name) {
@@ -393,73 +414,86 @@ class Grid {
         }
     }
 
-    protected function createColumn($name) {
+    protected function createColumn($name)
+    {
         $this->columns[$name] = $this->getColumnFactory()->create($name, $this->getColumnConfig($name));
         $this->columnsPriority[$name] = $this->columns[$name]->getPriority();
     }
 
-    function getColumnFactory() {
+    function getColumnFactory()
+    {
         if (!isset($this->columnFactory)) {
             $this->setColumnFactory(new Factory\ColumnFactory);
         }
         return $this->columnFactory;
     }
 
-    function setColumnFactory(\ZfMetal\Datagrid\Factory\ColumnFactory $columnFactory) {
+    function setColumnFactory(\ZfMetal\Datagrid\Factory\ColumnFactory $columnFactory)
+    {
         $this->columnFactory = $columnFactory;
     }
 
     #<-COLUMNS
 
-    protected function crudConfigure() {
+    protected function crudConfigure()
+    {
         if ($this->getOptions()->getCrudConfig()->getEnable() === true) {
             $this->addCrudColumn($this->getOptions()->getCrudConfig()->getName(), $this->getOptions()->getCrudConfig()->getSide(), $this->getOptions()->getCrudConfig());
         }
     }
 
-    protected function processExports() {
+    protected function processExports()
+    {
         if ($this->getInstance() == self::INSTANCE_EXPORT_TO_EXCEL) {
             $this->getSource()->exportToExcel($this->getOptions()->getExportConfig()->getExportToExcel()->getKey());
         }
     }
 
-    protected function preparePaginator() {
+    protected function preparePaginator()
+    {
         $this->paginatorAdapter = $this->getSource()->execute();
         $this->paginator = new Paginator($this->paginatorAdapter);
         $this->paginator->setDefaultItemCountPerPage($this->getOptions()->getRecordsPerPage());
         $this->paginator->setCurrentPageNumber($this->getPage());
     }
 
-    public function getForm() {
+    public function getForm()
+    {
         return $this->getSource()->getForm();
     }
 
     #CRUD
 
-    public function getCrudForm() {
+    public function getCrudForm()
+    {
         return $this->getCrud()->getCrudForm();
     }
 
-    protected function processCrudActions() {
+    protected function processCrudActions()
+    {
         $this->setInstance($this->getCrud()->crudActions());
     }
 
-    function getCrud() {
+    function getCrud()
+    {
         if (!isset($this->crud)) {
             $this->crud = $this->buildCrud();
         }
         return $this->crud;
     }
 
-    function buildCrud() {
+    function buildCrud()
+    {
         return new \ZfMetal\Datagrid\Crud($this->source, $this->getPost(), $this->getFlashMessenger(), $this->getOptions());
     }
 
-    function setCrud($crud) {
+    function setCrud($crud)
+    {
         $this->crud = $crud;
     }
 
-    public function addCrudColumn($name = null, $side = "left", $crudConfig = []) {
+    public function addCrudColumn($name = null, $side = "left", $crudConfig = [])
+    {
         $this->crudColumn = new CrudColumn($name, $side, $crudConfig, $this->getId());
         $this->crudColumn->setFilterActive(false);
         if ($side == "left") {
@@ -472,11 +506,13 @@ class Grid {
     #<-CRUD
     #MVCEVENT
 
-    public function getRoute() {
+    public function getRoute()
+    {
         return $this->getMvcevent()->getRouteMatch()->getMatchedRouteName();
     }
 
-    public function getQuery($param = null) {
+    public function getQuery($param = null)
+    {
         if ($param) {
             return $this->getMvcevent()->getRequest()->getQuery($param, null);
         } else {
@@ -484,17 +520,20 @@ class Grid {
         }
     }
 
-    public function getParam($param) {
+    public function getParam($param)
+    {
         return $this->getMvcevent()->getRequest()->getParam($param);
     }
 
-    public function getPost() {
+    public function getPost()
+    {
         return array_merge_recursive(
             $this->getMvcevent()->getRequest()->getPost()->toArray(), $this->getMvcevent()->getRequest()->getFiles()->toArray()
-            );
+        );
     }
 
-    public function getPage() {
+    public function getPage()
+    {
         if (!$this->page) {
             $page = $this->getMvcevent()->getRequest()->getQuery('page');
             if ($page) {
@@ -506,11 +545,13 @@ class Grid {
         return $this->page;
     }
 
-    public function setPage($page) {
+    public function setPage($page)
+    {
         $this->page = $page;
     }
 
-    public function getQueryArray() {
+    public function getQueryArray()
+    {
         $query = $this->getQuery();
         $return = array();
         foreach ($query as $key => $value) {
@@ -522,7 +563,8 @@ class Grid {
     #<-MVCEVENT
     #SORT
 
-    public function prepareSort() {
+    public function prepareSort()
+    {
         $query = $this->getQuery();
         if ($query["sortBy"] && $query["sortDirection"]) {
 
@@ -539,11 +581,12 @@ class Grid {
     #<-SORT
     #FILTERS
 
-    public function buildFilters() {
-    //Multi Filter
+    public function buildFilters()
+    {
+        //Multi Filter
         $this->filters = new \ZfMetal\Datagrid\Filters();
         if ($this->getOptions()->getMultiFilterConfig()->getEnable() and count($this->getQuery())) {
-    //Multi Filter
+            //Multi Filter
             foreach ($this->getQuery() as $key => $value) {
                 $name = str_replace("f_", "", $key);
                 if ($value != "") {
@@ -554,7 +597,7 @@ class Grid {
                 }
             }
         }
-    //Multi Search
+        //Multi Search
         $this->search = new \ZfMetal\Datagrid\Search();
 
         $multiSearchKey = $this->getMultiSearhKey();
@@ -572,34 +615,41 @@ class Grid {
         }
     }
 
-    public function getMultiSearhKey() {
+    public function getMultiSearhKey()
+    {
         return $this->getOptions()->getGridId() . self::MULTI_SEARH_ID;
     }
 
-    protected function generateFormFilters() {
+    protected function generateFormFilters()
+    {
         $this->formFilters = $this->getFormFilterFactory()->create(clone $this->source->getForm(), $this->getPage(), $this->getQuery());
     }
 
-    function getFormFilterFactory() {
+    function getFormFilterFactory()
+    {
         if (!isset($this->formFilterFactory)) {
             $this->setFormFilterFactory(new Factory\FormFilterFactory($this->getId(), $this->getOptions()->getMultiFilterConfig()));
         }
         return $this->formFilterFactory;
     }
 
-    function setFormFilterFactory(\ZfMetal\Datagrid\Factory\FormFilterFactory $formFilterFactory) {
+    function setFormFilterFactory(\ZfMetal\Datagrid\Factory\FormFilterFactory $formFilterFactory)
+    {
         $this->formFilterFactory = $formFilterFactory;
     }
 
-    public function getFormFilters() {
+    public function getFormFilters()
+    {
         return $this->formFilters;
     }
 
-    public function setFormFilters($formFilters) {
+    public function setFormFilters($formFilters)
+    {
         $this->formFilters = $formFilters;
     }
 
-    function getFormSearch() {
+    function getFormSearch()
+    {
         if (!$this->formSearch) {
             $this->formSearch = new \ZfMetal\Datagrid\Form\MultiSearch($this->getId(), $this->getMultiSearhKey());
             $this->formSearch->setData($this->getQuery());
@@ -607,37 +657,41 @@ class Grid {
         return $this->formSearch;
     }
 
-    function getFilters() {
+    function getFilters()
+    {
         return $this->filters;
     }
 
-    function setFilters(type $filters) {
+    function setFilters(type $filters)
+    {
         $this->filters = $filters;
     }
 
-    function getSearch() {
+    function getSearch()
+    {
         return $this->search;
     }
 
     #<-FILTERS
 
-    protected function processData() {
+    protected function processData()
+    {
 
         foreach ($this->data as $record) {
             if (is_array($record)) {
                 $this->row[] = $record;
             } else if (is_object($record)) {
                 if ($record instanceof \stdClass) {
-                    $this->row[] = (array) $record;
+                    $this->row[] = (array)$record;
                 } else {
-    //Process Data Columns
+                    //Process Data Columns
                     foreach ($this->columns as $column) {
                         $method = "get" . ucfirst($column->getName());
                         $item[$column->getName()] = $record->$method();
                     }
-    //Process Data ExtraColumns
+                    //Process Data ExtraColumns
                     foreach ($this->extraColumns as $ExtraColumn) {
-                        if($ExtraColumn->getType() == 'custom'){
+                        if ($ExtraColumn->getType() == 'custom') {
                             continue;
                         }
                         $item[$ExtraColumn->getName()] = $ExtraColumn->processData($item);
@@ -648,7 +702,8 @@ class Grid {
         }
     }
 
-    public function addCustomColumn($name, $helper, $side = "left") {
+    public function addCustomColumn($name, $helper, $side = "left")
+    {
 
         $columnConfig = $this->getColumnConfig($name);
         $columnConfig["type"] = "custom";
@@ -668,7 +723,8 @@ class Grid {
         return $extraColumn;
     }
 
-    public function addExtraColumn($name, $originalValue, $side = "left", $filter = false) {
+    public function addExtraColumn($name, $originalValue, $side = "left", $filter = false)
+    {
 
         $columnConfig = $this->getColumnConfig($name);
         $columnConfig["type"] = "extra";
@@ -691,7 +747,8 @@ class Grid {
         return $extraColumn;
     }
 
-    protected function mergeExtraColumn() {
+    protected function mergeExtraColumn()
+    {
         foreach ($this->extraColumns as $ExtraColumn) {
             if ($ExtraColumn->getSide() == "left") {
                 array_unshift($this->columns, $ExtraColumn);
@@ -701,34 +758,41 @@ class Grid {
         }
     }
 
-    public function getId() {
+    public function getId()
+    {
         return $this->getOptions()->getGridId();
     }
 
-    public function setId($id) {
+    public function setId($id)
+    {
         if (preg_match('/\s/', $id)) {
             throw new Exception("Id can't contain spaces");
         }
         $this->getOptions()->setGridId($id);
     }
 
-    public function getRow() {
+    public function getRow()
+    {
         return $this->row;
     }
 
-    public function getTableClass() {
+    public function getTableClass()
+    {
         return $this->tableClass;
     }
 
-    public function setTableClass($tableClass) {
+    public function setTableClass($tableClass)
+    {
         $this->tableClass = $tableClass;
     }
 
-    function getInstance() {
+    function getInstance()
+    {
         return $this->instance;
     }
 
-    function setInstance($instance) {
+    function setInstance($instance)
+    {
         if (in_array($instance, self::INSTANCES)) {
             $this->instance = $instance;
         } else {
@@ -736,121 +800,157 @@ class Grid {
         }
     }
 
-    function getAddBtn() {
+    function getAddBtn()
+    {
         return $this->addBtn;
     }
 
-    function setAddBtn($addBtn) {
+    function setAddBtn($addBtn)
+    {
         $this->addBtn = $addBtn;
     }
 
-    function getColumnFilter() {
+    function getColumnFilter()
+    {
         return $this->columnFilter;
     }
 
-    function setColumnFilter($columnFilter) {
+    function setColumnFilter($columnFilter)
+    {
         $this->columnFilter = $columnFilter;
     }
 
-    function getColumnOrder() {
+    function getColumnOrder()
+    {
         return $this->columnOrder;
     }
 
-    function setColumnOrder($columnOrder) {
+    function setColumnOrder($columnOrder)
+    {
         $this->columnOrder = $columnOrder;
     }
 
-    function getOrderBy() {
+    function getOrderBy()
+    {
         return $this->orderBy;
     }
 
-    function getOrderDirection() {
+    function getOrderDirection()
+    {
         return $this->orderDirection;
     }
 
     /**
-    * @return string $template
-    */
-    function getTemplate() {
+     * @return string $template
+     */
+    function getTemplate()
+    {
         return $this->template;
     }
 
     /**
-    * @param string $template 
-    */
-    function setTemplate($template) {
+     * @param string $template
+     */
+    function setTemplate($template)
+    {
         $this->template = $template;
     }
 
-    function getPaginator() {
+    function getPaginator()
+    {
         return $this->paginator;
     }
 
-    function setPaginator(\Zend\Paginator\Paginator $paginator) {
+    function setPaginator(\Zend\Paginator\Paginator $paginator)
+    {
         $this->paginator = $paginator;
     }
 
-    function getColumns() {
+    function getColumns()
+    {
         return $this->columns;
     }
 
-    function getCrudColumn() {
+    function getColumn($name)
+    {
+        if (key_exists($name, $this->columns)) {
+            return $this->columns[$name];
+        }
+        return null;
+    }
+
+    function getCrudColumn()
+    {
         return $this->crudColumn;
     }
 
-    function setCrudColumn($crudColumn) {
+    function setCrudColumn($crudColumn)
+    {
         $this->crudColumn = $crudColumn;
     }
 
-    function getRecordDetail() {
+    function getRecordDetail()
+    {
         return $this->crud->getRecord();
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return "toStringGrid";
     }
 
-    public function get_f_list() {
+    public function get_f_list()
+    {
         return \ZfMetal\Datagrid\C::F_LIST . $this->getId();
     }
 
-    public function get_f_add() {
+    public function get_f_add()
+    {
         return \ZfMetal\Datagrid\C::F_ADD . $this->getId();
     }
 
-    public function get_f_delete() {
+    public function get_f_delete()
+    {
         return \ZfMetal\Datagrid\C::F_DELETE . $this->getId();
     }
 
-    public function get_f_edit() {
+    public function get_f_edit()
+    {
         return \ZfMetal\Datagrid\C::F_EDIT . $this->getId();
     }
 
-    public function get_f_view() {
+    public function get_f_view()
+    {
         return \ZfMetal\Datagrid\C::F_VIEW . $this->getId();
     }
 
-    public function get_f_pagination() {
+    public function get_f_pagination()
+    {
         return \ZfMetal\Datagrid\C::F_PAGINATION . $this->getId();
     }
 
-    public function get_f_search() {
+    public function get_f_search()
+    {
         return \ZfMetal\Datagrid\C::F_SEARCH . $this->getId();
     }
 
-    public function get_f_filter() {
+    public function get_f_filter()
+    {
         return \ZfMetal\Datagrid\C::F_FILTER . $this->getId();
     }
 
-    public function get_f_export_to_excel() {
+    public function get_f_export_to_excel()
+    {
         return \ZfMetal\Datagrid\C::F_EXPORT_TO_EXCEL . $this->getId();
     }
 
-    public function get_f_export_to_csv() {
+    public function get_f_export_to_csv()
+    {
         return \ZfMetal\Datagrid\C::F_EXPORT_TO_CSV . $this->getId();
     }
 
-    public function get_title_form() {
+    public function get_title_form()
+    {
         if ($this->getCrud()->getAction() == "add" || $this->getCrud()->getAction() == "addSubmit") {
             return $this->getOptions()->getTitleAdd();
         }

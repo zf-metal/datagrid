@@ -39,6 +39,15 @@ abstract class AbstractColumn implements ColumnInterface {
      */
     protected $priority = 100;
 
+
+    /**
+     * Define Permission to view this column (Use with zfmetal/security & zfrbac) (isGreanted in view)
+     *
+     * @var string
+     */
+    protected $permission;
+
+
     /**
      * Valid type of columns
      * 
@@ -163,6 +172,23 @@ abstract class AbstractColumn implements ColumnInterface {
         $this->priority = $priority;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getPermission()
+    {
+        return $this->permission;
+    }
+
+    /**
+     * @param string $permission
+     */
+    public function setPermission($permission)
+    {
+        $this->permission = $permission;
+    }
+
 
 
 
