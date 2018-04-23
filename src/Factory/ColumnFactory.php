@@ -106,6 +106,10 @@ class ColumnFactory {
         if (isset($this->config["priority"])) {
             $this->column->setPriority($this->config["priority"]);
         }
+
+        if (isset($this->config["permission"])) {
+            $this->column->setPermission($this->config["permission"]);
+        }
     }
 
     /**
