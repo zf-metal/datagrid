@@ -14,6 +14,10 @@
 <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "exportToExcel"});
     }
 
+    //Export To Excel
+    function <?= \ZfMetal\Datagrid\C::F_IMPORT_FROM_CSV . $gridId ?>() {
+        <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "importFromCsv"});
+    }
 
 
     //Delete

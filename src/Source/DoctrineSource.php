@@ -50,6 +50,12 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
     protected $serviceExportToExcel;
 
     /**
+     *
+     * @var \ZfMetal\Datagrid\Service\ImportFromCsv
+     */
+    protected $serviceImportFromCsv;
+
+    /**
      * Doctrine Source Construct
      *
      * @param \Doctrine\ORM\EntityManager $em 
@@ -72,6 +78,25 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
         $this->serviceExportToExcel = $serviceExportToExcel;
         return $this;
     }
+
+    /**
+     * @return \ZfMetal\Datagrid\Service\ImportFromCsv
+     */
+    public function getServiceImportFromCsv()
+    {
+        return $this->serviceImportFromCsv;
+    }
+
+    /**
+     * @param \ZfMetal\Datagrid\Service\ImportFromCsv $serviceImportFromCsv
+     * @return $this
+     */
+    public function setServiceImportFromCsv($serviceImportFromCsv)
+    {
+        $this->serviceImportFromCsv = $serviceImportFromCsv;
+        return $this;
+    }
+
 
     public function getEm() {
         if (!isset($this->em)) {
@@ -96,6 +121,8 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
         $this->entityName = $entityName;
         return $this;
     }
+
+
 
     protected function createQb() {
         $this->qb = $this->getEm()->createQueryBuilder()->select($this->getEntityKey())->from($this->getEntityName(), $this->getEntityKey());
@@ -153,6 +180,14 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
 
     function exportToExcel($configKey) {
         $this->getServiceExportToExcel()->run($this->getEm(), $this->getEntityName(), $this->getQb(), $configKey);
+    }
+
+    function importFromCsv($configKey,$file) {
+        return $this->getServiceImportFromCsv()->run($this->getEm(), $this->getEntityName(), $file, $configKey);
+    }
+
+    function getImportExample($configKey) {
+        $this->getServiceImportFromCsv()->getImportExample($this->getEm(), $this->getEntityName(), $configKey);
     }
 
     public function pullColumns() {

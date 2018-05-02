@@ -98,6 +98,11 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
     protected $exportConfig;
 
     /**
+     * @var array
+     */
+    protected $importConfig;
+
+    /**
      *
      * key => flap name 
      * value => relatedKeyOption
@@ -275,6 +280,18 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         return $this;
     }
 
+    /**
+     *
+     * @return \ZfMetal\Datagrid\Options\ImportConfig
+     */
+    function getImportConfig() {
+        return $this->importConfig;
+    }
+
+    function setImportConfig($imporConfig) {
+        $this->importConfig = new \ZfMetal\Datagrid\Options\ImportConfig($imporConfig);
+        return $this;
+    }
 
 
 

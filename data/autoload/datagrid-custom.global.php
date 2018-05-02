@@ -3,6 +3,12 @@
 //AN EXAMPLE CUSTOM CONFIG
 
 $config = [
+    'zf-metal-datagrid.imports'=>[
+        'importFromCsv'=>[
+            'messageOk' => "%d records were imported",
+            'messageFail' => "There was an error importing records."
+        ]
+    ],
     'zf-metal-datagrid.custom' => [
         "application-entity-test" => [
             'grid_id' => 'test',
@@ -24,6 +30,15 @@ $config = [
                     'key' => '',
                     'btn_class' => 'btn btn-default',
                     'btn_value' => 'excel',
+                    'btn_tag' => 'button',
+                ],
+            ],
+            'import_config' => [
+                'import_from_csv' => [
+                    'enable' => false,
+                    'key' => 'importFromCsv',
+                    'btn_class' => 'btn btn-default',
+                    'btn_value' => 'import',
                     'btn_tag' => 'button',
                 ],
             ],
