@@ -72,6 +72,13 @@ class ImportFromCsv
      */
     private $application;
 
+    /**
+     *
+     * @var \ZfMetal\Datagrid\Builder\ColumnBuilder
+     */
+    private $columnBuilder; 
+
+
     private $messages = array(
         'messageOk' => '%d records were imported.',
         'messageFail' => 'There was an error importing records.'
@@ -117,11 +124,20 @@ class ImportFromCsv
         $this->columnsConfig = $columnsConfig;
     }
 
+    /**
+     * @return \ZfMetal\Datagrid\Builder\ColumnBuilder
+     */
+    public function getColumnBuilder()
+    {
+        return $this->columnBuilder;
+    }
 
-    function __construct($config = array(), \Zend\Mvc\Application $application)
+
+    function __construct($config = array(), \Zend\Mvc\Application $application, \ZfMetal\Datagrid\Builder\ColumnBuilder $columnBuilder)
     {
         $this->config = $config;
         $this->application = $application;
+        $this->columnBuilder = $columnBuilder; 
     }
 
     public function run(\Doctrine\ORM\EntityManager $em, $entity, $file, $configKey = null)
@@ -152,6 +168,7 @@ class ImportFromCsv
             ];
 
         } catch (\Exception $e) {
+            var_dump($e->getMessage()); die; 
             return [
                 'status' => 'fail',
                 'message' => $this->messages['messageFail']
@@ -220,102 +237,18 @@ class ImportFromCsv
     {
         $countNames = count($this->fieldNames);
         $this->rows = array();
+        $columnBuilder = $this->getColumnBuilder(); 
+        $columnBuilder->setConfig($this->columnsConfig); 
+        $columnBuilder->setEm($this->getEm()); 
+
         while (($data = fgetcsv($file, 0, $this->delimiter, "\"", "\"")) !== FALSE) {
 
             $reg = array();
             for ($i = 0; $i < $countNames; $i++) {
-                $columnConfig = $this->getColumnConfigFromValue($this->fieldNames[$i]);
-                $index = $columnConfig ? key($columnConfig) : $this->fieldNames[$i];
-                $reg[$index] = $this->buildValue($columnConfig[$index], $data[$i]);
+                $reg[$columnBuilder->getKeyFromValue($this->fieldNames[$i])] = $columnBuilder->buildValue($this->fieldNames[$i], $data[$i]);
             }
             $this->rows[] = $reg;
         }
-    }
-
-    private function getColumnConfigFromValue($value)
-    {
-        foreach ($this->columnsConfig as $index => $config) {
-
-            if ((isset($config['displayName']) && $config['displayName'] == $value) || $index == $value)
-                return array($index => $config);
-        }
-
-        return null;
-    }
-
-    private function buildValue($config = array(), $value = null)
-    {
-        if (empty($config))
-            return $value ? (string)$value : null;
-
-        $type = isset($config['type']) ? $config['type'] : 'string';
-
-        $result = null;
-
-        switch ($type) {
-            case 'relational':
-                $result = $this->getRelationalValue($config, $value);
-                break;
-            case 'datetime':
-                $result = $this->getDatetimeValue($config, $value);
-                break;
-            case 'boolean':
-                $result = $this->getBooleanValue($config, $value);
-                break;
-            default:
-                $result = (string)$value || null;
-        }
-
-        return $result;
-    }
-
-    private function getRelationalValue($config = array(), $value = null)
-    {
-        if (!$value && !isset($config['default']))
-            return null;
-
-        if (!isset($config['field']) || !isset($config['entity']))
-            throw new \Exception('failed config on getRelationalValue');
-
-        $obj = null;
-
-        $value = $value ? $value : $config['default'];
-
-        if ($config['field'] == 'id')
-            $obj = $this->getEm()->getReference($config['entity'], $value);
-        else
-            $obj = $this->getEm()->getRepository($config['entity'])->findOneBy([$config['field'], $value]);
-
-        return $obj;
-    }
-
-    private function getDatetimeValue($config = array(), $value = null)
-    {
-        $format = isset($config['format']) && !empty($config['format']) ? $config['format'] : 'Y-m-d H:i:s';
-
-        if ($value)
-            return \DateTime::createFromFormat($format, $value);
-
-        $default = isset($config['default']) && !empty($config['default']) ? $config['default'] : null;
-
-        switch ($default) {
-            case 'now':
-                return new \DateTime();
-            case 'curdate':
-                return new \DateTime('Y-m-d');
-        }
-
-        return null;
-    }
-
-    private function getBooleanValue($config = array(), $value = null)
-    {
-        if (isset($config['valueOfTrue']))
-            return $config['valueOfTrue'] == $value ? true : false;
-        elseif (isset($config['valueOfFalse']))
-            return $config['valueOfFalse'] == $value ? false : true;
-
-        return $value ? true : false;
     }
 
     private function persistRegisters()
@@ -384,5 +317,7 @@ class ImportFromCsv
         $csv->setDelimiter($this->delimiter ? $this->delimiter : '; ');
         $csv->saveFile($this->entity . '-Example');
     }
+
+
 
 }

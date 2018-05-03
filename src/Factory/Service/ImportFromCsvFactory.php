@@ -13,7 +13,10 @@ class ImportFromCsvFactory implements FactoryInterface {
         
         /* @var $application \Zend\Mvc\Application */
         $application = $container->get('application');
-        return new \ZfMetal\Datagrid\Service\ImportFromCsv(isset($config['zf-metal-datagrid.imports']) ? $config['zf-metal-datagrid.imports'] : array(), $application);
+
+        $columnBuilder = $container->get('zf-metal-datagrid-column-builder');
+
+        return new \ZfMetal\Datagrid\Service\ImportFromCsv(isset($config['zf-metal-datagrid.imports']) ? $config['zf-metal-datagrid.imports'] : array(), $application, $columnBuilder);
     }
 
 }
