@@ -76,7 +76,7 @@ class ImportFromCsv
      *
      * @var \ZfMetal\Datagrid\Builder\ColumnBuilder
      */
-    private $columnBuilder; 
+    private $columnBuilder;
 
 
     private $messages = array(
@@ -137,7 +137,7 @@ class ImportFromCsv
     {
         $this->config = $config;
         $this->application = $application;
-        $this->columnBuilder = $columnBuilder; 
+        $this->columnBuilder = $columnBuilder;
     }
 
     public function run(\Doctrine\ORM\EntityManager $em, $entity, $file, $configKey = null)
@@ -159,8 +159,8 @@ class ImportFromCsv
                 if (isset($this->customConfig['columnsConfig']))
                     $this->columnsConfig = $this->customConfig['columnsConfig'];
             }
-            $this->processFile();
-            $numRecors = $this->persistRegisters();
+
+            $numRecors = $this->processFile();
 
             return [
                 'status' => 'ok',
@@ -191,12 +191,11 @@ class ImportFromCsv
 
         $this->validateColumnsName();
 
-        $this->getRows($myFile);
-
-        if (count($this->rows) == 0)
-            throw new \Exception("Error Processing Rows", 1);
+        $num = $this->processRows($myFile);
 
         fclose($this->file);
+
+        return $num;
     }
 
     private function getEntityColumns($entity)
@@ -232,45 +231,40 @@ class ImportFromCsv
             throw new \Exception("The fields not match");
     }
 
-    private function getRows($file)
+    private function processRows($file)
     {
         $countNames = count($this->fieldNames);
         $this->rows = array();
-        $columnBuilder = $this->getColumnBuilder(); 
-        $columnBuilder->setConfig($this->columnsConfig); 
-        $columnBuilder->setEm($this->getEm()); 
-
-        while (($data = fgetcsv($file, 0, $this->delimiter, "\"", "\"")) !== FALSE) {
-
-            $reg = array();
-            for ($i = 0; $i < $countNames; $i++) {
-                $reg[$columnBuilder->getKeyFromValue($this->fieldNames[$i])] = $columnBuilder->buildValue($this->fieldNames[$i], $data[$i]);
-            }
-            $this->rows[] = $reg;
-        }
-    }
-
-    private function persistRegisters()
-    {
-
-        $collection = new ArrayCollection();
+        $columnBuilder = $this->getColumnBuilder();
+        $columnBuilder->setConfig($this->columnsConfig);
+        $columnBuilder->setEm($this->getEm());
         $hidrator = new DoctrineObject($this->em);
+        $c = 0;
 
         $this->getEm()->getConnection()->beginTransaction();
         try {
 
-            for ($i = 0; $i < count($this->rows); $i++) {
-                $collection->add($hidrator->hydrate($this->rows[$i], new $this->entity));
-            }
-
-            foreach ($collection->getIterator() as $i => $obj) {
+            while (($data = fgetcsv($file, 0, $this->delimiter, "\"", "\"")) !== FALSE) {
+                $reg = array();
+                for ($i = 0; $i < $countNames; $i++) {
+                    $reg[$columnBuilder->getKeyFromValue($this->fieldNames[$i])] = $columnBuilder->buildValue($this->fieldNames[$i], $data[$i]);
+                }
+                $obj = $hidrator->hydrate($reg, new $this->entity);
                 $this->getEm()->persist($obj);
+
+                $c++;
+                if ($c % 1000 == 0) {
+                    $this->getEm()->flush();
+                    $this->getEm()->clear();
+                }
             }
 
             $this->getEm()->flush();
+            $this->getEm()->clear();
+
             $this->getEm()->getConnection()->commit();
 
-            return $collection->count();
+            return $c; 
 
         } catch (\Exception $e) {
             $this->getEm()->getConnection()->rollBack();
@@ -316,7 +310,5 @@ class ImportFromCsv
         $csv->setDelimiter($this->delimiter ? $this->delimiter : '; ');
         $csv->saveFile($this->entity . '-Example');
     }
-
-
 
 }

@@ -134,7 +134,7 @@ class ColumnBuilder {
         $value = $value ? $value : $config['default'];
 
         if ($config['field'] == 'id')
-            $obj = $this->getEm()->getReference($config['entity'], $value);
+            $obj = $this->getEm()->getReference($config['entity'], (int)$value);
         else
             $obj = $this->getEm()->getRepository($config['entity'])->findOneBy([$config['field'], $value]);
 
