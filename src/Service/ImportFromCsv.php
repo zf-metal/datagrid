@@ -168,7 +168,6 @@ class ImportFromCsv
             ];
 
         } catch (\Exception $e) {
-            var_dump($e->getMessage()); die; 
             return [
                 'status' => 'fail',
                 'message' => $this->messages['messageFail']

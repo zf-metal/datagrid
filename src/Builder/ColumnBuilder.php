@@ -136,7 +136,7 @@ class ColumnBuilder {
         if ($config['field'] == 'id')
             $obj = $this->getEm()->getReference($config['entity'], $value);
         else
-            $obj = $this->getEm()->getRepository($config['entity'])->findOneBy([$config['field'],(int) $value]);
+            $obj = $this->getEm()->getRepository($config['entity'])->findOneBy([$config['field'], $value]);
 
         return $obj;
     }
@@ -154,7 +154,7 @@ class ColumnBuilder {
             case 'now':
             return new \DateTime();
             case 'curdate':
-            return new \DateTime('Y-m-d');
+            return new \DateTime(date('Y-m-d'));
         }
 
         return null;
