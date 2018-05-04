@@ -155,7 +155,7 @@ class ImportFromCsv
                 if (isset($this->customConfig['messageOk']))
                     $this->messages['messageOk'] = $this->customConfig['messageOk'];
                 if (isset($this->customConfig['messageFail']))
-                    $this->messages['messageFail'] = $this->customConfig['messageOk'];
+                    $this->messages['messageFail'] = $this->customConfig['messageFail'];
                 if (isset($this->customConfig['columnsConfig']))
                     $this->columnsConfig = $this->customConfig['columnsConfig'];
             }
