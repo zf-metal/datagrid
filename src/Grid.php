@@ -19,8 +19,10 @@ class Grid
     const INSTANCE_VIEW = "view";
     const INSTANCE_FORM = "form";
     const INSTANCE_EXPORT_TO_EXCEL = "exportToExcel";
+    const INSTANCE_IMPORT_FROM_CSV = "importFromCsv";
+    const INSTANCE_GET_IMPORT_EXAMPLE = "getImportExample";
     const INSTANCES = [
-        self::INSTANCE_GRID, self::INSTANCE_VIEW, self::INSTANCE_FORM, self::INSTANCE_EXPORT_TO_EXCEL
+        self::INSTANCE_GRID, self::INSTANCE_VIEW, self::INSTANCE_FORM, self::INSTANCE_EXPORT_TO_EXCEL, self::INSTANCE_IMPORT_FROM_CSV, self::INSTANCE_GET_IMPORT_EXAMPLE
     ];
     const MULTI_SEARH_ID = "_multisearch";
 
@@ -207,7 +209,6 @@ class Grid
      */
     public function __construct(\Zend\Mvc\MvcEvent $mvcevent, \ZfMetal\Datagrid\Options\GridOptionsInterface $options, \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger $flashMessenger)
     {
-
         $this->setMvcevent($mvcevent);
 
         $this->setOptions($options);
@@ -258,6 +259,9 @@ class Grid
 
         //EXPORT
         $this->processExports();
+
+        //Import
+        $this->processImports();
 
         //Paginator
         $this->preparePaginator();
@@ -446,6 +450,21 @@ class Grid
     {
         if ($this->getInstance() == self::INSTANCE_EXPORT_TO_EXCEL) {
             $this->getSource()->exportToExcel($this->getOptions()->getExportConfig()->getExportToExcel()->getKey());
+        }
+    }
+
+    protected function processImports()
+    {
+        if ($this->getInstance() == self::INSTANCE_IMPORT_FROM_CSV) {
+            $result = $this->getSource()->importFromCsv($this->getOptions()->getImportConfig()->getImportFromCsv()->getKey(), $this->getCrud()->getRecord());
+            if($result['status'] == 'ok')
+                $this->flashMessenger->addSuccessMessage($result['message']);
+            else
+                $this->flashMessenger->addWarningMessage($result['message']);
+            $this->setInstance(self::INSTANCE_GRID);
+        }
+        if ($this->getInstance() == self::INSTANCE_GET_IMPORT_EXAMPLE) {
+            $this->getSource()->getImportExample($this->getOptions()->getImportConfig()->getImportFromCsv()->getKey());
         }
     }
 
@@ -710,7 +729,7 @@ class Grid
         $extraColumn = $this->getColumnFactory()->create($name, $columnConfig);
 
         if ($side != "left" && $side != "right") {
-            throw new Exception("Side must be 'left' or 'right'");
+            throw new \Exception("Side must be 'left' or 'right'");
         }
 
         if ($side == "left") {
@@ -942,6 +961,16 @@ class Grid
     public function get_f_export_to_excel()
     {
         return \ZfMetal\Datagrid\C::F_EXPORT_TO_EXCEL . $this->getId();
+    }
+
+    public function get_f_import_from_csv()
+    {
+        return \ZfMetal\Datagrid\C::F_IMPORT_FROM_CSV . $this->getId();
+    }
+
+    public function get_f_get_import_example()
+    {
+        return \ZfMetal\Datagrid\C::F_GET_IMPORT_EXAMPLE . $this->getId();
     }
 
     public function get_f_export_to_csv()

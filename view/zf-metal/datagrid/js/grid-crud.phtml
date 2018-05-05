@@ -5,6 +5,16 @@
 <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "exportToExcel"});
     }
 
+    //Import From Csv
+    function <?= \ZfMetal\Datagrid\C::F_IMPORT_FROM_CSV . $gridId ?>() {
+        <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "importFromCsv"});
+    }
+
+    //Import From Csv
+    function <?= \ZfMetal\Datagrid\C::F_GET_IMPORT_EXAMPLE . $gridId ?>() {
+        <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "getImportExample"});
+    }
+
     //Delete
     function <?= \ZfMetal\Datagrid\C::F_DELETE . $gridId ?>(objectId) {
         if (confirm("¿Esta seguro que desea eliminar el registro?")) {

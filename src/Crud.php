@@ -152,8 +152,13 @@ class Crud {
     }
 
     public function crudActions() {
-
         switch ($this->action) {
+            case 'getImportExample':
+                $this->getImportExample();
+                break;
+            case 'importFromCsv':
+                $this->importFromCsv();
+                break;
             case 'exportToExcel':
                 $this->exportToExcel();
                 break;
@@ -179,6 +184,16 @@ class Crud {
                 return \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
         }
         return $this->instance;
+    }
+
+    protected function getImportExample()
+    {
+        $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_GET_IMPORT_EXAMPLE;
+    }
+
+    protected function importFromCsv() {
+        $this->record = $this->data['file'];
+        $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_IMPORT_FROM_CSV;
     }
 
     protected function exportToExcel() {

@@ -1,3 +1,5 @@
 /nbproject/
 composer.lock
 ./idea
+vendor/
+phpunit.xml

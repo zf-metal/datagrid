@@ -13,6 +13,11 @@
 <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "exportToExcel"});
     }
 
+    //EXPORT TO EXCEL
+    function <?= \ZfMetal\Datagrid\C::F_IMPORT_FROM_CSV . $gridId ?>() {
+        <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "importFromCsv"});
+    }
+
     //EDIT
     function <?= \ZfMetal\Datagrid\C::F_EDIT . $gridId ?>(objectId) {
 <?= \ZfMetal\Datagrid\C::F_POST_AJAX . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "edit", <?= \ZfMetal\Datagrid\Crud::inputId ?>: objectId});

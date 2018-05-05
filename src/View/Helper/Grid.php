@@ -4,14 +4,16 @@ namespace ZfMetal\Datagrid\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 
-class Grid extends AbstractHelper {
+class Grid extends AbstractHelper
+{
 
     CONST TEMPLATE_PATH = 'zf-metal/datagrid/templates/';
 
     protected $template = "default";
     protected $instance = \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
 
-    public function __invoke(\ZfMetal\Datagrid\Grid $grid) {
+    public function __invoke(\ZfMetal\Datagrid\Grid $grid)
+    {
 
         $this->template = $grid->getTemplate();
 
@@ -27,6 +29,7 @@ class Grid extends AbstractHelper {
         $partialFilter = self::TEMPLATE_PATH . $this->template . "/filter";
         $partialSearch = self::TEMPLATE_PATH . $this->template . "/search";
         $partialExports = self::TEMPLATE_PATH . $this->template . "/exports";
+        $partialImports = self::TEMPLATE_PATH . $this->template . "/imports";
         $partialModal = self::TEMPLATE_PATH . $this->template . "/modal";
 
         $routeParams = $grid->getQueryArray();
@@ -36,14 +39,15 @@ class Grid extends AbstractHelper {
         $route = $grid->getRoute();
 
         return $this->view->partial($partial, array(
-                    "grid" => $grid,
-                    "partialPagination" => $partialPagination,
-                    "partialFilter" => $partialFilter,
-                    "partialSearch" => $partialSearch,
-                    "partialExports" => $partialExports,
-                    "partialModal" => $partialModal,
-                    'routeParams' => $routeParams,
-                    'route' => $route));
+            "grid" => $grid,
+            "partialPagination" => $partialPagination,
+            "partialFilter" => $partialFilter,
+            "partialSearch" => $partialSearch,
+            "partialExports" => $partialExports,
+            "partialImports" => $partialImports,
+            "partialModal" => $partialModal,
+            'routeParams' => $routeParams,
+            'route' => $route));
     }
 
 }

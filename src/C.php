@@ -24,5 +24,8 @@ class C {
     //Export
     const F_EXPORT_TO_EXCEL = "ZfMetal_Grid_Export_To_Excel_";
     const F_EXPORT_TO_CSV = "ZfMetal_Grid_Export_To_Csv_";
+    //Import
+    const F_IMPORT_FROM_CSV = "ZfMetal_Grid_Import_From_Csv_";
+    const F_GET_IMPORT_EXAMPLE = "ZfMetal_Grid_Get_Import_Example_";
 
 }

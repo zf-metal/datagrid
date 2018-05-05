@@ -33,6 +33,15 @@ return array(
                 'btn_tag' => 'button',
             ],
         ],
+        'import_config' => [
+            'import_from_csv' => [
+                'enable' => false,
+                'key' => '',
+                'btn_class' => 'btn btn-default',
+                'btn_value' => 'import',
+                'btn_tag' => 'button',
+            ],
+        ],
         'multi_filter_config' => [
             "enable" => true,
             "properties_disabled" => []
@@ -112,11 +121,13 @@ return array(
             \ZfMetal\Datagrid\Controller\Plugin\GridBuilder::class => \ZfMetal\Datagrid\Factory\Controller\Plugin\GridBuilderFactory::class,
             \ZfMetal\Datagrid\Controller\Plugin\ManagerBuilder::class => \ZfMetal\Datagrid\Factory\Controller\Plugin\ManagerBuilderFactory::class,
             \ZfMetal\Datagrid\Controller\Plugin\ExportToExcel::class => \ZfMetal\Datagrid\Factory\Controller\Plugin\ExportToExcelFactory::class,
+            \ZfMetal\Datagrid\Controller\Plugin\ImportFromCsv::class => \ZfMetal\Datagrid\Factory\Controller\Plugin\ImportFromCsvFactory::class,
         ],
         'aliases' => [
             'gridBuilder' => \ZfMetal\Datagrid\Controller\Plugin\GridBuilder::class,
             'managerBuilder' => \ZfMetal\Datagrid\Controller\Plugin\ManagerBuilder::class,
             'exportToExcel' => \ZfMetal\Datagrid\Controller\Plugin\ExportToExcel::class,
+            'importFromCsv' => \ZfMetal\Datagrid\Controller\Plugin\ImportFromCsv::class,
         ]
     ],
     'controllers' => [

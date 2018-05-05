@@ -38,7 +38,10 @@
 <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "exportToExcel"});
     }
 
-
+    //import from csv
+    function <?= \ZfMetal\Datagrid\C::F_IMPORT_FROM_CSV . $gridId ?>() {
+        <?= \ZfMetal\Datagrid\C::F_POST . $gridId ?>({<?= \ZfMetal\Datagrid\Crud::inputAction ?>: "importFromCsv"});
+    }
 
     //EDIT
     function <?= \ZfMetal\Datagrid\C::F_EDIT . $gridId ?>(objectId) {
