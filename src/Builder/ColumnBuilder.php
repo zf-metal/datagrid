@@ -107,7 +107,7 @@ class ColumnBuilder {
                 return $index;
         }
 
-        return null;
+        return $value;
     }
 
     private function getColumnConfigFromValue($value)
