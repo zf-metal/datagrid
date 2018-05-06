@@ -16,49 +16,8 @@
                         <a class="btn btn-primary btn-lg" id="descargaEjemplo" onclick="<?php echo $this->grid->get_f_get_import_example(); ?>()">Descargar Ejemplo</a>
                     </div>
                     <div>
-
                         <?php
-                        $form = new \Zend\Form\Form('import');
-
-                        $form->add(array(
-                            'name' => 'file',
-                            'type' => 'Zend\Form\Element\File',
-                            'attributes' => array(
-                                'class' => 'btn btn-default',
-                                'accept' => "text/csv",
-                                'id'=>'fileUpload'
-                            ),
-                            'options' => array(
-                                'label' => 'Archivo',
-                            )
-                        ));
-                        $form->add(array(
-                            'name' => 'import',
-                            'type' => 'Zend\Form\Element\Submit',
-                            'attributes' => array(
-                                'value' => "Importar",
-                                'class' => 'pull-right btn btn-primary',
-                            ),
-                            'options' => array(
-                                'label' => 'Importar',
-                            )
-                        ));
-                        $form->add(array(
-                            'name' => 'cancel',
-                            'type' => 'Zend\Form\Element\Button',
-                            'attributes' => array(
-                                'value' => "Cancelar",
-                                'class' => 'pull-right btn btn-default',
-                                'id'=>"btnCancel"
-                            ),
-                            'options' => array(
-                                'label' => 'Cancelar',
-                            )
-                        ));
-
-
-                        ?>
-                        <?php
+                        $form = new \ZfMetal\Datagrid\Form\ImportFromCsvForm();
                         echo $this->renderForm($form);
                         ?>
                     </div>

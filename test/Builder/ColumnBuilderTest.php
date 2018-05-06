@@ -251,7 +251,6 @@ class ColumnBuilderTest extends AbstractControllerTestCase
             ->with(EntityTest::class, 1)
             ->will($this->returnValue($user));
 
-
         $config = [
             'entity' => [
                 'type' => 'relational',
@@ -291,7 +290,7 @@ class ColumnBuilderTest extends AbstractControllerTestCase
 
         $mockedRepository->expects($this->once())
             ->method('findOneBy')
-            ->with(['name', 'value'])
+            ->with(['name' => 'value'])
             ->will($this->returnValue($user));
 
         $config = [

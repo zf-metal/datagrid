@@ -201,7 +201,7 @@ class ImportFromCsv
     private function getEntityColumns($entity)
     {
         if (!class_exists($entity)) {
-            throw new \Exception('La clase no existe.');
+            throw new \Exception('The entity class is not exist.');
         }
 
         $properties = $this->getEm()->getClassMetadata($entity)->getReflectionProperties();
@@ -278,7 +278,7 @@ class ImportFromCsv
         $this->entity = $entity;
         if ($configKey) {
             if (!key_exists($configKey, $this->getConfig())) {
-                throw new \Exception('La key ' . $configKey . ' no existe en zf-metal-commons.imports!');
+                throw new \Exception('The key ' . $configKey . ' is not exist in zf-metal-commons.imports!');
             }
             $this->customConfig = $this->getConfig()[$configKey];
 
