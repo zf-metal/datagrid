@@ -176,7 +176,6 @@ class ColumnFactory {
         $this->column = new Column\RelationalColumn($name);
         $this->baseConfig();
 
-
         if (isset($this->config["orderProperty"])) {
             $this->column->setOrderProperty($this->config["orderProperty"]);
         }
@@ -185,6 +184,19 @@ class ColumnFactory {
             $this->column->setMultiSearchProperty($this->config["multiSearchProperty"]);
         }
 
+        if (isset($this->config["length"])) {
+            $this->column->setLength($this->config["length"]);
+        }
+
+        if (isset($this->config["tooltip"])) {
+
+            $this->column->setTooltip($this->config["tooltip"]);
+        }
+
+        if (isset($this->config["field"])) {
+
+            $this->column->setField($this->config["field"]);
+        }
 
         return $this->column;
     }
