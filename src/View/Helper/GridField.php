@@ -27,6 +27,7 @@ class GridField extends AbstractHelper {
         'crud' => 'GridFieldCrud',
         'custom' => 'GridFieldCustom',
         'file' => 'GridFieldFile',
+        'relational' => 'GridFieldRelational',
     );
 
     /**
@@ -46,8 +47,6 @@ class GridField extends AbstractHelper {
      * @return string
      */
     public function __invoke(ColumnInterface $column, array $data) {
-
-
 
         return $this->render($column, $data);
     }
@@ -86,6 +85,7 @@ class GridField extends AbstractHelper {
      * @return string|null
      */
     protected function renderType(ColumnInterface $column, array $data) {
+
         if (isset($this->typeMap[$column->getType()])) {
             return $this->renderHelper($this->typeMap[$column->getType()], $column, $data);
         }
