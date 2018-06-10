@@ -5,6 +5,7 @@ namespace ZfMetal\Datagrid\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject;
 use SimpleExcel\Writer\CSVWriter;
+use ZfMetal\Datagrid\Exception\NotMatchFieldException;
 use ZfMetal\Log\Log;
 
 class ImportFromCsv
@@ -50,11 +51,6 @@ class ImportFromCsv
      *
      */
     private $file;
-
-    /**
-     *
-     */
-    private $rows;
 
     /**
      *
@@ -132,6 +128,61 @@ class ImportFromCsv
         return $this->columnBuilder;
     }
 
+    /**
+     * @return array
+     */
+    public function getColumnNames()
+    {
+        return $this->columnNames;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFieldNames()
+    {
+        return $this->fieldNames;
+    }
+
+    /**
+     * @param mixed $entity
+     */
+    public function setEntity($entity)
+    {
+        $this->entity = $entity;
+    }
+
+    /**
+     * @param array $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @param array $customConfig
+     */
+    public function setCustomConfig($customConfig)
+    {
+        $this->customConfig = $customConfig;
+    }
+
+    /**
+     * @param array $columnNames
+     */
+    public function setColumnNames($columnNames)
+    {
+        $this->columnNames = $columnNames;
+    }
+
+    /**
+     * @param array $fieldNames
+     */
+    public function setFieldNames($fieldNames)
+    {
+        $this->fieldNames = $fieldNames;
+    }
 
     function __construct($config = array(), \Zend\Mvc\Application $application, \ZfMetal\Datagrid\Builder\ColumnBuilder $columnBuilder)
     {
@@ -182,7 +233,7 @@ class ImportFromCsv
         if (($myFile = fopen($this->file, "r")) == FALSE)
             throw new \Exception("Error Processing File", 1);
 
-        $this->getColumnsName($myFile);
+        $this->getColumnNamesFromFile($myFile);
 
         if (count($this->columnsConfig) == 0)
             $this->getEntityColumns($this->entity);
@@ -211,7 +262,7 @@ class ImportFromCsv
         }
     }
 
-    private function getColumnsName($file)
+    private function getColumnNamesFromFile($file)
     {
         // En primer lugar supongo que el separador es el punto y coma.
         $this->delimiter = ';';
@@ -221,24 +272,23 @@ class ImportFromCsv
         // En caso de que la cantidad de nombres sea uno, cambio el separador por coma, y vuelvo a procesar.
         if (count($this->columnNames) == 1) {
             $this->delimiter = ',';
-            $this->columnNames = trim(strtoupper(explode(",", $this->columnNames[0])));
+            $this->columnNames = explode(",", $this->columnNames[0]);
         }
     }
 
     private function validateColumnsName()
     {
-        if (count(array_diff($this->fieldNames, $this->columnNames)) != 0)
-            throw new \Exception("The fields not match");
+        if (count(array_diff($this->columnNames, $this->fieldNames)) != 0)
+            throw new NotMatchFieldException("The fields not match");
     }
 
     private function processRows($file)
     {
-        $countNames = count($this->fieldNames);
-        $this->rows = array();
+        $countNames = count($this->getColumnNames());
         $columnBuilder = $this->getColumnBuilder();
         $columnBuilder->setConfig($this->columnsConfig);
         $columnBuilder->setEm($this->getEm());
-        $hidrator = new DoctrineObject($this->em);
+
         $c = 0;
 
         $this->getEm()->getConnection()->beginTransaction();
@@ -247,9 +297,9 @@ class ImportFromCsv
             while (($data = fgetcsv($file, 0, $this->delimiter, "\"", "\"")) !== FALSE) {
                 $reg = array();
                 for ($i = 0; $i < $countNames; $i++) {
-                    $reg[$columnBuilder->getKeyFromValue($this->fieldNames[$i])] = $columnBuilder->buildValue($this->fieldNames[$i], $data[$i]);
+                    $reg[$columnBuilder->getKeyFromValue($this->getColumnNames()[$i])] = $columnBuilder->buildValue($this->getColumnNames()[$i], $data[$i]);
                 }
-                $obj = $hidrator->hydrate($reg, new $this->entity);
+                $obj = $this->getObjectForPersist($reg);
                 $this->getEm()->persist($obj);
 
                 $c++;
@@ -264,12 +314,59 @@ class ImportFromCsv
 
             $this->getEm()->getConnection()->commit();
 
-            return $c; 
+            return $c;
 
         } catch (\Exception $e) {
             $this->getEm()->getConnection()->rollBack();
             throw $e;
         }
+    }
+
+    private function getObjectForPersist($data)
+    {
+        $obj = null;
+
+        $identifier = $this->getEm()->getClassMetadata($this->entity)->getIdentifier();
+        $countIdentifier = count($identifier);
+
+        $count = 0;
+        for ($i = 0; $i < $countIdentifier; $i++) {
+            if (array_key_exists($identifier[$i], $data))
+                $count++;
+        }
+
+        if ($countIdentifier == $count && $this->validateContentIdentifier($identifier, $data)) {
+            $query = $this->getEm()->getRepository($this->entity)->createQueryBuilder('u');
+            for ($i = 0; $i < $countIdentifier; $i++) {
+                $query->where('u.' . $identifier[$i] . ' = :' . $identifier[$i]);
+                $query->setParameter($identifier[$i], $data[$identifier[$i]]);
+            }
+            $record = $query->getQuery()->getResult();
+
+            if(isset($record[0]))
+                $obj = $record[0];
+            else
+                $obj = new $this->entity;
+        } else {
+            $obj = new $this->entity;
+        }
+
+        $hidrator = new DoctrineObject($this->getEm());
+        $obj = $hidrator->hydrate($data, $obj);
+
+        return $obj;
+    }
+
+    private function validateContentIdentifier($identifier, $data)
+    {
+        $result = true;
+
+        foreach ($identifier as $key) {
+            if (!isset($data[$key]) || empty($data[$key]))
+                $result = false;
+        }
+
+        return $result;
     }
 
     public function getImportExample(\Doctrine\ORM\EntityManager $em, $entity, $configKey = null)
