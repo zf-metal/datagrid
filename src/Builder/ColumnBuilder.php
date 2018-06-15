@@ -77,7 +77,7 @@ class ColumnBuilder {
     	$config = $this->getColumnConfigFromValue($key); 
 
         if (empty($config))
-            return $value ? (string)$value : null;
+            return ($value != null || $value === 0) ? (string)$value : null;
 
         $type = isset($config['type']) ? $config['type'] : 'string';
 
@@ -94,7 +94,7 @@ class ColumnBuilder {
             $result = $this->getBooleanValue($config, $value);
             break;
             default:
-            $result = $value?(string)$value:null;
+            $result = ($value != null || $value === 0)?(string)$value:null;
         }
 
         return $result;

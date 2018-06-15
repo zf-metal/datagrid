@@ -296,7 +296,10 @@ class ColumnBuilderTest extends AbstractControllerTestCase
         $config = [
             'entity' => [
                 'type' => 'relational',
-                'entity' => EntityTest::class,
+                'id' => [
+                    'displayName' => 'ID',
+                    'default' => null,
+                ], 'entity' => EntityTest::class,
                 'field' => 'name'
             ]
         ];
@@ -307,6 +310,42 @@ class ColumnBuilderTest extends AbstractControllerTestCase
         $columnsBuilder->setConfig($config);
         $columnsBuilder->setEm($mockedEm);
         $this->assertSame($user, $columnsBuilder->buildValue('entity', 'value'));
+    }
+
+    /**
+     *
+     * @depends testBuildColumnsInstance
+     */
+    public function testBuildWithUpperCaseDisplayNameId($columnsBuilder)
+    {
+
+        $config = [
+            'id' => [
+                'displayName' => 'ID',
+                'default' => null,
+            ],
+        ];
+
+        $columnsBuilder->setConfig($config);
+        $this->assertSame('1', $columnsBuilder->buildValue('ID', 1));
+    }
+
+    /**
+     *
+     * @depends testBuildColumnsInstance
+     */
+    public function testBuildValueWithValue0($columnsBuilder)
+    {
+
+        $config = [
+            'val' => [
+                'displayName' => 'Val',
+                'default' => null,
+            ],
+        ];
+
+        $columnsBuilder->setConfig($config);
+        $this->assertSame('0', $columnsBuilder->buildValue('Val', "0"));
     }
 }
 
