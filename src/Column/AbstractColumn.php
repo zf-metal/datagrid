@@ -39,6 +39,13 @@ abstract class AbstractColumn implements ColumnInterface {
      */
     protected $priority = 100;
 
+    /**
+     * Replace data in datagrid by map
+     *
+     * @var array
+     */
+    protected $map = null;
+
 
     /**
      * Define Permission to view this column (Use with zfmetal/security & zfrbac) (isGreanted in view)
@@ -188,6 +195,23 @@ abstract class AbstractColumn implements ColumnInterface {
     {
         $this->permission = $permission;
     }
+
+    /**
+     * @return array
+     */
+    public function getMap()
+    {
+        return $this->map;
+    }
+
+    /**
+     * @param array $map
+     */
+    public function setMap($map)
+    {
+        $this->map = $map;
+    }
+
 
 
 

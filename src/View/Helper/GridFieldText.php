@@ -10,6 +10,7 @@ use ZfMetal\Datagrid\Column\ColumnInterface;
  */
 class GridFieldText extends AbstractHelper {
 
+
     /**
      * Invoke helper
      *
@@ -36,22 +37,33 @@ class GridFieldText extends AbstractHelper {
     public function render(ColumnInterface $column, array $data) {
        
         $value = $data[$column->getName()];
+
+
+
         if(!$value){
         return "";    
         }
+
+        if($column->getMap() && key_exists($value,$column->getMap())){
+            $value = $column->getMap()[$value];
+        }
         
         if ($column->getLength() && strlen($value) > $column->getLength()) {
-            $return = substr(nl2br($data[$column->getName()]), 0, $column->getLength()) . "...";
+            $return = substr(nl2br($value), 0, $column->getLength()) . "...";
         } else {
-            $return = nl2br($data[$column->getName()]);
+            $return = nl2br($value);
         }        
         
          if ($column->getTooltip()){
               $return = '<span data-toggle="tooltip" data-placement="bottom" title="'.$value.'" >'.$return.'</span>';
          }
-        
+
+
+
         return $return;
     }
+
+
 
 }
 

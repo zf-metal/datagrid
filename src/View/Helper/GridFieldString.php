@@ -36,7 +36,14 @@ class GridFieldString extends AbstractHelper {
      */
     public function render(ColumnInterface $column, array $data) {
 
-        return nl2br($data[$column->getName()]);
+        $value = $data[$column->getName()];
+
+
+        if($column->getMap() && key_exists($value,$column->getMap())){
+            $value = $column->getMap()[$value];
+        }
+
+        return nl2br($value);
     }
 
 }

@@ -110,6 +110,10 @@ class ColumnFactory {
         if (isset($this->config["permission"])) {
             $this->column->setPermission($this->config["permission"]);
         }
+
+        if (isset($this->config["map"])) {
+            $this->column->setMap($this->config["map"]);
+        }
     }
 
     /**
