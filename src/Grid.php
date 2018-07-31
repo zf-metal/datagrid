@@ -520,7 +520,7 @@ class Grid
 
     public function addCrudColumn($name = null, $side = "left", $crudConfig = [])
     {
-        $this->crudColumn = new CrudColumn($name, $side, $crudConfig, $this->getId());
+        $this->crudColumn = new CrudColumn($name, $side, $crudConfig, $this->getId(),$this->authService);
         $this->crudColumn->setFilterActive(false);
         if ($side == "left") {
             array_unshift($this->extraColumns, $this->crudColumn);

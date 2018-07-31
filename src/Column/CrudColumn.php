@@ -73,25 +73,25 @@ class CrudColumn extends ExtraColumn
 
         $this->processDefaultAction();
 
-        if ($this->add["enable"] && isset($this->add["permission"]) && $this->isGranted($this->add["permission"])) {
+        if ($this->add["enable"] && (!isset($this->add["permission"]) || $this->isGranted($this->add["permission"])) ) {
             $this->buildAddAction();
         }
 
         $this->originalValue = "";
 
-        if ($this->view["enable"] && isset($this->view["permission"]) && $this->isGranted($this->view["permission"])) {
+        if ($this->view["enable"] && (!isset($this->view["permission"]) || $this->isGranted($this->view["permission"]))) {
             $this->originalValue .= $this->buildViewAction();
         }
 
-        if ($this->edit["enable"]  && isset($this->edit["permission"]) && $this->isGranted($this->edit["permission"])) {
+        if ($this->edit["enable"]  && (!isset($this->edit["permission"]) || $this->isGranted($this->edit["permission"]))) {
             $this->originalValue .= $this->buildEditAction();
         }
 
-        if ($this->manager["enable"] && isset($this->manager["permission"]) && $this->isGranted($this->manager["permission"])) {
+        if ($this->manager["enable"] && (!isset($this->manager["permission"]) || $this->isGranted($this->manager["permission"]))) {
             $this->originalValue .= $this->buildManagerAction();
         }
 
-        if ($this->del["enable"] && isset($this->del["permission"]) && $this->isGranted($this->del["permission"])) {
+        if ($this->del["enable"] && (!isset($this->del["permission"]) || $this->isGranted($this->del["permission"]))) {
             $this->originalValue .= $this->buildDelAction();
         }
     }
