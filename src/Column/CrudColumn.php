@@ -7,7 +7,8 @@ namespace ZfMetal\Datagrid\Column;
  *
  * @author cincarnato
  */
-class CrudColumn extends ExtraColumn {
+class CrudColumn extends ExtraColumn
+{
 
     const type = "crud";
 
@@ -27,16 +28,28 @@ class CrudColumn extends ExtraColumn {
     protected $filter;
     protected $gridId = null;
     protected $displayName = null;
+    protected $authService = null;
 
-    protected function processDefaultAction() {
+    protected function isGranted($permission)
+    {
+        if (!empty($permission) && $permission != null && $this->authService && method_exists($this->authService, 'isGranted')) {
+            return $this->authService->isGranted($permission);
+        }
+        return true;
+    }
+
+    protected function processDefaultAction()
+    {
         $this->add["action"] = (empty($this->add["action"])) ? "onclick='" . \ZfMetal\Datagrid\C::F_ADD . $this->gridId . "()'" : $this->add["action"];
         $this->edit["action"] = (empty($this->edit["action"])) ? "onclick='" . \ZfMetal\Datagrid\C::F_EDIT . $this->gridId . "({{id}})'" : $this->edit["action"];
         $this->del["action"] = (empty($this->del["action"])) ? "onclick='" . \ZfMetal\Datagrid\C::F_DELETE . $this->gridId . "({{id}})'" : $this->del["action"];
         $this->view["action"] = (empty($this->view["action"])) ? "onclick='" . \ZfMetal\Datagrid\C::F_VIEW . $this->gridId . "({{id}})'" : $this->view["action"];
     }
 
-    function __construct($name, $side, \ZfMetal\Datagrid\Options\CrudConfig $gridCrudConfig, $gridId) {
+    function __construct($name, $side, \ZfMetal\Datagrid\Options\CrudConfig $gridCrudConfig, $gridId, \ZfcRbac\Service\AuthorizationService $authService = null)
+    {
         $this->setDisplayName($gridCrudConfig->getDisplayName());
+        $this->authService = $authService;
         if ($name) {
             $this->name = $name;
         }
@@ -60,63 +73,71 @@ class CrudColumn extends ExtraColumn {
 
         $this->processDefaultAction();
 
-        if ($this->add["enable"]) {
+        if ($this->add["enable"] && isset($this->add["permission"]) && $this->isGranted($this->add["permission"])) {
             $this->buildAddAction();
         }
 
         $this->originalValue = "";
 
-        if ($this->view["enable"]) {
+        if ($this->view["enable"] && isset($this->view["permission"]) && $this->isGranted($this->view["permission"])) {
             $this->originalValue .= $this->buildViewAction();
         }
 
-        if ($this->edit["enable"]) {
+        if ($this->edit["enable"]  && isset($this->edit["permission"]) && $this->isGranted($this->edit["permission"])) {
             $this->originalValue .= $this->buildEditAction();
         }
 
-        if ($this->manager["enable"]) {
+        if ($this->manager["enable"] && isset($this->manager["permission"]) && $this->isGranted($this->manager["permission"])) {
             $this->originalValue .= $this->buildManagerAction();
         }
 
-        if ($this->del["enable"]) {
+        if ($this->del["enable"] && isset($this->del["permission"]) && $this->isGranted($this->del["permission"])) {
             $this->originalValue .= $this->buildDelAction();
         }
     }
 
-    protected function buildAddAction() {
+    protected function buildAddAction()
+    {
         $this->addAction = " <" . $this->add["htmltag"] . " class='" . $this->add["class"] . "' " . $this->add["action"] . " >" . $this->add["value"] . "</" . $this->add["htmltag"] . ">";
         return $this->addAction;
     }
 
-    protected function buildEditAction() {
+    protected function buildEditAction()
+    {
         $this->editAction = " <" . $this->edit["htmltag"] . " class='" . $this->edit["class"] . "' " . $this->edit["action"] . " >" . $this->edit["value"] . "</" . $this->edit["htmltag"] . ">";
         return $this->editAction;
     }
 
-    protected function buildDelAction() {
+    protected function buildDelAction()
+    {
         $this->delAction = " <" . $this->del["htmltag"] . " class='" . $this->del["class"] . "' " . $this->del["action"] . " >" . $this->del["value"] . "</" . $this->del["htmltag"] . ">";
         return $this->delAction;
     }
 
-    protected function buildViewAction() {
+    protected function buildViewAction()
+    {
         $this->viewAction = " <" . $this->view["htmltag"] . " class='" . $this->view["class"] . "' " . $this->view["action"] . " >" . $this->view["value"] . "</" . $this->view["htmltag"] . ">";
         return $this->viewAction;
     }
 
-    protected function buildManagerAction() {
+    protected function buildManagerAction()
+    {
         $this->managerAction = " <" . $this->manager["htmltag"] . " class='" . $this->manager["class"] . "' " . $this->manager["action"] . " >" . $this->manager["value"] . "</" . $this->manager["htmltag"] . ">";
         return $this->managerAction;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getDisplayName();
     }
 
-    public function getSide() {
+    public function getSide()
+    {
         return $this->side;
     }
 
-    public function setSide($side) {
+    public function setSide($side)
+    {
         if ($side == "left" || $side == "right") {
             $this->side = $side;
         } else {
@@ -124,76 +145,93 @@ class CrudColumn extends ExtraColumn {
         }
     }
 
-    public function getFilterActive() {
+    public function getFilterActive()
+    {
         return $this->filterActive;
     }
 
-    public function setFilterActive($filterActive) {
+    public function setFilterActive($filterActive)
+    {
         $this->filterActive = $filterActive;
     }
 
-    public function getFilter() {
+    public function getFilter()
+    {
         return $this->filter;
     }
 
-    public function setFilter($filter) {
+    public function setFilter($filter)
+    {
         $this->filter = $filter;
     }
 
-    public function getOriginalValue() {
+    public function getOriginalValue()
+    {
         return $this->originalValue;
     }
 
-    public function setOriginalValue($originalValue) {
+    public function setOriginalValue($originalValue)
+    {
         $this->originalValue = $originalValue;
     }
 
-    function getEdit() {
+    function getEdit()
+    {
         return $this->edit;
     }
 
-    function getDel() {
+    function getDel()
+    {
         return $this->del;
     }
 
-    function getView() {
+    function getView()
+    {
         return $this->view;
     }
 
-    function setEdit($edit) {
+    function setEdit($edit)
+    {
         $this->edit = $edit;
     }
 
-    function setDel($del) {
+    function setDel($del)
+    {
         $this->del = $del;
     }
 
-    function setView($view) {
+    function setView($view)
+    {
         $this->view = $view;
     }
 
-    function getAdd() {
+    function getAdd()
+    {
         return $this->add;
     }
 
-    function setAdd($add) {
+    function setAdd($add)
+    {
         $this->add = $add;
     }
 
-    function getMananger() {
+    function getMananger()
+    {
         return $this->mananger;
     }
 
-    function setMananger($mananger) {
+    function setMananger($mananger)
+    {
         $this->mananger = $mananger;
         return $this;
     }
 
-    function getDisplayName() {
+    function getDisplayName()
+    {
         if (!$this->displayName) {
-            if($this->getAddAction()){
+            if ($this->getAddAction()) {
                 return $this->getAddAction();
-            }else{
+            } else {
                 return '';
             }
 
@@ -201,52 +239,63 @@ class CrudColumn extends ExtraColumn {
         return $this->displayName;
     }
 
-    function setDisplayName($displayName) {
+    function setDisplayName($displayName)
+    {
         $this->displayName = $displayName;
         return $this;
     }
 
-    function getAddAction() {
+    function getAddAction()
+    {
         return $this->addAction;
     }
 
-    function getEditAction() {
+    function getEditAction()
+    {
         return $this->editAction;
     }
 
-    function getDelAction() {
+    function getDelAction()
+    {
         return $this->delAction;
     }
 
-    function getViewAction() {
+    function getViewAction()
+    {
         return $this->viewAction;
     }
 
-    function getManagerAction() {
+    function getManagerAction()
+    {
         return $this->managerAction;
     }
 
-    function setAddAction($addAction) {
+    function setAddAction($addAction)
+    {
         $this->addAction = $addAction;
         return $this;
     }
 
-    function setEditAction($editAction) {
+    function setEditAction($editAction)
+    {
         $this->editAction = $editAction;
         return $this;
     }
 
-    function setDelAction($delAction) {
+    function setDelAction($delAction)
+    {
         $this->delAction = $delAction;
         return $this;
     }
 
-    function setViewAction($viewAction) {
+    function setViewAction($viewAction)
+    {
         $this->viewAction = $viewAction;
         return $this;
     }
 
-    function setManagerAction($managerAction) {
+    function setManagerAction($managerAction)
+    {
         $this->managerAction = $managerAction;
         return $this;
     }

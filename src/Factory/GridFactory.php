@@ -30,8 +30,16 @@ class GridFactory implements FactoryInterface {
         $flashMessenger = $container->get('ControllerPluginManager')->get('flashmessenger');
 
 
+        /** @var \ZfcRbac\Service\AuthorizationService $authService */
+        try{
+            $authService = $container->get(\ZfcRbac\Service\AuthorizationService::class);
+        }catch (\Exception $e){
+            $authService = null;
+        }
+
+
         //NEW GRID
-        $this->grid = new Grid($mvcevent, $gridOptions, $flashMessenger);
+        $this->grid = new Grid($mvcevent, $gridOptions, $flashMessenger,$authService);
 
         //SET SOURCE BY REQUEST NAME
         ($requestedName == "zf-metal-datagrid-doctrine" || (isset($this->gridOptions->getSourceConfig()["type"]) && $this->gridOptions->getSourceConfig()["type"] == "doctrine") ) ? $this->buildDoctrineSource() : null;

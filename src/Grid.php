@@ -198,6 +198,11 @@ class Grid
      */
     protected $formSearch;
 
+    #TOREVIEW
+    /**
+     * @var \ZfcRbac\Service\AuthorizationService
+     */
+    protected $authService;
 
     #TOREVIEW
     protected $tableClass;
@@ -207,7 +212,7 @@ class Grid
      *
      * @param \Zend\Mvc\MvcEvent $mvcevent
      */
-    public function __construct(\Zend\Mvc\MvcEvent $mvcevent, \ZfMetal\Datagrid\Options\GridOptionsInterface $options, \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger $flashMessenger)
+    public function __construct(\Zend\Mvc\MvcEvent $mvcevent, \ZfMetal\Datagrid\Options\GridOptionsInterface $options, \Zend\Mvc\Plugin\FlashMessenger\FlashMessenger $flashMessenger,  \ZfcRbac\Service\AuthorizationService $authService = null)
     {
         $this->setMvcevent($mvcevent);
 
@@ -216,6 +221,8 @@ class Grid
         $this->setTemplate($options->getTemplateDefault());
 
         $this->flashMessenger = $flashMessenger;
+
+        $this->authService = $authService;
     }
 
     public function prepare()
@@ -987,5 +994,22 @@ class Grid
             return $this->getOptions()->getTitleEdit();
         }
     }
+
+    /**
+     * @return \ZfcRbac\Service\AuthorizationService
+     */
+    public function getAuthService()
+    {
+        return $this->authService;
+    }
+
+    /**
+     * @param \ZfcRbac\Service\AuthorizationService $authService
+     */
+    public function setAuthService($authService)
+    {
+        $this->authService = $authService;
+    }
+
 
 }
