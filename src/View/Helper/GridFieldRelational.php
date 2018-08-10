@@ -37,12 +37,22 @@ class GridFieldRelational extends AbstractHelper {
             return "";
         }
 
-        if($column->getField()){
+        if ($column->getField()) {
             $method = $this->buildGedMethod($column->getField());
-            if(method_exists($record, $method)){
-                $record = $record->$method();
-            }
+        } else {
+            $method = "__toString";
         }
+
+        try {
+            if (method_exists($record, $method)) {
+                $record = $record->$method();
+            } else if (method_exists($record, "__toString")) {
+                $record = $record->__toString();
+            }
+        } catch (\Exception $e) {
+            $record = "";
+        }
+
 
         if ($column->getLength() && strlen($record) > $column->getLength()) {
             $return = substr(nl2br($record), 0, $column->getLength()) . "...";

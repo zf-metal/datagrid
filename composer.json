@@ -3,7 +3,7 @@
     "description": "Zend Framework 3 Module that provides a datagrid",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "keywords": [
         "ZfcDatagrid",
         "datagrid",
