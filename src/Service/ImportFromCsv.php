@@ -221,7 +221,7 @@ class ImportFromCsv
         } catch (\Exception $e) {
             return [
                 'status' => 'fail',
-                'message' => $this->messages['messageFail']
+                'message' => $this->messages['messageFail']." Error: ".$e->getMessage()
             ];
         }
 
@@ -231,7 +231,7 @@ class ImportFromCsv
     {
         $myFile = null;
         if (($myFile = fopen($this->file, "r")) == FALSE)
-            throw new \Exception("Error Processing File", 1);
+            throw new \Exception("Error al abrir el archivo", 1);
 
         $this->getColumnNamesFromFile($myFile);
 
@@ -252,7 +252,7 @@ class ImportFromCsv
     private function getEntityColumns($entity)
     {
         if (!class_exists($entity)) {
-            throw new \Exception('The entity class is not exist.');
+            throw new \Exception('La entidad no existe.');
         }
 
         $properties = $this->getEm()->getClassMetadata($entity)->getReflectionProperties();
@@ -279,7 +279,7 @@ class ImportFromCsv
     private function validateColumnsName()
     {
         if (count(array_diff($this->columnNames, $this->fieldNames)) != 0)
-            throw new NotMatchFieldException("The fields not match");
+            throw new NotMatchFieldException("Los campos no coinciden. Se sugiere descargar archivo de ejemplo.");
     }
 
     private function processRows($file)
