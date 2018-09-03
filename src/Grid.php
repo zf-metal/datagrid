@@ -634,8 +634,10 @@ class Grid
             foreach ($this->getOptions()->getMultiSearchConfig()->getPropertiesEnabled() as $property) {
 
                 if (key_exists($property, $this->columns)) {
+
                     $filter = new \ZfMetal\Datagrid\Filter($this->columns[$property], $multiSearchValue);
                     $this->search->addSearch($filter);
+
                 }
             }
         }
