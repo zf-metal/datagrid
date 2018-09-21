@@ -190,6 +190,7 @@ return array(
             'GridCrudAjax' => 'ZfMetal\Datagrid\View\Helper\GridCrudAjax',
             'GridField' => 'ZfMetal\Datagrid\View\Helper\GridField',
             'GridFieldString' => 'ZfMetal\Datagrid\View\Helper\GridFieldString',
+            'GridFieldInteger' => 'ZfMetal\Datagrid\View\Helper\GridFieldInteger',
             'GridFieldText' => 'ZfMetal\Datagrid\View\Helper\GridFieldText',
             'GridFieldBoolean' => 'ZfMetal\Datagrid\View\Helper\GridFieldBoolean',
             'GridFieldDateTime' => 'ZfMetal\Datagrid\View\Helper\GridFieldDateTime',

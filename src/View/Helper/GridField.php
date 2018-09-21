@@ -19,6 +19,7 @@ class GridField extends AbstractHelper {
      */
     protected $typeMap = array(
         'string' => 'GridFieldString',
+        'integer' => 'GridFieldInteger',
         'text' => 'GridFieldText',
         'boolean' => 'GridFieldBoolean',
         'datetime' => 'GridFieldDateTime',

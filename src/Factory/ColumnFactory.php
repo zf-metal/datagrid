@@ -41,6 +41,9 @@ class ColumnFactory {
             case "string":
                 $this->createStringColumn($name);
                 break;
+            case "integer":
+                $this->createIntegerColumn($name);
+                break;
             case "text":
                 $this->createTextColumn($name);
                 break;
@@ -124,6 +127,18 @@ class ColumnFactory {
      */
     protected function createStringColumn($name) {
         $this->column = new Column\StringColumn($name);
+        $this->baseConfig();
+        return $this->column;
+    }
+
+    /**
+     * Create a Integer Column
+     *
+     * @param string $name name of the column
+     * @return \ZfMetal\Datagrid\Column\IntegerColumn
+     */
+    protected function createIntegerColumn($name) {
+        $this->column = new Column\IntegerColumn($name);
         $this->baseConfig();
         return $this->column;
     }
