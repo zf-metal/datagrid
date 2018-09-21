@@ -188,7 +188,7 @@ class ExportToExcel {
                     $header[$column->getDisplayName()] = "YYYY-MM-DD HH:MM:SS";
                 }
 
-            }else if($column->getType() == 'relational'){
+            }else if($column->getType() == 'relational' || $column->getType() == 'boolean'){
 
                 $header[$column->getDisplayName()] = "string";
 
