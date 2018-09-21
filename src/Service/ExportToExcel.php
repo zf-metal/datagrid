@@ -174,7 +174,27 @@ class ExportToExcel {
                 continue;
             }
 
-            $header[$column->getDisplayName()] = $column->getType() == 'relational' ? 'string' : $column->getType();
+            if($column->getType() == 'datetime' ||  $column->getType() == 'date' || $column->getType() == 'time'){
+
+                if($column->getFormat() == "H" || $column->getFormat() == "H:i" || $column->getFormat() == "H:i:s"){
+                    $header[$column->getDisplayName()] = "string";
+                }
+
+                if($column->getFormat() == "Y-m-d"){
+                    $header[$column->getDisplayName()] = "YYYY-MM-DD";
+                }
+
+                if($column->getFormat() == "Y-m-d H:i:s"){
+                    $header[$column->getDisplayName()] = "YYYY-MM-DD HH:MM:SS";
+                }
+
+            }else if($column->getType() == 'relational'){
+
+                $header[$column->getDisplayName()] = "string";
+
+            }else{
+                $header[$column->getDisplayName()] =  $column->getType();
+            }
         }
 
 
