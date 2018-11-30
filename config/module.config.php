@@ -201,6 +201,7 @@ return array(
             'GridFieldCustom' => 'ZfMetal\Datagrid\View\Helper\GridFieldCustom',
             'GridFieldFile' => 'ZfMetal\Datagrid\View\Helper\GridFieldFile',
             'GridFieldRelational' => 'ZfMetal\Datagrid\View\Helper\GridFieldRelational',
+            'GridFieldRelationalList' => 'ZfMetal\Datagrid\View\Helper\GridFieldRelationalList',
             'GridBtnAdd' => 'ZfMetal\Datagrid\View\Helper\GridBtnAdd',
             //Manager
             'ManagerRender' => 'ZfMetal\Datagrid\View\Helper\Manager',

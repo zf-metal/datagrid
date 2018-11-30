@@ -217,6 +217,21 @@ class ColumnFactory {
             $this->column->setField($this->config["field"]);
         }
 
+        if (isset($this->config["relationalEntity"])) {
+
+            $this->column->setRelationalEntity($this->config["relationalEntity"]);
+        }
+
+        if (isset($this->config["relationalId"])) {
+
+            $this->column->setRelationalId($this->config["relationalId"]);
+        }
+
+        if (isset($this->config["oneToMany"])) {
+
+            $this->column->setOneToMany($this->config["oneToMany"]);
+        }
+
         return $this->column;
     }
 

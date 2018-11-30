@@ -3,7 +3,7 @@
     "description": "Zend Framework 3 Module that provides a datagrid",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.19",
+    "version": "1.0.20",
     "keywords": [
         "ZfcDatagrid",
         "datagrid",
@@ -53,6 +53,7 @@
         "zendframework/zend-mvc": "^3.0.4",
         "zendframework/zend-view": "^2.8",
         "zendframework/zend-http": "~2.2",
+        "zendframework/zend-code": "^3.1",
         "zendframework/zend-paginator": "~2.2",
         "mk-j/php_xlsxwriter": "^0.37",
         "faisalman/simple-excel-php": "dev-master",

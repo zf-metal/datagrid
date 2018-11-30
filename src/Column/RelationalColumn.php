@@ -16,6 +16,7 @@ class RelationalColumn extends AbstractColumn {
     protected $relationalEntity;
     protected $multiSearchProperty;
     protected $field = null;
+    protected $oneToMany = false;
 
     /**
      * Max lenght text
@@ -112,6 +113,25 @@ class RelationalColumn extends AbstractColumn {
     {
         $this->field = $field;
     }
+
+    /**
+     * @return bool
+     */
+    public function getOneToMany()
+    {
+        return $this->oneToMany;
+    }
+
+    /**
+     * @param bool $oneToMany
+     */
+    public function setOneToMany($oneToMany)
+    {
+        $this->oneToMany = $oneToMany;
+    }
+
+
+
 
 }
 

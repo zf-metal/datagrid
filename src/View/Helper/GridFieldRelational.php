@@ -4,6 +4,7 @@ namespace ZfMetal\Datagrid\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use ZfMetal\Datagrid\Column\ColumnInterface;
+use ZfMetal\Datagrid\Column\RelationalColumn;
 
 /**
  * @author cincarnato
@@ -30,7 +31,12 @@ class GridFieldRelational extends AbstractHelper {
      * @param  array $data
      * @return string
      */
-    public function render(ColumnInterface $column, array $data) {
+    public function render(RelationalColumn $column, array $data) {
+
+        if($column->getOneToMany()){
+            return $this->renderList($column,$data);
+        }
+
         $record = $data[$column->getName()];
 
         if(!$record){
@@ -71,6 +77,18 @@ class GridFieldRelational extends AbstractHelper {
 
     private function buildGedMethod($name) {
         return 'get' . ucfirst($name);
+    }
+
+    /**
+     * Render a Field from the provided $column and $data
+     *
+     * @param  ColumnInterface $column
+     * @param  array $data
+     * @return string
+     */
+    public function renderList(ColumnInterface $column, array $data) {
+        $helper = $this->getView()->plugin('GridFieldRelationalList');
+        return $helper($column, $data);
     }
 
 }
