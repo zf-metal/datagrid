@@ -106,12 +106,13 @@ trait CrudTrait {
     }
 
     public function delRecord($id) {
-        $crudForm = $this->getCrudForm($id);
+       // $crudForm = $this->getCrudForm($id);
 
         try {
             $record = $this->getEm()->getRepository($this->entityName)->find($id);
             //Aqui deberia crear un evento en forma de escucha
-            $argv = array('record' => $record, 'form' => $crudForm);
+            //$argv = array('record' => $record, 'form' => $crudForm);
+            $argv = array('record' => $record);
             $this->getEventManager()->trigger(__FUNCTION__ . '_before', $this, $argv);
             $this->getEm()->remove($record);
             $this->getEm()->flush();
