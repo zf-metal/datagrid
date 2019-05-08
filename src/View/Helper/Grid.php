@@ -24,6 +24,10 @@ class Grid extends AbstractHelper
             return null;
         }
 
+        if ($this->instance == \ZfMetal\Datagrid\Grid::INSTANCE_EXPORT_TO_CSV) {
+            return null;
+        }
+
         $partial = self::TEMPLATE_PATH . $this->template . "/" . $this->instance;
         $partialPagination = self::TEMPLATE_PATH . $this->template . "/pagination";
         $partialFilter = self::TEMPLATE_PATH . $this->template . "/filter";

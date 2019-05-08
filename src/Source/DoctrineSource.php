@@ -51,6 +51,12 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
 
     /**
      *
+     * @var \ZfMetal\Datagrid\Service\ExportToCsv
+     */
+    protected $serviceExportToCsv;
+
+    /**
+     *
      * @var \ZfMetal\Datagrid\Service\ImportFromCsv
      */
     protected $serviceImportFromCsv;
@@ -79,6 +85,11 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
         return $this;
     }
 
+    function setServiceExportToCsv(\ZfMetal\Datagrid\Service\ExportToCsv $serviceExportToCsv) {
+        $this->serviceExportToCsv = $serviceExportToCsv;
+        return $this;
+    }
+
     /**
      * @return \ZfMetal\Datagrid\Service\ImportFromCsv
      */
@@ -95,6 +106,14 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
     {
         $this->serviceImportFromCsv = $serviceImportFromCsv;
         return $this;
+    }
+
+    /**
+     * @return \ZfMetal\Datagrid\Service\ExportToCsv
+     */
+    public function getServiceExportToCsv()
+    {
+        return $this->serviceExportToCsv;
     }
 
 
@@ -121,7 +140,6 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
         $this->entityName = $entityName;
         return $this;
     }
-
 
 
     protected function createQb() {
@@ -180,6 +198,10 @@ class DoctrineSource extends AbstractSource implements SourceInterface {
 
     function exportToExcel($configKey) {
         $this->getServiceExportToExcel()->run($this->getEm(), $this->getEntityName(), $this->getQb(), $configKey);
+    }
+
+    function exportToCsv($configKey) {
+        $this->getServiceExportToCsv()->run($this->getEm(), $this->getEntityName(), $this->getQb(), $configKey);
     }
 
     function importFromCsv($configKey,$file) {

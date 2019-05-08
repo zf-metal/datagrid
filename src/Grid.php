@@ -19,10 +19,11 @@ class Grid
     const INSTANCE_VIEW = "view";
     const INSTANCE_FORM = "form";
     const INSTANCE_EXPORT_TO_EXCEL = "exportToExcel";
+    const INSTANCE_EXPORT_TO_CSV = "exportToCsv";
     const INSTANCE_IMPORT_FROM_CSV = "importFromCsv";
     const INSTANCE_GET_IMPORT_EXAMPLE = "getImportExample";
     const INSTANCES = [
-        self::INSTANCE_GRID, self::INSTANCE_VIEW, self::INSTANCE_FORM, self::INSTANCE_EXPORT_TO_EXCEL, self::INSTANCE_IMPORT_FROM_CSV, self::INSTANCE_GET_IMPORT_EXAMPLE
+        self::INSTANCE_GRID, self::INSTANCE_VIEW, self::INSTANCE_FORM, self::INSTANCE_EXPORT_TO_EXCEL, self::INSTANCE_EXPORT_TO_CSV, self::INSTANCE_IMPORT_FROM_CSV, self::INSTANCE_GET_IMPORT_EXAMPLE
     ];
     const MULTI_SEARH_ID = "_multisearch";
 
@@ -277,11 +278,12 @@ class Grid
         $this->data = $this->paginator->getCurrentItems();
         $this->processData();
 
-        //Extra Columns (todo)
+        //Extra Columns
         $this->mergeExtraColumn();
 
         //Order Columns..Need review to enable
         //$this->processOrderColumn();
+
         $this->ready = true;
         return $this;
     }
@@ -457,6 +459,10 @@ class Grid
     {
         if ($this->getInstance() == self::INSTANCE_EXPORT_TO_EXCEL) {
             $this->getSource()->exportToExcel($this->getOptions()->getExportConfig()->getExportToExcel()->getKey());
+        }
+
+        if ($this->getInstance() == self::INSTANCE_EXPORT_TO_CSV) {
+            $this->getSource()->exportToCsv($this->getOptions()->getExportConfig()->getExportToCsv()->getKey());
         }
     }
 
