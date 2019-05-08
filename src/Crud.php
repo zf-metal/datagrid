@@ -162,6 +162,9 @@ class Crud {
             case 'exportToExcel':
                 $this->exportToExcel();
                 break;
+            case 'exportToCsv':
+                $this->exportToCsv();
+                break;
             case 'delete':
                 $this->delete();
                 break;
@@ -181,6 +184,7 @@ class Crud {
                 $this->editSubmit();
                 break;
             default:
+
                 return \ZfMetal\Datagrid\Grid::INSTANCE_GRID;
         }
         return $this->instance;
@@ -198,6 +202,10 @@ class Crud {
 
     protected function exportToExcel() {
         $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_EXPORT_TO_EXCEL;
+    }
+
+    protected function exportToCsv() {
+        $this->instance = \ZfMetal\Datagrid\Grid::INSTANCE_EXPORT_TO_CSV;
     }
 
     protected function view() {

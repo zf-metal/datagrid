@@ -78,6 +78,11 @@ class GridFactory implements FactoryInterface {
             $source->setServiceExportToExcel($serviceExportToExcel);
         }
 
+        if ($this->gridOptions->getExportConfig()->getExportToCsv()->getEnable()) {
+            $serviceExportToCsv = $this->container->get('zf-metal-datagrid.export_to_csv');
+            $source->setServiceExportToCsv($serviceExportToCsv);
+        }
+
         if ($this->gridOptions->getImportConfig()->getImportFromCsv()->getEnable()) {
             $serviceImportFromCsv = $this->container->get('zf-metal-datagrid.import_from_csv');
             $source->setServiceImportFromCsv($serviceImportFromCsv);

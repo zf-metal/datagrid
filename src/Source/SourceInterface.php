@@ -45,6 +45,11 @@ interface SourceInterface {
     public function exportToExcel($configKey);
 
     /**
+     * Execute an export to excel
+     */
+    public function exportToCsv($configKey);
+
+    /**
      * Execute an import from csv
      */
     public function importFromCsv($file,$configKey);
