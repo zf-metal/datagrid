@@ -74,6 +74,9 @@ class ColumnFactory {
             case "relational":
                 $this->createRelationalColumn($name);
                 break;
+            case "exportMethod":
+                $this->createExportMethodColumn($name);
+                break;
             default:
                 $this->createStringColumn($name);
                 break;
@@ -328,4 +331,13 @@ class ColumnFactory {
         return $this->column;
     }
 
+    protected function createExportMethodColumn($name){
+        $this->column = new Column\ExportMethodColumn($name);
+        $this->baseConfig();
+
+        if (isset($this->config["method"])) {
+            $this->column->setMethod($this->config["method"]);
+        }
+        return $this->column;
+    }
 }

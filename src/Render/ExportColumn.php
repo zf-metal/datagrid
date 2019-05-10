@@ -2,13 +2,16 @@
 
 namespace ZfMetal\Datagrid\Render;
 
-class ExportColumn {
+use mysql_xdevapi\Exception;
 
-    public function render($entity, \ZfMetal\Datagrid\Column\AbstractColumn $column = null, $config = array()) {
+class ExportColumn
+{
+
+    public function render($entity, \ZfMetal\Datagrid\Column\AbstractColumn $column = null, $config = array())
+    {
         if (!$entity && !$column) {
             throw new \Exception('Algo anda mal, la entidad o la columna no pueden ser nulos');
         }
-
         $type = $column->getType();
 
         $result = '';
@@ -29,16 +32,21 @@ class ExportColumn {
             case 'relational':
                 $result = $this->getRelational($entity, $column->getName(), isset($config['field']) ? $config['field'] : '');
                 break;
+            case 'exportMethod':
+                $result = $this->getExportMethod($entity, $column->getName(), isset($config['method']) ? $config['method'] : null);
+                break;
         }
         return $result;
     }
 
-    private function getString($entity, $name) {
+    private function getString($entity, $name)
+    {
         $getMethod = $this->buildGedMethod($name);
-        return (string) $entity->$getMethod();
+        return (string)$entity->$getMethod();
     }
 
-    private function getBoolean($entity, $name, $valueWhenTrue, $valueWhenFalse) {
+    private function getBoolean($entity, $name, $valueWhenTrue, $valueWhenFalse)
+    {
         $getMethod = $this->buildGedMethod($name);
         $result = $entity->$getMethod();
         if ($result == false) {
@@ -49,16 +57,18 @@ class ExportColumn {
         return "";
     }
 
-    private function getDate($entity, $name, $format = 'Y-m-d') {
+    private function getDate($entity, $name, $format = 'Y-m-d')
+    {
         $getMethod = $this->buildGedMethod($name);
         $date = $entity->$getMethod();
         if (is_a($date, "DateTime")) {
-            return (string) $date->format($format);
+            return (string)$date->format($format);
         }
         return "";
     }
 
-    private function getRelational($entity, $name, $field) {
+    private function getRelational($entity, $name, $field)
+    {
         $getMethod = $this->buildGedMethod($name);
         if ($field) {
             $getField = $this->buildGedMethod($field);
@@ -69,10 +79,22 @@ class ExportColumn {
                 return "";
             }
         }
-        return (string) $entity->$getMethod();
+        return (string)$entity->$getMethod();
     }
 
-    private function buildGedMethod($name) {
+    private function getExportMethod($entity, $name, $method = null){
+        if(!$method){
+            throw new \Exception("The method property must be implemented in config field " . $name);
+        }
+        if(!method_exists($entity, $method)){
+            throw new \Exception("The method '". $method ."' in entity " . get_class($entity) . " doesn't exists");
+        }
+
+        return $entity->$method();
+    }
+
+    private function buildGedMethod($name)
+    {
         return 'get' . ucfirst($name);
     }
 
