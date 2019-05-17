@@ -6,9 +6,9 @@
         <?php echo $this->partial($this->partialExports, array("grid" => $this->grid)); ?>
         <?php echo $this->partial($this->partialImports, array("grid" => $this->grid)); ?>
 
-        <?php if ($this->grid->getOptions()->getMultiSearchConfig()->getEnable()): ?>     
+        <?php if ($this->grid->getOptions()->getMultiSearchConfig()->getEnable()): ?>
             <?php echo $this->partial($this->partialSearch, array("grid" => $this->grid)); ?>
-        <?php endif; ?>     
+        <?php endif; ?>
 
         <?php if ($this->grid->getOptions()->getMultiFilterConfig()->getEnable()): ?>
             <?php echo $this->partial($this->partialFilter, array("grid" => $this->grid)); ?>
@@ -24,7 +24,7 @@
                     <?php if (!$column->getHidden()): ?>
                         <th class="<?php echo $column->getThClass(); ?>">
                             <?php echo $this->translate((string) $column); ?>
-                            <?php if ($column->getType() != "extra" && $column->getType() != "crud"): ?>
+                            <?php if ($column->getType() != "extra" && $column->getType() != "crud" && $column->getType() != "custom"): ?>
                                 <!--SORT-->
                                 <?php if ($this->grid->getSort() && $this->grid->getSort()->getBy() == $column->getName()): ?>
                                     <?php if ($this->grid->getSort()->getDirection() == "DESC"): ?>

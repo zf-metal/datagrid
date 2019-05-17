@@ -741,6 +741,8 @@ class Grid
 
         $columnConfig = $this->getColumnConfig($name);
         $columnConfig["type"] = "custom";
+        $columnConfig["helper"] = $helper;
+
         $extraColumn = $this->getColumnFactory()->create($name, $columnConfig);
 
         if ($side != "left" && $side != "right") {
