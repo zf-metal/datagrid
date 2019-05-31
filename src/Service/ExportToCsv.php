@@ -174,13 +174,11 @@ class ExportToCsv
         $data = $this->getData();
 
         foreach ($data as $row) {
+            $line = "";
             foreach ($row as $key => $field) {
-                $export .= $field;
-                if (end($row) != $field) {
-                    $export .= ";";
-                }
+                $line .= $field . ";";
             }
-            $export .= PHP_EOL;
+            $export .= substr_replace($line ,"", -1).PHP_EOL;
         }
         return $export;
 
