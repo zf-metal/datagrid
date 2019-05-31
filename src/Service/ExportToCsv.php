@@ -230,6 +230,7 @@ class ExportToCsv
 
     private function dispatchResponse($file)
     {
+        $file =  "\xEF\xBB\xBF" . $file;
         $plugin = $this;
         $mvcevent = $this->getApplication()->getMvcEvent();
         $this->getApplication()->getEventManager()->attach($mvcevent::EVENT_FINISH, function ($e) use ($plugin, $file) {
