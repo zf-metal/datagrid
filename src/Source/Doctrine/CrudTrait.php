@@ -130,9 +130,10 @@ trait CrudTrait {
 
     public function updateRecord($id, $data) {
         $crudForm = $this->getCrudForm($id);
-
         $crudForm->setData($data);
-
+        
+        $this->getEventManager()->trigger(__FUNCTION__ . '_before_validating_form', $this);
+        
         if ($crudForm->isValid()) {
             $record = $crudForm->getObject();
             //Aqui deberia crear un evento en forma de escucha
@@ -154,9 +155,10 @@ trait CrudTrait {
 
     public function saveRecord($aData) {
         $crudForm = $this->getCrudForm();
-
         $crudForm->setData($aData);
 
+        $this->getEventManager()->trigger(__FUNCTION__ . '_before_validating_form', $this);
+        
         if ($crudForm->isValid()) {
             $record = $crudForm->getObject();
             $argv = array('record' => $record, 'form' => $crudForm, 'data' => $aData);
