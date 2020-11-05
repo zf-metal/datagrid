@@ -30,7 +30,7 @@ class ExportToExcel {
 
     /**
      *
-     * @var \Doctrine\ORM\QueryBuilder 
+     * @var \Doctrine\ORM\QueryBuilder
      */
     private $queryBuilder;
 
@@ -41,13 +41,13 @@ class ExportToExcel {
     private $columns = array();
 
     /**
-     * 
-     * @var \Doctrine\ORM\EntityManager 
+     *
+     * @var \Doctrine\ORM\EntityManager
      */
     private $em;
 
     /**
-     * 
+     *
      * @var \Zend\Mvc\Application
      */
     private $application;
@@ -110,6 +110,10 @@ class ExportToExcel {
 
         $this->generateColumns();
 
+        $this->extraColumns();
+
+        $this->orderColumns();
+
         $result = $this->export();
 
         $this->dispatchResponse($result);
@@ -139,7 +143,27 @@ class ExportToExcel {
         foreach ($this->columnsName as $name) {
             $this->columns[$name] = $factoryColumns->create($name, isset($this->columnsConfig[$name]) ? $this->columnsConfig[$name] : array());
         }
-        $this->orderColumns();
+
+    }
+
+
+    private function extraColumns() {
+        $factoryColumns = new \ZfMetal\Datagrid\Factory\ColumnFactory();
+        foreach ($this->columnsConfig as $columnName => $data ){
+            if($data['extra']){
+
+                $this->columns[$columnName] = $factoryColumns->create($columnName, $data);
+            }
+
+        }
+    }
+
+    private function orderColumns() {
+
+        usort( $this->columns, function($a, $b) {
+            return $a->getPriority() > $b->getPriority();
+        });
+
     }
 
     private function export() {
@@ -158,13 +182,7 @@ class ExportToExcel {
         //return '/tmp/test.xlsx';
     }
 
-    private function orderColumns() {
-        foreach ($this->columns as $column) {
-            $orderHeader[$column->getName()] = $column->getPriority();
-        }
-        asort($orderHeader);
-        $this->columns = array_merge($orderHeader, $this->columns);
-    }
+
 
     private function getHeader() {
         // $header = array();
@@ -188,7 +206,7 @@ class ExportToExcel {
                     $header[$column->getDisplayName()] = "YYYY-MM-DD HH:MM:SS";
                 }
 
-            }else if($column->getType() == 'relational' || $column->getType() == 'boolean'){
+            }else if($column->getType() == 'relational' || $column->getType() == 'boolean' || $column->getType() == 'exportMethod'){
 
                 $header[$column->getDisplayName()] = "string";
 
