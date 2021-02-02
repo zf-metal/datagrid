@@ -4,18 +4,18 @@ namespace ZfMetal\Datagrid\Options;
 
 use Zend\Stdlib\AbstractOptions;
 
-class FormConfig extends AbstractOptions {
+class SourceConfig extends AbstractOptions {
 
     /**
      * SourceType
-     * 
+     *
      * @var string
      */
     protected $type = null;
 
     /**
      * Source Options
-     * 
+     *
      * @var array
      */
     protected $sourceOptions = array();

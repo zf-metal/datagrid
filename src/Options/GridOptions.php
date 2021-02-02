@@ -8,28 +8,28 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
 
     /**
      * ID of the GRID
-     * 
+     *
      * @var string
      */
     protected $gridId = "zfmdg";
 
     /**
      * Title of the GRID
-     * 
+     *
      * @var string
      */
     protected $title = "";
 
     /**
      * Title when add
-     * 
+     *
      * @var string
      */
     protected $titleAdd = "";
 
     /**
      * Title when edit
-     * 
+     *
      * @var string
      */
     protected $titleEdit = "";
@@ -59,7 +59,7 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
     protected $crudConfig = array();
 
     /**
-     * 
+     *
      * @var array
      */
     protected $flashMessagesConfig = array();
@@ -79,21 +79,21 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
     protected $sourceConfig = array();
 
     /**
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $multiSearchConfig;
 
     /**
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $multiFilterConfig;
-    
-    
+
+
      /**
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $exportConfig;
 
@@ -104,10 +104,10 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
 
     /**
      *
-     * key => flap name 
+     * key => flap name
      * value => relatedKeyOption
-     * 
-     * @var array 
+     *
+     * @var array
      */
     protected $managerConfig;
 
@@ -192,8 +192,8 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
     }
 
     /**
-     * 
-     * @return \ZfMetal\Datagrid\Options\FormConfig
+     *
+     * @return \ZfMetal\Datagrid\Options\SourceConfig
      */
     function getFormConfig() {
         return $this->formConfig;
@@ -266,9 +266,9 @@ class GridOptions extends AbstractOptions implements GridOptionsInterface {
         }
         $this->flashMessagesConfig = new \ZfMetal\Datagrid\Options\FlashMessagesConfig($flashMessagesConfig);
     }
-    
+
     /**
-     * 
+     *
      * @return \ZfMetal\Datagrid\Options\ExportConfig
      */
     function getExportConfig() {
