@@ -150,7 +150,7 @@ class ExportToExcel {
     private function extraColumns() {
         $factoryColumns = new \ZfMetal\Datagrid\Factory\ColumnFactory();
         foreach ($this->columnsConfig as $columnName => $data ){
-            if($data['extra']){
+            if(isset($data['extra']) && $data['extra']){
 
                 $this->columns[$columnName] = $factoryColumns->create($columnName, $data);
             }
