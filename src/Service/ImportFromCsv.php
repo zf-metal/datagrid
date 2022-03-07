@@ -219,10 +219,18 @@ class ImportFromCsv
             ];
 
         } catch (\Exception $e) {
-            return [
-                'status' => 'fail',
-                'message' => $this->messages['messageFail']." Error: ".$e->getMessage()
-            ];
+            if(str_contains($e->getMessage(), '1062 Duplicate entry') && str_contains($this->messages['messageFail'],"There was an error importing records.")){
+                $var=explode("'", $e->getMessage());
+                return [
+                    'status' => 'fail',
+                    'message' => 'Se ha producido un error al importar los registros. '. 'Existe un registro pre-existente. El dato es: '.$var[3].'.'
+                ];
+            }else{
+                return [
+                    'status' => 'fail',
+                    'message' => $this->messages['messageFail']." Error: ".$e->getMessage()
+                ];
+            }
         }
 
     }
