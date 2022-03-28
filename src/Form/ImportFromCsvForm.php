@@ -40,11 +40,11 @@ class ImportFromCsvForm extends \Zend\Form\Form
             'name' => 'import',
             'type' => 'Zend\Form\Element\Submit',
             'attributes' => array(
-                'value' => "Import",
+                'value' => "Importar",
                 'class' => 'pull-right btn btn-primary',
             ),
             'options' => array(
-                'label' => 'Import',
+                'label' => 'Importar',
             )
         ));
         $this->add(array(
