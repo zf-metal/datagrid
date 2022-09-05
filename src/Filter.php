@@ -124,6 +124,7 @@ class Filter {
             }
         } elseif (substr($this->inputFilterValue, 0, 1) == '~' || substr($this->inputFilterValue, 0, 1) == '%' || substr($this->inputFilterValue, -1) == '%' || substr($this->inputFilterValue, 0, 1) == '*' || substr($this->inputFilterValue, -1) == '*') {
             // LIKE
+            $value = $this->inputFilterValue;
             if (substr($this->inputFilterValue, 0, 1) == '~') {
                 $value = substr($this->inputFilterValue, 1);
             }
